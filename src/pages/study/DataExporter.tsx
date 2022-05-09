@@ -5,10 +5,10 @@ interface DataExporterProps {
 }
 
 const DataExporter: React.FC<DataExporterProps> = (props) => {
-    let params = useParams();
-    return (
-        <p>DataExporter for {params.studykey}</p>
-    );
+  let params = useParams();
+  return (
+    <p>DataExporter for {params.studykey}</p>
+  );
 };
 
 export default DataExporter;

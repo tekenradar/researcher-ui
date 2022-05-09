@@ -4,9 +4,9 @@ interface ParticipantOverviewProps {
 }
 
 const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
-    return (
-        <p>ParticipantOverview</p>
-    );
+  return (
+    <p>ParticipantOverview</p>
+  );
 };
 
 export default ParticipantOverview;

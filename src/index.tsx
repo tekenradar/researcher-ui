@@ -23,9 +23,10 @@ root.render(
           <Route path="studies">
             <Route index element={<StudySelector />} />
             <Route path=":studykey" element={<Study />}>
-              <Route index element={<DataExporter />} />
+              <Route path="exporter" element={<DataExporter />} />
               <Route path="participant-records" element={<ParticipantRecords />} />
               <Route path="settings" element={<Settings />} />
+              <Route index element={<Navigate replace to="exporter" />} />
             </Route>
           </Route>
 
