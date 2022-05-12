@@ -5,7 +5,7 @@ const Settings: React.FC = () => {
   let params = useParams();
 
   return (
-    <p>Settings for {params.studykey}</p>
+    <p className='text-center'>Settings for {params.studykey}</p>
   );
 };
 
