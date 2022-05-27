@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavigationMenu from "../../components/study/NavigationMenu";
-import menuBarIcon from "/Users/syed/researcher-ui/src/assets/icons/menu_bar.png";
+import {MdOutlineMenu} from "react-icons/md"
 import "./study.css";
 const Study: React.FC = () => {
   const [isNavbarOpen, setNavbarStatus] = useState(false);
@@ -25,11 +25,11 @@ const Study: React.FC = () => {
           setTimeout(() => { setMenuVisibilily(false) }, 100);
           
         }}
-        style={{ width: "40px", height: "30px",paddingLeft:"0.5rem",
+        style={{ width: "40px", height: "35px",paddingLeft:"0.5rem",
         paddingTop:"0.1rem" ,opacity: !isMenuVisible ? "0" : "1",
         transition: "all 0.5s",}}
       >
-        <img src={menuBarIcon} alt="Menu Bar" style={{alignContent:"center"}}/>
+        <MdOutlineMenu style={{alignContent:"center"}}/>
       </button> 
       
       <Outlet />
