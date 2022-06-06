@@ -1,5 +1,5 @@
-import React from 'react';
-import { Offcanvas } from 'react-bootstrap';
+import React from "react";
+import { Offcanvas } from "react-bootstrap";
 
 interface ParticipantDetailsProps {
   participantDetails: Object;
@@ -8,33 +8,28 @@ interface ParticipantDetailsProps {
 }
 
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
-
- 
-const tableEachRow = () =>{
-  return (Object.values(props.participantDetails).map((rowElement)=>{
-    return (<p>{""+rowElement}</p>);
-}));
-};
+  const tableEachRow = () => {
+    return Object.values(props.participantDetails).map((rowElement) => {
+      return <p>{"" + rowElement}</p>;
+    });
+  };
   return (
     <Offcanvas
       show={props.show}
       onHide={props.onClose}
       scroll={true}
       backdrop={false}
-      placement='end'
+      placement="end"
       style={{
-        width: '40%',
+        width: "40%",
       }}
     >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Participant Details</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body>
-       <div>
-         {tableEachRow()}
-       </div>
+        <div>{tableEachRow()}</div>
       </Offcanvas.Body>
-
     </Offcanvas>
   );
 };
