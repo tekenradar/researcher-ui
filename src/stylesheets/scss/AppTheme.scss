@@ -15,6 +15,26 @@ $theme-colors: (
   "warning":    $warning,
   "danger":     $danger,
 );
+$gradients: () !default;
+$gradients: map-merge((
+    firstStudyColor: linear-gradient(to right, #4c515f, #4286f4),
+    secondStudyColor: linear-gradient(to right, #0a504a, #38ef7d),
+    thirdStudyColor: linear-gradient(to right, #a86008, #ffba56),
+    fourthStudyColor: linear-gradient(135deg, #23bdb8 0%, #43e794 100%),
+), $gradients);
+
+@mixin bg-gradient( $gradient) {
+ 
+    background: $gradient;
+  
+}
+
+.firstStudyColor{
+  @include bg-gradient(map-get($gradients,firstStudyColor));
+}
+.secondStudyColor{
+  @include bg-gradient(map-get($gradients,secondStudyColor));
+}
 
 $custom-colors: (
     "homePageBgColor": #e0e0e0,

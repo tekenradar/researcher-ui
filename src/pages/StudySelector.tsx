@@ -19,7 +19,7 @@ const StudySelector: React.FC = () => {
               <Link
                 type="button"
                 className={`${
-                  index === 0 ? "l-bg-blue-dark" : "l-bg-green-dark"
+                  index === 0 ? "firstStudyColor" : "secondStudyColor"
                 }  btn cardBtn card-body shadow-none border border-secondary fw-bold`}
                 to={study.key}
               >
