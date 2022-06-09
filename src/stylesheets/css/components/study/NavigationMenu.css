@@ -5,6 +5,9 @@
 }
 
 .icon:hover{
-    color:#9e9e9e;
     width: 34px;
+}
+
+.active{
+    background-color: #616161;
 }
