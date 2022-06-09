@@ -14,6 +14,7 @@ interface NavigationMenuProps {
 }
 
 const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let params = useParams();
   return (
     <div

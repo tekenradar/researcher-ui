@@ -1,0 +1,28 @@
+
+$primary: #3464D5;
+$secondary: #EDEFF4;
+$success: #00A733;
+$warning: #FD9644;
+$danger: #DA3659;
+$info: #BCE0FA;
+
+
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+);
+
+$custom-colors: (
+    "appThemeColor": #bdbdbd ,
+    "firstStudyColor": #8bc34a,
+    "secondStudyColor": #d4e157,
+);
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "~bootstrap/scss/bootstrap";

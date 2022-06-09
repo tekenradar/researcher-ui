@@ -10,7 +10,7 @@ import DataExporter from "./pages/study/DataExporter";
 import ParticipantRecords from "./pages/study/ParticipantRecords";
 import Settings from "./pages/study/Settings";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./stylesheets/scss/AppTheme.scss";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

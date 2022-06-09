@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavigationMenu from "../../components/study/NavigationMenu";
-import { MdOutlineMenu } from "react-icons/md";
-import "./study.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import "../../stylesheets/css/pages/study/Study.css";
 const Study: React.FC = () => {
   const [isNavbarOpen, setNavbarStatus] = useState(false);
   const [isMenuVisible, setMenuVisibilily] = useState(true);
@@ -39,7 +40,7 @@ const Study: React.FC = () => {
             transition: "all 0.5s",
           }}
         >
-          <MdOutlineMenu style={{ alignContent: "center" }} />
+          <FontAwesomeIcon icon={faBars} />
         </button>
 
         <Outlet />
