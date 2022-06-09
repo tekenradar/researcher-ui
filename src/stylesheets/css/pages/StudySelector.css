@@ -1,0 +1,9 @@
+.cardBtn {
+    -webkit-transition: font-size 0.5s;
+    transition: font-size 0.5s;
+  }
+  .cardBtn:hover {
+    padding-right: 18px;
+    padding: 18px;
+    font-size: 1.1em;
+  }
