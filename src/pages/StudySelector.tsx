@@ -20,7 +20,7 @@ const StudySelector: React.FC = () => {
                 type="button"
                 className={`${
                   index === 0 ? "bg-firstStudyColor" : "bg-secondStudyColor"
-                } btn cardBtn card-body shadow-none border border-secondary`}
+                } btn cardBtn card-body shadow-none border border-secondary fw-bold`}
                 to={study.key}
               >
                 {study.name} <FontAwesomeIcon icon={faAnglesRight} />
