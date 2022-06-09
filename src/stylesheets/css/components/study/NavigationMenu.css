@@ -1,0 +1,10 @@
+.icon{
+    -webkit-transition: font-size 0.5s;
+    transition: font-size 0.5s;
+    color: white;
+}
+
+.icon:hover{
+    color:#9e9e9e;
+    width: 34px;
+}

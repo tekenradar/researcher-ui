@@ -29,10 +29,10 @@ $gradients: map-merge((
   
 }
 
-.firstStudyColor{
+.firstStudyTheme{
   @include bg-gradient(map-get($gradients,firstStudyColor));
 }
-.secondStudyColor{
+.secondStudyTheme{
   @include bg-gradient(map-get($gradients,secondStudyColor));
 }
 

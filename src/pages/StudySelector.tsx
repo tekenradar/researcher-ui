@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import "./../stylesheets/css/pages/StudySelector.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import { AppConstants } from "../AppConstants";
 
 const dummyStudies = [
   { key: "dummy", name: "Dummy study" },
-  { key: "dummy-2", name: "Dummy study 2" },
+  { key: "dummy_2", name: "Dummy study 2" },
 ];
 
 const StudySelector: React.FC = () => {
@@ -15,12 +16,12 @@ const StudySelector: React.FC = () => {
       <div className="row justify-content-center gx-5 p-3">
         {dummyStudies.map((study, index) => (
           <div className="col-3">
-            <div className="card rounded " key={study.key}>
+            <div className="card rounded" key={study.key}>
               <Link
                 type="button"
-                className={`${
-                  index === 0 ? "firstStudyColor" : "secondStudyColor"
-                }  btn cardBtn card-body shadow-none border border-secondary fw-bold`}
+                className={`${AppConstants.getStudyTheme(
+                  study.key
+                )}  btn cardBtn card-body shadow-none border border-secondary fw-bold`}
                 to={study.key}
               >
                 {study.name} <FontAwesomeIcon icon={faAnglesRight} />
