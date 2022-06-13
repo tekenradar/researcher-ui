@@ -1,5 +1,8 @@
-import React from "react";
-import { Offcanvas } from "react-bootstrap";
+import { useParams } from "react-router";
+import { AppConstants } from "../../AppConstants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import "../../stylesheets/css/components/study/ParticipantDetails.css";
 
 interface ParticipantDetailsProps {
   participantDetails: Object;
@@ -8,29 +11,31 @@ interface ParticipantDetailsProps {
 }
 
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
+  let { studykey } = useParams();
   const tableEachRow = () => {
     return Object.values(props.participantDetails).map((rowElement) => {
       return <p>{"" + rowElement}</p>;
     });
   };
   return (
-    <Offcanvas
-      show={props.show}
-      onHide={props.onClose}
-      scroll={true}
-      backdrop={false}
-      placement="end"
-      style={{
-        width: "40%",
-      }}
+    <div
+      className={` d-flex flex-column h-100 ${props.show ? "open" : "close"}`}
+      style={{ width: "200px" }}
     >
-      <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Participant Details</Offcanvas.Title>
-      </Offcanvas.Header>
-      <Offcanvas.Body>
-        <div>{tableEachRow()}</div>
-      </Offcanvas.Body>
-    </Offcanvas>
+      <div className={`${AppConstants.getStudyTheme("" + studykey)}`}>
+        <button
+          type="button"
+          className="btn shadow-none"
+          onClick={() => {
+            props.onClose();
+          }}
+        >
+          <FontAwesomeIcon className="fa-xl pl-5" icon={faAngleRight} />
+        </button>
+        <p className="text-center">Participant Details </p>
+      </div>
+      <div className="text-center">{tableEachRow()}</div>
+    </div>
   );
 };
 

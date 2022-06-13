@@ -62,25 +62,29 @@ const ParticipantRecords: React.FC = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [participantData, setParticipantData] = useState({});
   return (
-    <div className="position-relative h-100">
-      <p className="text-center"> ParticipantRecords {params.studykey}</p>
-      <ParticipantOverview
-        participantsRecords={dummyParticipantRecords}
-        onParticipantRowClicked={(participantId: number) => {
-          setShowDetails(true);
-          dummyParticipantRecords.map((element) => {
-            if (element.participantId === participantId) {
-              setParticipantData(element);
-            }
-            return null;
-          });
-        }}
-      />
-      <ParticipantDetails
-        participantDetails={participantData}
-        show={showDetails}
-        onClose={() => setShowDetails(false)}
-      />
+    <div className="d-flex flex-row h-100">
+      <div className=" flex-grow-1 d-flex flex-column">
+        <p className="text-center"> ParticipantRecords {params.studykey}</p>
+        <ParticipantOverview
+          participantsRecords={dummyParticipantRecords}
+          onParticipantRowClicked={(participantId: number) => {
+            setShowDetails(true);
+            dummyParticipantRecords.map((element) => {
+              if (element.participantId === participantId) {
+                setParticipantData(element);
+              }
+              return null;
+            });
+          }}
+        />
+      </div>
+      <div className="">
+        <ParticipantDetails
+          participantDetails={participantData}
+          show={showDetails}
+          onClose={() => setShowDetails(false)}
+        />
+      </div>
     </div>
   );
 };

@@ -30,13 +30,15 @@ const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
     });
   };
   return (
-    <div className="table-responsive">
-      <table className="table table-hover">
-        <thead>
-          <tr>{tableColumnName()}</tr>
-        </thead>
-        <tbody>{tableRows()}</tbody>
-      </table>
+    <div className="">
+      <div className="table-responsive ">
+        <table className="table table-hover ">
+          <thead>
+            <tr>{tableColumnName()}</tr>
+          </thead>
+          <tbody>{tableRows()}</tbody>
+        </table>
+      </div>
     </div>
   );
 };
