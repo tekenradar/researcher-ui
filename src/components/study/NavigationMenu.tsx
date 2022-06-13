@@ -18,7 +18,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
       className={`border-end h-100 d-flex flex-column ${AppConstants.getStudyTheme(
         "" + studykey
       )}`}
-      style={{ minHeight: "100%" }}
+      style={{ minHeight: "100%", width: 60 }}
     >
       <Nav className="flex-column flex-grow-1">
         <NavLink

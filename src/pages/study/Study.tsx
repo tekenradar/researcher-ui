@@ -3,11 +3,11 @@ import NavigationMenu from "../../components/study/NavigationMenu";
 import "../../stylesheets/css/pages/study/Study.css";
 const Study: React.FC = () => {
   return (
-    <div className="row gx-0 h-100">
-      <div className="col-1 ">
+    <div className="d-flex flex-row overflow-hidden h-100">
+      <div className="">
         <NavigationMenu />
       </div>
-      <div className="col-11  bg-homePageBgColor">
+      <div className="w-100 bg-homePageBgColor p-2">
         <Outlet />
       </div>
     </div>
