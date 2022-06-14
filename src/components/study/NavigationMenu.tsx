@@ -1,23 +1,24 @@
 import clsx from "clsx";
 import React from "react";
 import { Nav } from "react-bootstrap";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import "../../stylesheets/css/components/study/NavigationMenu.css";
-import { AppConstants } from "../../AppConstants";
-interface NavigationMenuProps {}
+import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+
+interface NavigationMenuProps { }
+
 
 const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
-  let { studykey } = useParams();
+  const { bgColor, color } = useStudyColorClassnames();
+
   return (
     <div
-      className={`border-end h-100 d-flex flex-column ${AppConstants.getStudyTheme(
-        "" + studykey
-      )}`}
+      className={`${bgColor} ${color} border-end h-100 alert-study-tekenradar d-flex flex-column`}
       style={{ minHeight: "100%", width: 60 }}
     >
       <Nav className="flex-column flex-grow-1">

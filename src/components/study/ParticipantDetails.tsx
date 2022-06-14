@@ -1,5 +1,3 @@
-import { useParams } from "react-router";
-import { AppConstants } from "../../AppConstants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import "../../stylesheets/css/components/study/ParticipantDetails.css";
@@ -11,7 +9,7 @@ interface ParticipantDetailsProps {
 }
 
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
-  let { studykey } = useParams();
+
   const tableEachRow = () => {
     return Object.values(props.participantDetails).map((rowElement) => {
       return <p>{"" + rowElement}</p>;
@@ -22,7 +20,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
       className={`flex-shrink-1 ${props.show ? "open" : "close"}`}
     // style={{ width: "400px" }}
     >
-      <div className={`${AppConstants.getStudyTheme("" + studykey)}`}>
+      <div>
         <button
           type="button"
           className="btn shadow-none"
