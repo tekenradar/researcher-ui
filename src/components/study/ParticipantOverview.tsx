@@ -1,4 +1,5 @@
 import React from "react";
+import { Table } from "react-bootstrap";
 
 interface ParticipantOverviewProps {
   onParticipantRowClicked: (participantId: number) => void;
@@ -30,15 +31,13 @@ const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
     });
   };
   return (
-    <div className="">
-      <div className="table-responsive ">
-        <table className="table table-hover ">
-          <thead>
-            <tr>{tableColumnName()}</tr>
-          </thead>
-          <tbody>{tableRows()}</tbody>
-        </table>
-      </div>
+    <div className="flex-grow-1 table-responsive">
+      <Table responsive hover>
+        <thead>
+          <tr>{tableColumnName()}</tr>
+        </thead>
+        <tbody>{tableRows()}</tbody>
+      </Table>
     </div>
   );
 };
