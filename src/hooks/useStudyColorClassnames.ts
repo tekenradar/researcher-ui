@@ -7,6 +7,13 @@ export const useStudyColorClassnames = (): {
 } => {
   const appContext = useAppContext();
 
+  if (appContext.studyKey === undefined) {
+    return {
+      bgColor: `bg-white`,
+      color: `text-dark`
+    }
+  }
+
   return {
     bgColor: `alert-study-${appContext.studyKey}`,
     color: `text-study-${appContext.studyKey}`
