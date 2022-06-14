@@ -19,7 +19,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
   };
   return (
     <div
-      className={`flex-shrink-1 bg-secondary ${props.show ? "open" : "close"}`}
+      className={`flex-shrink-1 ${props.show ? "open" : "close"}`}
     // style={{ width: "400px" }}
     >
       <div className={`${AppConstants.getStudyTheme("" + studykey)}`}>

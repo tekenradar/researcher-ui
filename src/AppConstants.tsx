@@ -1,11 +1,11 @@
 export enum studyTheme {
-  dummy = "firstStudyTheme",
+  dummy = "study-tekenradar",
   dummy_2 = "secondStudyTheme",
 }
 export class AppConstants {
   private static instance: AppConstants;
 
-  private constructor() {}
+  private constructor() { }
 
   public static getInstance(): AppConstants {
     if (!AppConstants.instance) {

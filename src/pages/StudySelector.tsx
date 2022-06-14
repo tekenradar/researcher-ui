@@ -12,16 +12,16 @@ const dummyStudies = [
 
 const StudySelector: React.FC = () => {
   return (
-    <div className="container-fluid h-100 bg-homePageBgColor px-4 justify-content-center">
+    <div className="container-fluid h-100 px-4 justify-content-center">
       <div className="row justify-content-center gx-5 p-3">
         {dummyStudies.map((study, index) => (
           <div className="col-3">
             <div className="card rounded" key={study.key}>
               <Link
                 type="button"
-                className={`${AppConstants.getStudyTheme(
+                className={`alert-${AppConstants.getStudyTheme(
                   study.key
-                )}  btn cardBtn card-body shadow-none border border-secondary fw-bold`}
+                )}  btn cardBtn text-study-tekenradar card-body shadow-none border border-secondary fw-bold`}
                 to={study.key}
               >
                 {study.name} <FontAwesomeIcon icon={faAnglesRight} />
