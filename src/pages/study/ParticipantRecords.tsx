@@ -59,13 +59,11 @@ const dummyParticipantRecords = [
 ];
 const ParticipantRecords: React.FC = () => {
   let params = useParams();
-  const [showDetails, setShowDetails] = useState(true);
+  const [showDetails, setShowDetails] = useState(false);
   const [participantData, setParticipantData] = useState({});
 
   return (
-    <div className="d-flex w-100 h-100 table-responsive" style={{
-
-    }}>
+    <div className="d-flex w-100 h-100 table-responsive" style={{}}>
       <ParticipantOverview
         participantsRecords={dummyParticipantRecords}
         onParticipantRowClicked={(participantId: number) => {
