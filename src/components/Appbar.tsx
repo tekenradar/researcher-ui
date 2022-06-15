@@ -7,15 +7,23 @@ const Appbar: React.FC = () => {
   const appContext = useAppContext();
   const { bgColor, color } = useStudyColorClassnames();
 
-  console.log(appContext)
+  const studyName = appContext.studyInfo ? appContext.studyInfo.name : 'Select a study';
 
   return (
     <div className={clsx(
-      "border-bottom border-secondary d-flex justify-content-end align-items-center",
+      "border-bottom border-secondary d-flex align-items-center",
       bgColor,
       color
     )}>
+      <div style={{ width: 200 }}>
 
+      </div>
+      <div className="flex-grow-1 text-center">
+        <h1 className={clsx(
+          "h6 m-0",
+          color,
+        )}>{studyName}</h1>
+      </div>
       <span>Logged in as: {"todo"}</span>
       <button className="btn">Logout</button>
     </div>
