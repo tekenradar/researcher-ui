@@ -1,58 +1,78 @@
 import clsx from "clsx";
 import React from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { faGears } from "@fortawesome/free-solid-svg-icons";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import "../../stylesheets/css/components/study/NavigationMenu.css";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface NavigationMenuProps { }
 
+interface NavMenuItemProps {
+  tooltip: string;
+  to: string;
+  icon: IconProp;
+  bgColorClass: string;
+  colorClass: string;
+}
+
+const NavMenuItem: React.FC<NavMenuItemProps> = (props) => {
+  return <OverlayTrigger
+    placement="right"
+    overlay={
+      <Tooltip>{props.tooltip}</Tooltip>
+    }
+  >
+    <NavLink
+      className={({ isActive }) =>
+        clsx("nav-link py-3 text-center scale-effect-on-hover", props.colorClass, { ["active text-white bg-secondary fw-bold " + props.bgColorClass]: isActive })
+      }
+      to={props.to} //  "settings"
+    >
+      <FontAwesomeIcon className="fa-xl icon" icon={props.icon} />
+    </NavLink>
+  </OverlayTrigger>
+}
+
 
 const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
-  const { bgColor, color } = useStudyColorClassnames();
+  const { bgColor, color, bgDarkColor, borderClassName, btnClassName } = useStudyColorClassnames();
 
   return (
     <div
-      className={`${bgColor} ${color} border-end h-100 alert-study-tekenradar d-flex flex-column`}
-      style={{ minHeight: "100%", width: 60 }}
+      className={clsx(
+        "border-end border-secondary h-100 d-flex flex-colum",
+        borderClassName,
+        color,
+        bgColor,
+      )}
+      style={{ minHeight: "100%" }}
     >
       <Nav className="flex-column flex-grow-1">
-        <NavLink
-          className={({ isActive }) =>
-            clsx("nav-link", { "active fw-bold": isActive })
-          }
-          style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
+        <NavMenuItem
+          tooltip="Data Exporter"
+          colorClass={color}
+          bgColorClass={bgDarkColor}
           to="exporter"
-        >
-          <FontAwesomeIcon className="fa-xl icon" icon={faFileExport} />
-        </NavLink>
-        <NavLink
-          className={({ isActive }) =>
-            clsx("nav-link", { "active fw-bold": isActive })
-          }
-          style={{ paddingBottom: "1rem" }}
+          icon={faFileExport}
+        />
+        <NavMenuItem
+          tooltip="Participant Records"
+          colorClass={color}
+          bgColorClass={bgDarkColor}
           to="participant-records"
-        >
-          <FontAwesomeIcon className="fa-xl icon" icon={faAddressCard} />
-        </NavLink>
-        <NavLink
-          className={({ isActive }) =>
-            clsx("nav-link", { "active fw-bold": isActive })
-          }
-          style={{ paddingBottom: "1rem" }}
+          icon={faAddressCard}
+        />
+        <NavMenuItem
+          tooltip="Study Settings"
+          colorClass={color}
+          bgColorClass={bgDarkColor}
           to="settings"
-        >
-          <FontAwesomeIcon className="fa-xl icon" icon={faGears} />
-        </NavLink>
-        <div className="flex-grow-1"></div>
-        <NavLink className={"nav-link text-danger pb-4 fw-bold"} to="../">
-          <FontAwesomeIcon className="fa-xl" icon={faArrowRightFromBracket} />
-        </NavLink>
+          icon={faGears}
+        />
       </Nav>
     </div>
   );

@@ -15,28 +15,6 @@ $theme-colors: (
   "warning": $warning,
   "danger": $danger,
 );
-$gradients: (
-  ) !default;
-$gradients: map-merge((firstStudyColor: linear-gradient(to right, #4c515f, #4286f4),
-      secondStudyColor: linear-gradient(to right, #0a504a, #38ef7d),
-      thirdStudyColor: linear-gradient(to right, #a86008, #ffba56),
-      fourthStudyColor: linear-gradient(135deg, #23bdb8 0%, #43e794 100%),
-    ), $gradients
-);
-
-@mixin bg-gradient($gradient) {
-
-  background: $gradient;
-
-}
-
-.firstStudyTheme {
-  @include bg-gradient(map-get($gradients, firstStudyColor));
-}
-
-.secondStudyTheme {
-  @include bg-gradient(map-get($gradients, secondStudyColor));
-}
 
 $custom-colors: (
   "study-tekenradar": #1C8E00,
@@ -45,5 +23,14 @@ $custom-colors: (
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+.scale-effect-on-hover {
+  transition: transform 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.scale-effect-on-hover:hover {
+  transform: scale(1.035);
+}
 
 @import "~bootstrap/scss/bootstrap";
