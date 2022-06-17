@@ -1,37 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./../stylesheets/css/pages/StudySelector.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { dummyStudies, StudyInfo } from "../hooks/useAppContext";
+import StudyInfoCard from "../components/study/StudyInfoCard";
 
-
-const dummyStudies = [
-  { key: "tekenradar", name: "Tekenradar" },
-  { key: "weekly-tb", name: "Weekly TB" },
-];
 
 const StudySelector: React.FC = () => {
+  const [studies, setStudies] = useState<StudyInfo[]>([])
+
+  useEffect(() => {
+    setStudies(dummyStudies)
+  }, [])
 
   return (
-    <div className="container-fluid h-100 px-4 justify-content-center">
-      <div className="row justify-content-center gx-5 p-3">
+    <div className="container h-100 justify-content-center">
+      <div className="row justify-content-start g-3 py-3">
         {
-          dummyStudies.map((study, index) => {
-            const bgColor = `alert-study-${study.key}`;
-            const color = `text-study-${study.key}`;
-
-            return <div className="col-3">
-              <div className="card rounded" key={study.key}>
-                <Link
-                  type="button"
-                  className={`${bgColor} ${color} btn cardBtn text-study-tekenradar card-body shadow-none border border-secondary fw-bold`}
-                  to={study.key}
-                >
-                  {study.name} <FontAwesomeIcon icon={faAnglesRight} />
-                </Link>
-              </div>
-            </div>
-          })}
+          studies.map((study) => <StudyInfoCard
+            key={study.key}
+            study={study}
+          />
+          )
+        }
       </div>
     </div>
   );

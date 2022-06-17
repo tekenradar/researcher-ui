@@ -1,9 +1,10 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 export interface StudyInfo {
   key: string;
   name: string;
+  description: string;
 }
 
 
@@ -14,9 +15,13 @@ export interface AppContextData {
 }
 
 
-const dummyStudies = [
-  { key: "tekenradar", name: "Tekenradar" },
-  { key: "weekly-tb", name: "Weekly TB" },
+export const dummyStudies = [
+  { key: "tekenradar", name: "Tekenradar", description: "Default study of tekenradar" },
+  { key: "weekly-tb", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
+  { key: "weekly-tb2", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
+  { key: "weekly-tb3", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
+  { key: "weekly-tb4", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
+  { key: "weekly-tb5", name: "Weekly TB", description: "Weekly TB Cohort in coll wid sdosno dfnsodfnsodfknaboration with..." },
 ];
 
 
