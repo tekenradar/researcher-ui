@@ -3,6 +3,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import "../../stylesheets/css/components/study/ParticipantDetails.css";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 import clsx from "clsx";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 interface ParticipantDetailsProps {
   participantDetails?: {
@@ -14,63 +15,64 @@ interface ParticipantDetailsProps {
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
   const { bgColor, color, borderClassName } = useStudyColorClassnames();
 
-
   const header = () => {
-    return <div className={clsx(
-      bgColor,
-      color,
-      borderClassName,
-      "d-flex align-items-center border-bottom p-2"
-    )}>
-      <h5 className="m-0 flex-grow-1">Participant Details</h5>
-      <button
-        type="button"
-        className={clsx("btn", color)}
-        onClick={() => {
-          props.onClose();
-        }}
+    return (
+      <div
+        className={clsx(
+          bgColor,
+          color,
+          borderClassName,
+          "d-flex align-items-center border-bottom p-2"
+        )}
       >
-        <FontAwesomeIcon className="fa-xl pl-5" icon={faClose} />
-      </button>
-    </div>
-  }
-
+        <h5 className="m-0 flex-grow-1">Participant Details</h5>
+        <OverlayTrigger
+          placement="bottom"
+          overlay={<Tooltip>Close Details</Tooltip>}
+        >
+          <button
+            type="button"
+            className={clsx("btn", color)}
+            onClick={() => {
+              props.onClose();
+            }}
+          >
+            <FontAwesomeIcon className="fa-xl pl-5" icon={faClose} />
+          </button>
+        </OverlayTrigger>
+      </div>
+    );
+  };
 
   const body = () => {
     if (!props.participantDetails) {
-      return <p key="select">Select a participant</p>
+      return <p key="select">Select a participant</p>;
     }
 
-    return <div
-      className="p-2"
-    >
-      <div className="d-flex flex-wrap justify-content-between">
-        {Object.entries(props.participantDetails).map(([key, value]) => {
-          return <div key={key}
-            className="my-2 mx-3"
-          >
-            <label className="fw-bold fs-6">{key}</label>
-            <p>{value}</p>
-          </div>
-        })
-        }
+    return (
+      <div className="p-2">
+        <div className="d-flex flex-wrap justify-content-between">
+          {Object.entries(props.participantDetails).map(([key, value]) => {
+            return (
+              <div key={key} className="my-2 mx-3">
+                <label className="fw-bold fs-6">{key}</label>
+                <p>{value}</p>
+              </div>
+            );
+          })}
+        </div>
+        {/* --------- */}
+        <hr></hr>
       </div>
-      {/* --------- */}
-      <hr></hr>
-
-    </div>
-  }
+    );
+  };
 
   return (
     <div
-      className={clsx(
-        'bg-white border-start',
-        borderClassName,
-        {
-          "open": props.participantDetails,
-          "close": !props.participantDetails,
-        }
-      )}
+      className={clsx("bg-white border-start", borderClassName, {
+        open: props.participantDetails,
+        close: !props.participantDetails,
+      })}
       style={{ minWidth: "280px" }}
     >
       {header()}
