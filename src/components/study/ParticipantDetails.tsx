@@ -27,7 +27,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
       >
         <h5 className="m-0 flex-grow-1">Participant Details</h5>
         <OverlayTrigger
-          placement="bottom"
+          placement="left"
           overlay={<Tooltip>Close Details</Tooltip>}
         >
           <button
