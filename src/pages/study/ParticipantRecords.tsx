@@ -3,6 +3,12 @@ import { useParams } from "react-router-dom";
 import ParticipantDetails from "../../components/study/ParticipantDetails";
 import ParticipantOverview from "../../components/study/ParticipantOverview";
 
+
+interface ParticipantInfos {
+  [key: string]: any;
+}
+
+
 const dummyParticipantRecords = [
   {
     sessionId: 1,
@@ -57,17 +63,17 @@ const dummyParticipantRecords = [
     lastResearch: "dummyResearch",
   },
 ];
+
+
 const ParticipantRecords: React.FC = () => {
-  let params = useParams();
-  const [showDetails, setShowDetails] = useState(false);
-  const [participantData, setParticipantData] = useState({});
+
+  const [participantData, setParticipantData] = useState<ParticipantInfos>();
 
   return (
     <div className="d-flex w-100 h-100 table-responsive" style={{}}>
       <ParticipantOverview
         participantsRecords={dummyParticipantRecords}
         onParticipantRowClicked={(participantId: number) => {
-          setShowDetails(true);
           dummyParticipantRecords.map((element) => {
             if (element.participantId === participantId) {
               setParticipantData(element);
@@ -78,8 +84,7 @@ const ParticipantRecords: React.FC = () => {
       />
       <ParticipantDetails
         participantDetails={participantData}
-        show={showDetails}
-        onClose={() => setShowDetails(false)}
+        onClose={() => setParticipantData(undefined)}
       />
     </div>
   );

@@ -39,7 +39,7 @@ const NavMenuItem: React.FC<NavMenuItemProps> = (props) => {
 
 
 const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
-  const { bgColor, color, bgDarkColor, borderClassName, btnClassName } = useStudyColorClassnames();
+  const { bgColor, color, bgDarkColor, borderClassName } = useStudyColorClassnames();
 
   return (
     <div

@@ -1,38 +1,81 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 import "../../stylesheets/css/components/study/ParticipantDetails.css";
+import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+import clsx from "clsx";
 
 interface ParticipantDetailsProps {
-  participantDetails: Object;
-  show: boolean;
+  participantDetails?: {
+    [key: string]: any;
+  };
   onClose: () => void;
 }
 
 const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
+  const { bgColor, color, borderClassName } = useStudyColorClassnames();
 
-  const tableEachRow = () => {
-    return Object.values(props.participantDetails).map((rowElement) => {
-      return <p>{"" + rowElement}</p>;
-    });
-  };
+
+  const header = () => {
+    return <div className={clsx(
+      bgColor,
+      color,
+      borderClassName,
+      "d-flex align-items-center border-bottom p-2"
+    )}>
+      <h5 className="m-0 flex-grow-1">Participant Details</h5>
+      <button
+        type="button"
+        className={clsx("btn", color)}
+        onClick={() => {
+          props.onClose();
+        }}
+      >
+        <FontAwesomeIcon className="fa-xl pl-5" icon={faClose} />
+      </button>
+    </div>
+  }
+
+  console.log(props.participantDetails)
+
+
+  const body = () => {
+    if (!props.participantDetails) {
+      return <p key="select">Select a participant</p>
+    }
+
+    return <div
+      className="p-2"
+    >
+      <div className="d-flex flex-wrap justify-content-between">
+        {Object.entries(props.participantDetails).map(([key, value]) => {
+          return <div key={key}
+            className="my-2 mx-3"
+          >
+            <label className="fw-bold fs-6">{key}</label>
+            <p>{value}</p>
+          </div>
+        })
+        }
+      </div>
+      {/* --------- */}
+
+    </div>
+  }
+
   return (
     <div
-      className={`flex-shrink-1 ${props.show ? "open" : "close"}`}
-    // style={{ width: "400px" }}
+      className={clsx(
+        'bg-white border-start',
+        borderClassName,
+        {
+          "open": props.participantDetails,
+          "close": !props.participantDetails,
+        }
+      )}
+      style={{ minWidth: "280px" }}
     >
-      <div>
-        <button
-          type="button"
-          className="btn shadow-none"
-          onClick={() => {
-            props.onClose();
-          }}
-        >
-          <FontAwesomeIcon className="fa-xl pl-5" icon={faAngleRight} />
-        </button>
-        <p className="text-center">Participant Details </p>
-      </div>
-      <div className="text-center">{tableEachRow()}</div>
+      {header()}
+      {body()}
     </div>
   );
 };
