@@ -12,10 +12,8 @@ interface ParticipantInfos {
 const dummyParticipantRecords = [
   {
     sessionId: 1,
-    participantId: 1234,
+    participantId: 134,
     name: "dummy",
-    otherContactInfo: "dummyContact",
-    ExtraConcent: "dummy",
     Age: 34,
     sex: "M",
     baseLineSurvey: true,
@@ -27,41 +25,55 @@ const dummyParticipantRecords = [
     sessionId: 1,
     participantId: 134,
     name: "dummy",
-    otherContactInfo: "dummyContact",
-    ExtraConcent: "dummy",
     Age: 34,
     sex: "M",
     baseLineSurvey: true,
     dateTime: "23.11.55",
     noOfResearcherRecord: 4,
     lastResearch: "dummyResearch",
-  },
-  {
+  }, {
     sessionId: 1,
-    participantId: 124,
+    participantId: 134,
     name: "dummy",
-    otherContactInfo: "dummyContact",
-    ExtraConcent: "dummy",
     Age: 34,
     sex: "M",
     baseLineSurvey: true,
     dateTime: "23.11.55",
     noOfResearcherRecord: 4,
     lastResearch: "dummyResearch",
-  },
-  {
+  }
+  , {
     sessionId: 1,
-    participantId: 12340,
+    participantId: 134,
     name: "dummy",
-    otherContactInfo: "dummyContact",
-    ExtraConcent: "dummy",
     Age: 34,
     sex: "M",
     baseLineSurvey: true,
     dateTime: "23.11.55",
     noOfResearcherRecord: 4,
     lastResearch: "dummyResearch",
-  },
+  }
+  , {
+    sessionId: 1,
+    participantId: 134,
+    name: "dummy",
+    Age: 34,
+    sex: "M",
+    baseLineSurvey: true,
+    dateTime: "23.11.55",
+    noOfResearcherRecord: 4,
+    lastResearch: "dummyResearch",
+  }, {
+    sessionId: 1,
+    participantId: 134,
+    name: "dummy",
+    Age: 34,
+    sex: "M",
+    baseLineSurvey: true,
+    dateTime: "23.11.55",
+    noOfResearcherRecord: 4,
+    lastResearch: "dummyResearch",
+  }
 ];
 
 
@@ -71,17 +83,22 @@ const ParticipantRecords: React.FC = () => {
 
   return (
     <div className="d-flex w-100 h-100 table-responsive" style={{}}>
-      <ParticipantOverview
-        participantsRecords={dummyParticipantRecords}
-        onParticipantRowClicked={(participantId: number) => {
-          dummyParticipantRecords.map((element) => {
-            if (element.participantId === participantId) {
-              setParticipantData(element);
-            }
-            return null;
-          });
-        }}
-      />
+      <div className="table-responsive w-100 p-0">
+        <div className="table-responsive bg-white">
+          <h2 className="p-3 pb-0">Participant Records</h2>
+          <ParticipantOverview
+            participantsRecords={dummyParticipantRecords}
+            onParticipantRowClicked={(participantId: number) => {
+              dummyParticipantRecords.map((element) => {
+                if (element.participantId === participantId) {
+                  setParticipantData(element);
+                }
+                return null;
+              });
+            }}
+          />
+        </div>
+      </div>
       <ParticipantDetails
         participantDetails={participantData}
         onClose={() => setParticipantData(undefined)}

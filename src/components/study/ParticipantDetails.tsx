@@ -35,8 +35,6 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
     </div>
   }
 
-  console.log(props.participantDetails)
-
 
   const body = () => {
     if (!props.participantDetails) {
@@ -58,6 +56,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         }
       </div>
       {/* --------- */}
+      <hr></hr>
 
     </div>
   }

@@ -18,7 +18,7 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
     <div className='col-12 col-md-6 col-lg-4'>
       <Link
         className={clsx(
-          "p-2 scale-effect-on-hover text-decoration-none d-block border h-100",
+          "p-3 scale-effect-on-hover text-decoration-none d-block border h-100",
           borderColor,
           bgColor,
           color,

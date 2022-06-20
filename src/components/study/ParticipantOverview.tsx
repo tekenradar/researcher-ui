@@ -32,7 +32,7 @@ const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
   };
   return (
     <div className="flex-grow-1 table-responsive">
-      <Table responsive hover>
+      <Table responsive hover className="mx-3">
         <thead>
           <tr>{tableColumnName()}</tr>
         </thead>
