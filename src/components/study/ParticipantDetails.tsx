@@ -52,7 +52,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
     }
 
     return (
-      <div className="p-2">
+      <div className="p-3">
         <h6>General</h6>
         <div className="d-flex flex-wrap justify-content-between">
           {Object.entries(props.participantDetails).map(([key, value]) => {

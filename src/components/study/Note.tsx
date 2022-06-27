@@ -1,5 +1,7 @@
 import React from 'react';
 import { fromUnixTime, format } from 'date-fns'
+import { useStudyColorClassnames } from '../../hooks/useStudyColorClassnames';
+import clsx from 'clsx';
 
 interface NoteProps {
   time: number;
@@ -8,6 +10,7 @@ interface NoteProps {
 }
 
 const Note: React.FC<NoteProps> = (props) => {
+  const { borderClassName, color } = useStudyColorClassnames();
 
 
   return (
@@ -17,7 +20,11 @@ const Note: React.FC<NoteProps> = (props) => {
         <span>{props.author}</span>
       </div>
       <div
-        className='p-2 bg-info'
+        className={clsx(
+          'p-2 border form-control',
+          borderClassName,
+
+        )}
         style={{
           whiteSpace: 'pre-line',
         }}>
