@@ -33,4 +33,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   transform: scale(1.035);
 }
 
+.fs-small {
+  font-size: small !important;
+}
+
 @import "~bootstrap/scss/bootstrap";

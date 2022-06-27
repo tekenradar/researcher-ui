@@ -11,13 +11,16 @@ const Note: React.FC<NoteProps> = (props) => {
 
 
   return (
-    <div>
-      <div className='d-flex'>
-        <span>{format(fromUnixTime(props.time), 'dd-MM-yy')}</span>
+    <div className='my-3'>
+      <div className='d-flex text-muted fs-small'>
+        <span className='flex-grow-1'>{format(fromUnixTime(props.time), 'dd-MM-yy')}</span>
+        <span>{props.author}</span>
       </div>
-      <div style={{
-        whiteSpace: 'pre-line',
-      }}>
+      <div
+        className='p-2 bg-info'
+        style={{
+          whiteSpace: 'pre-line',
+        }}>
         {props.content}
       </div>
     </div>

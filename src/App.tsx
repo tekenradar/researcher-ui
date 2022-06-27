@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const appContextValue = useAppContextValue();
 
   return (
-    <div className="d-flex flex-column vh-100">
+    <div className="d-flex flex-column vh-100 overflow-hidden">
       <AppContext.Provider value={appContextValue}>
         <Appbar />
         <Outlet />

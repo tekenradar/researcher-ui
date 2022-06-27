@@ -79,22 +79,70 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
           className="btn btn-secondary"
           label="Add note"
         />
-        <Note
-          time={15456465}
-          author='email-2@todo.tld'
-          content={`Hi \n\n how are you`}
-        />
+        <div className="">
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+          <Note
+            time={1665456465}
+            author='email-2@todo.tld'
+            content={`Hi \n\n how are you`}
+          />
+        </div>
+
       </div>
     );
   };
 
   return (
     <div
-      className={clsx("bg-white border-start", borderClassName, {
-        open: props.participantDetails,
-        close: !props.participantDetails,
-      })}
-      style={{ minWidth: "280px" }}
+      className={clsx(
+        "bg-white border-start",
+        "d-flex flex-column overflow-scroll",
+        borderClassName,
+        {
+          open: props.participantDetails,
+          close: !props.participantDetails,
+        })
+      }
+      style={{ minWidth: "280px", maxHeight: '100%' }}
     >
       {header()}
       {body()}
