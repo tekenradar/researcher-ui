@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import React, { useState } from "react";
-import { Form, Spinner } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Credits from "../../components/Credits";
+import LoadingButton from "../../components/LoadingButton";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 
 interface DataExporterProps { }
@@ -47,16 +48,16 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
   </div>
 
 
-  const downloadBtn = <button className={clsx(
-    "btn text-white",
-    btnClassName
-  )}
+  const downloadBtn = <LoadingButton
+    className={clsx(
+      'btn',
+      btnClassName
+    )}
+    label="Download"
+    disabled={selectedDataset === undefined}
+    loading={loading}
     type="submit"
-    disabled={loading || selectedDataset === undefined}
-  >
-    Download
-    {loading ? <Spinner className="ms-2" animation="border" size="sm" /> : null}
-  </button>
+  />
 
   return <div className="w-100 p-3">
     <div className="bg-white p-3">
