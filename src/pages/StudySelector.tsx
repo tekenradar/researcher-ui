@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { dummyStudies, StudyInfo } from "../hooks/useAppContext";
 import StudyInfoCard from "../components/study/StudyInfoCard";
+import Credits from "../components/Credits";
 
 
 const StudySelector: React.FC = () => {
@@ -21,6 +22,7 @@ const StudySelector: React.FC = () => {
           )
         }
       </div>
+      <Credits />
     </div>
   );
 };

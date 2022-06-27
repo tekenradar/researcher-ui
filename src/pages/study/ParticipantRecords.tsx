@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import Credits from "../../components/Credits";
 import ParticipantDetails from "../../components/study/ParticipantDetails";
 import ParticipantOverview from "../../components/study/ParticipantOverview";
 
@@ -98,6 +99,7 @@ const ParticipantRecords: React.FC = () => {
             }}
           />
         </div>
+        <Credits />
       </div>
       <ParticipantDetails
         participantDetails={participantData}
