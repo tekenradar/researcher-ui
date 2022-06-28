@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 
 interface ParticipantOverviewProps {
-  onParticipantRowClicked: (participantId: number) => void;
+  onParticipantRowClicked: (participantId: string) => void;
   participantsRecords: Array<any>;
 }
 
@@ -17,7 +17,7 @@ const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
       return (
         <tr
           onClick={() => {
-            props.onParticipantRowClicked(item.participantId as number);
+            props.onParticipantRowClicked(item.participantId as string);
           }}
         >
           {tableEachRow(item)}

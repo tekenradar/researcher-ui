@@ -12,7 +12,7 @@ interface ParticipantInfos {
 const dummyParticipantRecords = [
   {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df1',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -23,7 +23,7 @@ const dummyParticipantRecords = [
   },
   {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df2',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -33,7 +33,7 @@ const dummyParticipantRecords = [
     lastResearch: "dummyResearch",
   }, {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df3',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -44,7 +44,7 @@ const dummyParticipantRecords = [
   }
   , {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df4',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -55,7 +55,7 @@ const dummyParticipantRecords = [
   }
   , {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df5',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -65,7 +65,7 @@ const dummyParticipantRecords = [
     lastResearch: "dummyResearch",
   }, {
     sessionId: 1,
-    participantId: 134,
+    participantId: 'ab4654s32s1d354we534r3d1s3df6',
     name: "dummy",
     Age: 34,
     sex: "M",
@@ -88,7 +88,7 @@ const ParticipantRecords: React.FC = () => {
           <h2 className="p-3 pb-0">Participant Records</h2>
           <ParticipantOverview
             participantsRecords={dummyParticipantRecords}
-            onParticipantRowClicked={(participantId: number) => {
+            onParticipantRowClicked={(participantId: string) => {
               dummyParticipantRecords.map((element) => {
                 if (element.participantId === participantId) {
                   setParticipantData(element);

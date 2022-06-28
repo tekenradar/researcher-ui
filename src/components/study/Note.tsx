@@ -14,7 +14,7 @@ const Note: React.FC<NoteProps> = (props) => {
 
 
   return (
-    <div className='my-3'>
+    <div className='mb-3'>
       <div className='d-flex text-muted fs-small'>
         <span className='flex-grow-1'>{format(fromUnixTime(props.time), 'dd-MM-yy')}</span>
         <span>{props.author}</span>
