@@ -1,6 +1,5 @@
 import { useAppContext } from "./useAppContext";
 
-
 export const useStudyColorClassnames = (): {
   bgColor: string;
   color: string;
@@ -14,10 +13,10 @@ export const useStudyColorClassnames = (): {
     return {
       bgColor: `bg-white`,
       color: `text-dark`,
-      bgDarkColor: 'bg-primary',
-      borderClassName: 'border-secondary',
-      btnClassName: 'btn-primary',
-    }
+      bgDarkColor: "bg-primary",
+      borderClassName: "border-secondary",
+      btnClassName: "btn-primary",
+    };
   }
 
   return {
@@ -26,6 +25,5 @@ export const useStudyColorClassnames = (): {
     color: `text-study-${appContext.studyKey}`,
     borderClassName: `border-study-${appContext.studyKey}`,
     btnClassName: `btn-study-${appContext.studyKey}`,
-  }
-}
-
+  };
+};

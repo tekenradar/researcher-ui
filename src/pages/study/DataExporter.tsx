@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { Form } from "react-bootstrap";
 import Credits from "../../components/Credits";
@@ -10,13 +10,29 @@ import "../../stylesheets/scss/CustomDatePicker.scss";
 interface DataExporterProps {}
 
 const DataExporter: React.FC<DataExporterProps> = (props) => {
-  const { bgColor, btnClassName } = useStudyColorClassnames();
+  const { bgColor, bgDarkColor, btnClassName } = useStudyColorClassnames();
 
   const [loading, setLoading] = useState(false);
   const [selectedDataset, setSelectedDataset] = useState<string | undefined>();
   const [fromStartDate, setFromStartDate] = useState(new Date("3-1-2022"));
-  const [UntilStartDate, setUntilStartDate] = useState(new Date("3-1-2022"));
+  const [UntilStartDate, setUntilStartDate] = useState(new Date());
 
+  const setDatepickerColors = () => {
+    const darkColorElem = document.querySelector("." + bgDarkColor);
+    const lightColorElem = document.querySelector("." + bgColor);
+    if (darkColorElem && lightColorElem) {
+      const lightColorStyle = getComputedStyle(lightColorElem);
+      const darkColorStyle = getComputedStyle(darkColorElem);
+      document.documentElement.style.setProperty(
+        "--study-dark-color",
+        darkColorStyle.backgroundColor
+      );
+      document.documentElement.style.setProperty(
+        "--study-light-color",
+        lightColorStyle.backgroundColor
+      );
+    }
+  };
   const datasetSelector = (
     <Form.Group className="mb-3">
       <Form.Label>Dataset:</Form.Label>
@@ -42,8 +58,11 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
           <Form.Label>From:</Form.Label>
           <DatePicker
             selected={fromStartDate}
-            onChange={(date: Date) => setFromStartDate(date)}
-            dateFormat="do MMMM y"
+            onChange={(date: Date) => {
+              setFromStartDate(date);
+            }}
+            dateFormat="dd-MM-y"
+            onInputClick={() => setDatepickerColors()}
           />
         </Form.Group>
       </div>
@@ -54,7 +73,8 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
           <DatePicker
             selected={UntilStartDate}
             onChange={(date: Date) => setUntilStartDate(date)}
-            dateFormat="do MMMM y"
+            dateFormat="dd-MM-y"
+            onInputClick={() => setDatepickerColors()}
           />
         </Form.Group>
       </div>
