@@ -1,0 +1,92 @@
+@import './datepicker-defaults/datepicker.scss';
+
+@mixin datepicker_classes($theme-colors) {
+  .react-datepicker {
+    font: inherit !important;
+    border-radius: 0 !important;
+    border: 0 !important;
+  }
+
+  .react-datepicker__header {
+    padding-top: 0.8em !important;
+    border-radius: 0 !important;
+    color: white !important;
+    background: map-get($theme-colors, "secondary") !important;
+    border: 0 !important;
+  }
+
+  .react-datepicker__day-name {
+    color: white !important;
+  }
+
+  .react-datepicker__month {
+    border-radius: 0 !important;
+    margin: 0.4em 1em !important;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 1.9em !important;
+    line-height: 1.9em !important;
+    margin: 0.166em !important;
+    border-radius: 0 !important;
+    outline: none !important;
+  }
+
+  .react-datepicker__day:hover {
+    &:not(.react-datepicker__day--disabled) {
+      &:not(.react-datepicker__day--selected) {
+        background: rgba(map-get($theme-colors, "secondary"), 0.2) !important;
+      }
+    }
+  }
+
+  .react-datepicker__day--selected {
+    background: map-get($theme-colors, "secondary") !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .react-datepicker__triangle:before {
+    border: 0 !important;
+  }
+
+  .react-datepicker__triangle {
+    border-top-color: white !important;
+    border-bottom-color: map-get($theme-colors, "secondary") !important;
+    margin: -7px !important;
+    position: absolute !important;
+    left: 50% !important;
+  }
+
+  .datepicker-arrow-btn {
+    display: inline-flex !important;
+    vertical-align: middle !important;
+    background-color: transparent;
+    padding: 3px !important;
+    border-radius: 0%;
+    text-align: center;
+    border: none;
+    color: white !important;
+    cursor: pointer;
+    /* Mouse pointer on hover */
+    outline: none;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white !important;
+    }
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.2);
+      outline: none;
+      color: white !important;
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.2);
+      outline: none;
+      color: white !important;
+    }
+  }
+}

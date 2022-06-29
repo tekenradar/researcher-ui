@@ -37,4 +37,8 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   font-size: small !important;
 }
 
+// for date picker
+@import './date_input.scss';
+@include datepicker_classes($theme-colors);
+
 @import "~bootstrap/scss/bootstrap";

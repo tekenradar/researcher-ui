@@ -1,7 +1,9 @@
 import clsx from "clsx";
+import { addMonths } from "date-fns/esm";
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import Credits from "../../components/Credits";
+import CustomDatePicker from "../../components/CustomDatePicker";
 import LoadingButton from "../../components/LoadingButton";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 
@@ -12,6 +14,8 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [selectedDataset, setSelectedDataset] = useState<string | undefined>();
+  const [startDate, setStartDate] = useState(addMonths(new Date(), -1));
+  const [endDate, setEndDate] = useState(new Date());
 
 
   const datasetSelector = <Form.Group className="mb-3">
@@ -35,14 +39,30 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
     <div className="col-6">
       <Form.Group className="mb-3">
         <Form.Label>From:</Form.Label>
-        <div>Datepicker 1</div>
+        <CustomDatePicker
+          selectedDate={startDate}
+          onChange={(date) => {
+            if (date === null) {
+              return
+            }
+            setStartDate(date)
+          }}
+        />
       </Form.Group>
     </div>
 
     <div className="col-6">
       <Form.Group className="mb-3">
         <Form.Label>Until:</Form.Label>
-        <div>Datepicker 2</div>
+        <CustomDatePicker
+          selectedDate={endDate}
+          onChange={(date) => {
+            if (date === null) {
+              return
+            }
+            setEndDate(date)
+          }}
+        />
       </Form.Group>
     </div>
   </div>
@@ -50,8 +70,8 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
 
   const downloadBtn = <LoadingButton
     className={clsx(
-      'btn',
-      btnClassName
+      'btn text-white',
+      btnClassName,
     )}
     label="Download"
     disabled={selectedDataset === undefined}
