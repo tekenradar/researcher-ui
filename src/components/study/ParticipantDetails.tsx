@@ -6,11 +6,10 @@ import clsx from "clsx";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import LoadingButton from "../LoadingButton";
 import Note from "./Note";
+import { ParticipantSessionData } from "../../pages/study/ParticipantRecords";
 
 interface ParticipantDetailsProps {
-  participantDetails?: {
-    [key: string]: any;
-  };
+  participantDetails?: ParticipantSessionData;
   onClose: () => void;
 }
 
@@ -55,14 +54,17 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
       <div className="p-3">
         <h5 className="fw-bold ">General</h5>
         <div className="d-flex flex-wrap justify-content-between">
-          {Object.entries(props.participantDetails).map(([key, value]) => {
+          {/*Object.entries(props.participantDetails).map(([key, value]) => {
+            if (key === 'participantId') {
+              value = (value as string).slice(0, 4) + '...' + (value as string).slice(60, 65);
+            }
             return (
               <div key={key} className="my-2 me-3">
                 <label className="fw-bold fs-small">{key}</label>
                 <p>{value}</p>
               </div>
             );
-          })}
+          })*/}
         </div>
         {/* --------- */}
         <hr></hr>
@@ -81,41 +83,18 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         />
         <div className="py-3">
           <p className="fw-bold m-0">Previous notes:</p>
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
-          <Note
-            time={1665456465}
-            author='email-2@todo.tld'
-            content={`Hi \n\n how are you`}
-          />
+          {!props.participantDetails.notes || props.participantDetails.notes.length < 1 ?
+            <p className="text-muted">No notes yet.</p>
+            : null}
+          {props.participantDetails.notes?.map((note, index) => {
+            return <Note
+              key={index.toString()}
+              time={note.time}
+              author={note.author}
+              content={note.content}
+            />
+          })}
+
         </div>
 
       </div>
