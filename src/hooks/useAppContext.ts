@@ -17,11 +17,14 @@ export interface AppContextData {
 
 export const dummyStudies = [
   { key: "tekenradar", name: "Tekenradar", description: "Default study of tekenradar" },
+  { key: "tb-only", name: "TB only ", description: "Tickbite reports without health data" },
   { key: "weekly-tb", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
-  { key: "weekly-tb2", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
-  { key: "weekly-tb3", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
-  { key: "weekly-tb4", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with..." },
-  { key: "weekly-tb5", name: "Weekly TB", description: "Weekly TB Cohort in coll wid sdosno dfnsodfnsodfknaboration with..." },
+  //
+  { key: "k-em-contact", name: "kEM", description: "kEM with contact data" },
+  { key: "em-adult-contact", name: "EM Adult", description: "EM Adults with contact data" },
+  { key: "fever-adult-contact", name: "Fever Adult", description: "Fever Adults with contact data" },
+  { key: "tb-adult-contact", name: "TB Adults", description: "TB Adults with contact data" },
+  { key: "tb-kids-contact", name: "TB Kids", description: "TB Kids with contact data" },
 ];
 
 
