@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Credits from "../../components/Credits";
 import EmailNotifications from "../../components/study/contacts/EmailNotifications";
 import ContactDetails from "../../components/study/contacts/ContactDetails";
 import ContactTable from "../../components/study/contacts/ContactTable";
+import { useAppContext } from "../../hooks/useAppContext";
+import { useNavigate } from "react-router-dom";
 
 
 interface Note {
@@ -220,6 +222,14 @@ const dummyParticipantRecords: ParticipantSessionData[] = [
 
 
 const Contacts: React.FC = () => {
+  const { studyInfo } = useAppContext();
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (!studyInfo?.features.contacts) {
+      navigate('../unavailable', { replace: true })
+    }
+  }, [navigate, studyInfo?.features.contacts])
 
   const [participantData, setParticipantData] = useState<ParticipantSessionData>();
 

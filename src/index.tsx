@@ -11,6 +11,7 @@ import Contacts from "./pages/study/Contacts";
 
 
 import "./stylesheets/scss/AppTheme.scss";
+import Unavailable from "./pages/study/Unavailable";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,10 +25,9 @@ root.render(
             <Route index element={<StudySelector />} />
             <Route path=":studykey" element={<Study />}>
               <Route path="exporter" element={<DataExporter />} />
-              <Route
-                path="contacts"
-                element={<Contacts />}
-              />
+              <Route path="contacts" element={<Contacts />} />
+              <Route path="unavailable" element={<Unavailable />} />
+              <Route path="*" element={<Navigate replace to="unavailable" />} />
               <Route index element={<Navigate replace to="exporter" />} />
             </Route>
           </Route>

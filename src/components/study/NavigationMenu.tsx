@@ -7,6 +7,7 @@ import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { useAppContext } from "../../hooks/useAppContext";
 
 interface NavigationMenuProps { }
 
@@ -38,6 +39,7 @@ const NavMenuItem: React.FC<NavMenuItemProps> = (props) => {
 
 
 const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
+  const { studyInfo } = useAppContext();
   const { bgColor, color, bgDarkColor, borderClassName } = useStudyColorClassnames();
 
   return (
@@ -51,20 +53,22 @@ const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
       style={{ minHeight: "100%" }}
     >
       <Nav className="flex-column flex-grow-1">
-        <NavMenuItem
-          tooltip="Data Exporter"
-          colorClass={color}
-          bgColorClass={bgDarkColor}
-          to="exporter"
-          icon={faFileExport}
-        />
-        <NavMenuItem
-          tooltip="Participant Contacts"
-          colorClass={color}
-          bgColorClass={bgDarkColor}
-          to="contacts"
-          icon={faAddressCard}
-        />
+        {studyInfo?.features.datasetExporter ?
+          <NavMenuItem
+            tooltip="Data Exporter"
+            colorClass={color}
+            bgColorClass={bgDarkColor}
+            to="exporter"
+            icon={faFileExport}
+          /> : null}
+        {studyInfo?.features.contacts ?
+          <NavMenuItem
+            tooltip="Participant Contacts"
+            colorClass={color}
+            bgColorClass={bgDarkColor}
+            to="contacts"
+            icon={faAddressCard}
+          /> : null}
       </Nav>
     </div>
   );
