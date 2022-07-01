@@ -65,7 +65,11 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
   return (
     <React.Fragment>
       <Table
-        responsive hover size="sm" >
+        bordered
+        striped
+        responsive
+        hover
+      >
         <thead>
           <tr>{tableColumnName()}</tr>
         </thead>
