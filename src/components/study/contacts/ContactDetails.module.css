@@ -1,0 +1,9 @@
+.open {
+  right: 0px;
+  transition: 1s;
+}
+
+.close {
+  right: -100%;
+  position: fixed;
+}

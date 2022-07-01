@@ -2,23 +2,21 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import { ParticipantSessionData } from "../../pages/study/Contacts";
-import { shortenParticipantID } from "../../utils/shortenParticipantID";
+import { ParticipantSessionData } from "../../../pages/study/Contacts";
+import { shortenParticipantID } from "../../../utils/shortenParticipantID";
 
 
-interface ParticipantOverviewProps {
+interface ContactTableProps {
   onParticipantRowClicked: (participantId: string) => void;
   participantsRecords: Array<ParticipantSessionData>;
 }
 
 const compactViewItemLimit = 9;
 
-const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
+const ContactTable: React.FC<ContactTableProps> = (props) => {
   const [showAll, setShowAll] = useState(false);
 
   const tableColumnName = () => {
-
-
     return (<React.Fragment>
       <th>Session ID</th>
       <th>Participant ID</th>
@@ -91,4 +89,4 @@ const ParticipantOverview: React.FC<ParticipantOverviewProps> = (props) => {
   );
 };
 
-export default ParticipantOverview;
+export default ContactTable;

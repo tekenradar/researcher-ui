@@ -1,14 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faClone } from "@fortawesome/free-regular-svg-icons";
-import "../../stylesheets/css/components/study/ParticipantDetails.css";
-import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+import { useStudyColorClassnames } from "../../../hooks/useStudyColorClassnames";
 import clsx from "clsx";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import LoadingButton from "../LoadingButton";
+import LoadingButton from "../../LoadingButton";
 import Note from "./Note";
-import { ParticipantSessionData } from "../../pages/study/Contacts";
-import { shortenParticipantID } from "../../utils/shortenParticipantID";
+import { ParticipantSessionData } from "../../../pages/study/Contacts";
+import { shortenParticipantID } from "../../../utils/shortenParticipantID";
+import styles from './ContactDetails.module.css';
+
 
 interface ParticipantDetailsProps {
   participantDetails?: ParticipantSessionData;
@@ -129,8 +130,8 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         "d-flex flex-column overflow-scroll",
         borderClassName,
         {
-          open: props.participantDetails,
-          close: !props.participantDetails,
+          [styles.open]: props.participantDetails,
+          [styles.close]: !props.participantDetails,
         })
       }
       style={{ minWidth: "380px", maxHeight: '100%' }}

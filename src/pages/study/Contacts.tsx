@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Credits from "../../components/Credits";
 import EmailNotifications from "../../components/study/contacts/EmailNotifications";
-import ParticipantDetails from "../../components/study/ParticipantDetails";
-import ParticipantOverview from "../../components/study/ParticipantOverview";
+import ParticipantDetails from "../../components/study/contacts/ContactDetails";
+import ParticipantOverview from "../../components/study/contacts/ContactTable";
 
 
 interface Note {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { fromUnixTime, format } from 'date-fns'
-import { useStudyColorClassnames } from '../../hooks/useStudyColorClassnames';
+import { useStudyColorClassnames } from '../../../hooks/useStudyColorClassnames';
 import clsx from 'clsx';
 
 interface NoteProps {
