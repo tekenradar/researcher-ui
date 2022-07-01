@@ -7,8 +7,8 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import StudySelector from "./pages/StudySelector";
 import Study from "./pages/study/Study";
 import DataExporter from "./pages/study/DataExporter";
-import ParticipantRecords from "./pages/study/ParticipantRecords";
-import Settings from "./pages/study/Settings";
+import Contacts from "./pages/study/Contacts";
+
 
 import "./stylesheets/scss/AppTheme.scss";
 
@@ -25,10 +25,9 @@ root.render(
             <Route path=":studykey" element={<Study />}>
               <Route path="exporter" element={<DataExporter />} />
               <Route
-                path="participant-records"
-                element={<ParticipantRecords />}
+                path="contacts"
+                element={<Contacts />}
               />
-              <Route path="settings" element={<Settings />} />
               <Route index element={<Navigate replace to="exporter" />} />
             </Route>
           </Route>

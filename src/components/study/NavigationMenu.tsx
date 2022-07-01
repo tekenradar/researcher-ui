@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard } from "@fortawesome/free-solid-svg-icons";
-import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
@@ -60,18 +59,11 @@ const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
           icon={faFileExport}
         />
         <NavMenuItem
-          tooltip="Participant Records"
+          tooltip="Participant Contacts"
           colorClass={color}
           bgColorClass={bgDarkColor}
-          to="participant-records"
+          to="contacts"
           icon={faAddressCard}
-        />
-        <NavMenuItem
-          tooltip="Study Settings"
-          colorClass={color}
-          bgColorClass={bgDarkColor}
-          to="settings"
-          icon={faGears}
         />
       </Nav>
     </div>

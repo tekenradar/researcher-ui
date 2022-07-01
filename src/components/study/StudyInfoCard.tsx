@@ -30,8 +30,6 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
         <div className='text-end text-decoration-underline'>Open Study<FontAwesomeIcon className='ms-2' icon={faAnglesRight} /></div>
       </Link>
     </div>
-
-
   );
 };
 

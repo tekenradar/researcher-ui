@@ -80,7 +80,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
   />
 
   return <div className="w-100 p-3">
-    <div className="bg-white p-3">
+    <div className="bg-white p-3  shadow-sm">
       <h2 className="">Dataset Exporter</h2>
       <Form onSubmit={(event) => {
         event.preventDefault()

@@ -1,16 +1,14 @@
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import clsx from "clsx";
-import React from "react";
-import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Tooltip } from "react-bootstrap";
-import Credits from "../../components/Credits";
-import LoadingButton from "../../components/LoadingButton";
-import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import clsx from 'clsx';
+import React from 'react';
+import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import LoadingButton from '../../LoadingButton';
 
+interface EmailNotificationsProps {
+}
 
-const Settings: React.FC = () => {
-  const { btnClassName, color } = useStudyColorClassnames();
-
+const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
   const notifications: Array<string> = [
     'test@email.nl',
     'test2@email.nl'
@@ -31,7 +29,7 @@ const Settings: React.FC = () => {
         >
           <span className="flex-grow-1">{notification}</span>
           <OverlayTrigger placement="bottom" overlay={<Tooltip>Remove email from notification list</Tooltip>}>
-            <button className={clsx("btn", color)}>
+            <button className={clsx("btn text-secondary")}>
               <FontAwesomeIcon
                 className="fa-sm"
                 icon={faTrashAlt}
@@ -44,13 +42,13 @@ const Settings: React.FC = () => {
 
   }
 
-  return <div className="w-100 p-3">
-    <div className="bg-white p-3">
-      <h2 className="">Study Settings</h2>
 
-      <h5>
+  return (
+    <div className="bg-white p-3 mt-3  shadow-sm">
+      <h5 className="">
         Email Notifications
       </h5>
+      <p>Recieve email notification, whenever a new entry is added to the above list.</p>
       <ListGroup>
         {renderNotificationList()}
       </ListGroup>
@@ -65,20 +63,14 @@ const Settings: React.FC = () => {
             type="button"
             label="Add"
             className={clsx(
-              "btn",
-              btnClassName
+              "btn btn-secondary",
             )}
             loading={true}
-
           />
         </InputGroup>
       </Form.Group>
-
-
     </div>
-    <Credits />
-
-  </div>
+  );
 };
 
-export default Settings;
+export default EmailNotifications;

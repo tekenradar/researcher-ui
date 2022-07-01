@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import LoadingButton from "../LoadingButton";
 import Note from "./Note";
-import { ParticipantSessionData } from "../../pages/study/ParticipantRecords";
+import { ParticipantSessionData } from "../../pages/study/Contacts";
 import { shortenParticipantID } from "../../utils/shortenParticipantID";
 
 interface ParticipantDetailsProps {
