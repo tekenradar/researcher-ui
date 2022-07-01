@@ -91,6 +91,14 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         {/* --------- */}
         <hr></hr>
         <h5 className="fw-bold">Contact Infos</h5>
+        <div className="alert alert-warning">
+          <p className="fs-small">
+            Unless explicitly marked here, contact infos will be deleted after 12 weeks automatically.
+          </p>
+          <p className="m-0 fs-small">
+            If user manually deletes the contact data, it won't be available, even if marked here to keep data.
+          </p>
+        </div>
         <p className="text-muted">No contact info provided</p>
         {/* --------- */}
         <hr></hr>
