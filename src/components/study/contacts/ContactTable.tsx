@@ -1,5 +1,6 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { format, fromUnixTime } from "date-fns";
 import React, { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { ParticipantSessionData } from "../../../pages/study/Contacts";
@@ -18,6 +19,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
 
   const tableColumnName = () => {
     return (<React.Fragment>
+      <th>Added on</th>
       <th>Session ID</th>
       <th>Participant ID</th>
       {Object.keys(props.participantsRecords[0].general).map((item) => {
@@ -49,6 +51,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
   const tableEachRow = (item: any) => {
     return (
       <React.Fragment>
+        <td>{format(fromUnixTime(item.addedAt), 'dd-MM-yyyy')}</td>
         <td>{item.sessionID}</td>
         <td>{shortenParticipantID(item.participantID)}</td>
         {Object.values(item.general).map((rowElement, index) => {
@@ -60,8 +63,9 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
 
 
   return (
-    <div className="flex-grow-1 table-responsive">
-      <Table responsive hover className="mx-3" size="sm" >
+    <React.Fragment>
+      <Table
+        responsive hover size="sm" >
         <thead>
           <tr>{tableColumnName()}</tr>
         </thead>
@@ -84,8 +88,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
           </div>
         </Button>
       </div> : null}
-
-    </div>
+    </React.Fragment >
   );
 };
 
