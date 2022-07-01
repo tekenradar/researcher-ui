@@ -31,8 +31,8 @@ export const dummyStudies = [
   {
     key: "tb-only", name: "TB only ", description: "Tickbite reports without health data",
     features: {
-      datasetExporter: false,
-      contacts: true,
+      datasetExporter: true,
+      contacts: false,
     }
   },
   {

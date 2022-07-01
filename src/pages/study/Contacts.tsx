@@ -226,10 +226,10 @@ const Contacts: React.FC = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (!studyInfo?.features.contacts) {
+    if (studyInfo !== undefined && !studyInfo.features.contacts) {
       navigate('../unavailable', { replace: true })
     }
-  }, [navigate, studyInfo?.features.contacts])
+  }, [navigate, studyInfo])
 
   const [participantData, setParticipantData] = useState<ParticipantSessionData>();
 
