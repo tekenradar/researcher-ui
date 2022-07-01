@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { addMonths } from "date-fns/esm";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import Credits from "../../components/Credits";
 import CustomDatePicker from "../../components/CustomDatePicker";
@@ -9,6 +9,15 @@ import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 
 interface DataExporterProps { }
 
+interface DatasetInfo {
+  key: string;
+  name: string;
+}
+const dummyDatasets: DatasetInfo[] = [
+  { key: 'PDiff', name: 'PDiff (Entry survey)' },
+]
+
+
 const DataExporter: React.FC<DataExporterProps> = (props) => {
   const { btnClassName } = useStudyColorClassnames();
 
@@ -16,6 +25,13 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
   const [selectedDataset, setSelectedDataset] = useState<string | undefined>();
   const [startDate, setStartDate] = useState(addMonths(new Date(), -1));
   const [endDate, setEndDate] = useState(new Date());
+  const [datasets, setDataSets] = useState<DatasetInfo[]>([])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDataSets(dummyDatasets);
+    }, 1000)
+  }, [])
 
 
   const datasetSelector = <Form.Group className="mb-3">
@@ -28,9 +44,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       }}
     >
       <option>Select a dataset</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
+      {datasets.map(value => <option key={value.key} value={value.key}>{value.name}</option>)}
     </Form.Select>
   </Form.Group>
 
