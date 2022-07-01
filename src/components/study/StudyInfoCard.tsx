@@ -18,7 +18,7 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
     <div className='col-12 col-md-6 col-lg-4'>
       <Link
         className={clsx(
-          "p-3 scale-effect-on-hover text-decoration-none d-block border h-100",
+          "p-3 scale-effect-on-hover text-decoration-none d-flex flex-column border h-100",
           borderColor,
           bgColor,
           color,
@@ -26,7 +26,7 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
         to={props.study.key}
       >
         <h5>{props.study.name}</h5>
-        <p>{props.study.description}</p>
+        <p className='flex-grow-1'>{props.study.description}</p>
         <div className='text-end text-decoration-underline'>Open Study<FontAwesomeIcon className='ms-2' icon={faAnglesRight} /></div>
       </Link>
     </div>
