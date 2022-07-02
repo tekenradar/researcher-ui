@@ -1,14 +1,23 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import LoadingButton from '../../LoadingButton';
 
 interface EmailNotificationsProps {
 }
 
+const emailFormatRegexp = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+const checkEmailFormat = (email: string): boolean => {
+  return emailFormatRegexp.test(email);
+}
+
 const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
+  const [newEmailSubscription, setNewEmailSubscription] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   const notifications: Array<string> = [
     'test@email.nl',
     'test2@email.nl'
@@ -29,7 +38,15 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
         >
           <span className="flex-grow-1">{notification}</span>
           <OverlayTrigger placement="bottom" overlay={<Tooltip>Remove email from notification list</Tooltip>}>
-            <button className={clsx("btn text-secondary")}>
+            <button className={clsx("btn text-secondary")}
+              onClick={() => {
+                const confirmed = window.confirm(`Do you want to remove the entry "${notification}" from the notification list?`)
+                if (confirmed) {
+                  // TODO: add logic to delete notification from the list
+                  console.log('TODO: delete email from notification list')
+                }
+              }}
+            >
               <FontAwesomeIcon
                 className="fa-sm"
                 icon={faTrashAlt}
@@ -58,14 +75,34 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
           className="fw-bold"
         >Add a new email subscription</Form.Label>
         <InputGroup>
-          <FormControl type="email"></FormControl>
+          <FormControl
+            type="email"
+            value={newEmailSubscription}
+            onChange={(event) => {
+              setNewEmailSubscription(event.target.value);
+            }}
+          ></FormControl>
           <LoadingButton
             type="button"
             label="Add"
             className={clsx(
               "btn btn-secondary",
             )}
-            loading={true}
+            onClick={() => {
+              if (notifications.find(n => n === newEmailSubscription)) {
+                alert(`"${newEmailSubscription}" is already in the list.`)
+                return;
+              }
+              const confirmed = window.confirm(`You are about to add the email "${newEmailSubscription}" to the notification list. Do you want to proceed?`)
+              if (confirmed) {
+                // TODO: add logic to add notification to the list
+                setIsLoading(true)
+                console.log('TODO: add email to notification list')
+
+              }
+            }}
+            disabled={!checkEmailFormat(newEmailSubscription)}
+            loading={isLoading}
           />
         </InputGroup>
       </Form.Group>
