@@ -1,12 +1,18 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import React, { useState } from 'react';
-import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import LoadingButton from '../../LoadingButton';
 
 interface EmailNotificationsProps {
 }
+
+const dummyNotifications: Array<string> = [
+  'test@email.nl',
+  'test2@email.nl'
+];
+
 
 const emailFormatRegexp = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
@@ -16,14 +22,28 @@ const checkEmailFormat = (email: string): boolean => {
 
 const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
   const [newEmailSubscription, setNewEmailSubscription] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const notifications: Array<string> = [
-    'test@email.nl',
-    'test2@email.nl'
-  ];
+  const [notifications, setNotifications] = useState<string[]>([]);
+
+  useEffect(() => {
+    setNewEmailSubscription('');
+    setTimeout(() => {
+      setNotifications(dummyNotifications)
+      setIsLoading(false);
+    }, 1000)
+  }, [])
+
 
   const renderNotificationList = () => {
+    if (isLoading) {
+      return <div className='py-2 text-center'>
+        <Spinner className="mx-1" size="sm" animation="grow" />
+        <Spinner className="mx-1" size="sm" animation="grow" />
+        <Spinner className="mx-1" size="sm" animation="grow" />
+      </div>
+    }
+
     if (notifications.length < 1) {
       return (
         <ListGroup.Item className="text-muted">Currently there are no subscriptions for this study.</ListGroup.Item>
@@ -56,7 +76,6 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
         </ListGroup.Item>
       )
     })
-
   }
 
 
