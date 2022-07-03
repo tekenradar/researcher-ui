@@ -13,7 +13,8 @@ interface Note {
   content: string;
 }
 
-export interface ParticipantSessionData {
+export interface ContactDetailsData {
+  id: string;
   addedAt: number;
   sessionID: string;
   participantID: string;
@@ -23,8 +24,9 @@ export interface ParticipantSessionData {
 }
 
 
-const dummyParticipantRecords: ParticipantSessionData[] = [
+const dummyParticipantRecords: ContactDetailsData[] = [
   {
+    id: "1",
     addedAt: 1682238238,
     sessionID: '621394a1a0919b92',
     participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
@@ -34,96 +36,7 @@ const dummyParticipantRecords: ParticipantSessionData[] = [
     },
   },
   {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
-    addedAt: 1682238238,
-    sessionID: '621394a1a0919b92',
-    participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
-    general: {
-      Age: 34,
-      sex: "M",
-    },
-  },
-  {
+    id: "2",
     addedAt: 1652238238,
     sessionID: '621394a1a0919b93',
     participantID: 'a3b960c17ea4de7d4e267c754dbbe9eaeba54bf5a1da8d5d90b59bcd0cfef1a6',
@@ -225,13 +138,29 @@ const Contacts: React.FC = () => {
   const { studyInfo } = useAppContext();
   let navigate = useNavigate();
 
+  const [contactDetailsList, setContactDetailsList] = useState<ContactDetailsData[]>([])
+  const [selectedContactDetails, setSelectedContactDetails] = useState<ContactDetailsData>();
+  const [loadingContactDetails, setLoadingContactDetails] = useState(true);
+
   useEffect(() => {
     if (studyInfo !== undefined && !studyInfo.features.contacts) {
       navigate('../unavailable', { replace: true })
     }
   }, [navigate, studyInfo])
 
-  const [participantData, setParticipantData] = useState<ParticipantSessionData>();
+  useEffect(() => {
+    setSelectedContactDetails(undefined);
+    fetchContactDetails();
+  }, [])
+
+  const fetchContactDetails = async () => {
+    setLoadingContactDetails(true);
+    // TODO
+    setTimeout(() => {
+      setContactDetailsList(dummyParticipantRecords);
+      setLoadingContactDetails(false);
+    }, 1200)
+  }
 
   return (
     <div className="d-flex w-100" style={{}}>
@@ -239,11 +168,13 @@ const Contacts: React.FC = () => {
         <div className="table-responsive flex-grow-1 p-3 bg-white shadow-sm">
           <h2 className="">Participant Contacts</h2>
           <ContactTable
-            participantsRecords={dummyParticipantRecords}
+            isLoading={loadingContactDetails}
+            contactDetailsList={contactDetailsList}
+            selectedContactDetails={selectedContactDetails}
             onParticipantRowClicked={(participantId: string) => {
-              dummyParticipantRecords.map((element) => {
+              contactDetailsList.map((element) => {
                 if (element.participantID === participantId) {
-                  setParticipantData(element);
+                  setSelectedContactDetails(element);
                 }
                 return null;
               });
@@ -254,8 +185,18 @@ const Contacts: React.FC = () => {
         <Credits />
       </div>
       <ContactDetails
-        participantDetails={participantData}
-        onClose={() => setParticipantData(undefined)}
+        contactDetails={selectedContactDetails}
+        onClose={() => setSelectedContactDetails(undefined)}
+        onContactDetailsChanged={(details) => {
+          const index = contactDetailsList.findIndex(cd => cd.id === details.id);
+          setSelectedContactDetails({ ...details })
+          if (index > -1) {
+            setContactDetailsList(prev => {
+              prev[index] = details;
+              return [...prev];
+            })
+          }
+        }}
       />
     </div>
   );

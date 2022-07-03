@@ -3,21 +3,51 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faClone } from "@fortawesome/free-regular-svg-icons";
 import { useStudyColorClassnames } from "../../../hooks/useStudyColorClassnames";
 import clsx from "clsx";
-import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import LoadingButton from "../../LoadingButton";
-import Note from "./Note";
-import { ParticipantSessionData } from "../../../pages/study/Contacts";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { ContactDetailsData } from "../../../pages/study/Contacts";
 import { shortenParticipantID } from "../../../utils/shortenParticipantID";
 import styles from './ContactDetails.module.css';
+import Notes from "./Notes";
+import { useState } from "react";
 
 
-interface ParticipantDetailsProps {
-  participantDetails?: ParticipantSessionData;
+interface ContactDetailsProps {
+  contactDetails?: ContactDetailsData;
   onClose: () => void;
+  onContactDetailsChanged: (contactDetails: ContactDetailsData) => void;
 }
 
-const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
+const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
   const { bgColor, color, borderClassName } = useStudyColorClassnames();
+
+  const [loadingNotes, setLoadingNotes] = useState(false);
+
+  const addNewNote = async (message: string) => {
+    setLoadingNotes(true);
+    // TODO:
+    setTimeout(() => {
+      if (props.contactDetails !== undefined) {
+        const notes = [
+          {
+            time: (new Date()).getTime(),
+            author: 'test@email.nl',
+            content: message,
+          }
+        ]
+        if (props.contactDetails.notes) {
+          notes.push(...props.contactDetails.notes)
+        }
+
+        const newContactDetails: ContactDetailsData = {
+          ...props.contactDetails,
+          notes: notes
+        }
+        props.onContactDetailsChanged(newContactDetails)
+        setLoadingNotes(false)
+      }
+    }, 500)
+  }
+
 
   const header = () => {
     return (
@@ -49,7 +79,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
   };
 
   const body = () => {
-    if (!props.participantDetails) {
+    if (!props.contactDetails) {
       return <p key="select">Select a participant</p>;
     }
 
@@ -58,17 +88,17 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         <h5 className="fw-bold ">General</h5>
         <div>
           <label className="fs-small fw-bold">Session ID</label>
-          <p>{props.participantDetails.sessionID}</p>
+          <p>{props.contactDetails.sessionID}</p>
         </div>
         <div className="">
           <label className="fs-small fw-bold">Participant ID</label>
           <div className="d-flex align-items-center">
-            <p className="m-0">{shortenParticipantID(props.participantDetails.participantID)}</p>
+            <p className="m-0">{shortenParticipantID(props.contactDetails.participantID)}</p>
             <OverlayTrigger placement="left" overlay={<Tooltip>Copy participant ID</Tooltip>}>
               <button className="btn"
                 onClick={() => {
-                  if (props.participantDetails?.participantID) {
-                    navigator.clipboard.writeText(props.participantDetails?.participantID)
+                  if (props.contactDetails?.participantID) {
+                    navigator.clipboard.writeText(props.contactDetails?.participantID)
                   }
                 }}
               >
@@ -79,7 +109,7 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         </div>
 
         <div className="d-flex flex-wrap justify-content-between">
-          {Object.entries(props.participantDetails.general).map(([key, value]) => {
+          {Object.entries(props.contactDetails.general).map(([key, value]) => {
             return (
               <div key={key} className="my-2 me-3">
                 <label className="fs-small fw-bold">{key}</label>
@@ -102,30 +132,11 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         <p className="text-muted">No contact info provided</p>
         {/* --------- */}
         <hr></hr>
-        <h5 className="fw-bold">Notes</h5>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label>New note:</Form.Label>
-          <Form.Control as="textarea" rows={3} />
-        </Form.Group>
-        <LoadingButton
-          className="btn btn-secondary"
-          label="Add note"
+        <Notes
+          contactNotes={props.contactDetails.notes}
+          onAddContactNote={addNewNote}
+          isLoading={loadingNotes}
         />
-        <div className="py-3">
-          <p className="fw-bold m-0">Previous notes:</p>
-          {!props.participantDetails.notes || props.participantDetails.notes.length < 1 ?
-            <p className="text-muted">No notes yet.</p>
-            : null}
-          {props.participantDetails.notes?.map((note, index) => {
-            return <Note
-              key={index.toString()}
-              time={note.time}
-              author={note.author}
-              content={note.content}
-            />
-          })}
-
-        </div>
 
       </div>
     );
@@ -138,8 +149,8 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
         "d-flex flex-column overflow-scroll",
         borderClassName,
         {
-          [styles.open]: props.participantDetails,
-          [styles.close]: !props.participantDetails,
+          [styles.open]: props.contactDetails,
+          [styles.close]: !props.contactDetails,
         })
       }
       style={{ minWidth: "380px", maxHeight: '100%' }}
@@ -150,4 +161,4 @@ const ParticipantDetails: React.FC<ParticipantDetailsProps> = (props) => {
   );
 };
 
-export default ParticipantDetails;
+export default ContactDetails;

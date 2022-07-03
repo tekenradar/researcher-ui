@@ -1,15 +1,18 @@
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import clsx from "clsx";
 import { format, fromUnixTime } from "date-fns";
 import React, { useState } from "react";
-import { Button, Table } from "react-bootstrap";
-import { ParticipantSessionData } from "../../../pages/study/Contacts";
+import { Button, Spinner, Table } from "react-bootstrap";
+import { ContactDetailsData } from "../../../pages/study/Contacts";
 import { shortenParticipantID } from "../../../utils/shortenParticipantID";
 
 
 interface ContactTableProps {
+  isLoading: boolean;
+  selectedContactDetails?: ContactDetailsData;
   onParticipantRowClicked: (participantId: string) => void;
-  participantsRecords: Array<ParticipantSessionData>;
+  contactDetailsList: Array<ContactDetailsData>;
 }
 
 const compactViewItemLimit = 9;
@@ -22,7 +25,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
       <th>Added on</th>
       <th>Session ID</th>
       <th>Participant ID</th>
-      {Object.keys(props.participantsRecords[0].general).map((item) => {
+      {Object.keys(props.contactDetailsList[0].general).map((item) => {
         return <th key={item} scope="col">{item}</th>;
       })}
     </React.Fragment>);
@@ -30,13 +33,16 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
 
 
   const tableRows = () => {
-    return props.participantsRecords.map((item, index) => {
+    return props.contactDetailsList.map((item, index) => {
       if (!showAll && index >= compactViewItemLimit) {
         return null
       }
       return (
         <tr
           key={index.toFixed()}
+          className={clsx({
+            "fw-bold": props.selectedContactDetails?.id === item.id
+          })}
           onClick={() => {
             props.onParticipantRowClicked(item.participantID as string);
           }}
@@ -62,6 +68,21 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
   };
 
 
+  if (props.isLoading) {
+    return <div className='py-3 text-center'>
+      <Spinner className="mx-1" size="sm" animation="grow" />
+      <Spinner className="mx-1" size="sm" animation="grow" />
+      <Spinner className="mx-1" size="sm" animation="grow" />
+    </div>
+  }
+
+  if (props.contactDetailsList.length < 1) {
+    return <div className='py-3 text-center'>
+      <p>No contact infos found in this study yet. Check back later or refresh the page.</p>
+    </div>
+  }
+
+
   return (
     <React.Fragment>
       <Table
@@ -78,7 +99,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
         </tbody>
 
       </Table>
-      {props.participantsRecords.length > compactViewItemLimit ? <div className="text-center mb-3">
+      {props.contactDetailsList.length > compactViewItemLimit ? <div className="text-center mb-3">
         <Button
           variant="outline-secondary"
           onClick={() => {
@@ -88,7 +109,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
           <div className="d-flex alignt-items-center ">
             {showAll ?
               <span>Show only recent entries <FontAwesomeIcon icon={faChevronUp} /></span>
-              : <span>Show all ({props.participantsRecords.length}) entries <FontAwesomeIcon icon={faChevronDown} /></span>}
+              : <span>Show all ({props.contactDetailsList.length}) entries <FontAwesomeIcon icon={faChevronDown} /></span>}
           </div>
         </Button>
       </div> : null}
