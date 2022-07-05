@@ -18,8 +18,31 @@ export interface ContactDetailsData {
   addedAt: number;
   sessionID: string;
   participantID: string;
-  general: { [key: string]: any };
-  confidentialData?: { [key: string]: any };
+  general: {
+    age: number;
+    gender: string;
+    otherStudies: boolean;
+  };
+  contactData?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+    birthday?: number;
+    gender?: string;
+    gp?: {
+      office: string;
+      name: string;
+      address: {
+        street: string;
+        nr: string;
+        postcode: string;
+        city: string;
+      }
+      phone: string;
+    }
+  };
+  keepContactData: boolean;
   notes?: Note[];
 }
 
@@ -31,9 +54,11 @@ const dummyParticipantRecords: ContactDetailsData[] = [
     sessionID: '621394a1a0919b92',
     participantID: 'f878a37068309bb9c8746390d9a30216981dbf1bace1923999ff18cfa1ed5cb4',
     general: {
-      Age: 34,
-      sex: "M",
+      age: 34,
+      gender: "male",
+      otherStudies: true
     },
+    keepContactData: false
   },
   {
     id: "2",
@@ -41,12 +66,16 @@ const dummyParticipantRecords: ContactDetailsData[] = [
     sessionID: '621394a1a0919b93',
     participantID: 'a3b960c17ea4de7d4e267c754dbbe9eaeba54bf5a1da8d5d90b59bcd0cfef1a6',
     general: {
-      Age: 24,
-      sex: "M",
+      age: 26,
+      gender: "other",
+      otherStudies: true,
     },
-    confidentialData: {
+    keepContactData: true,
+    contactData: {
       firstName: 'First',
-      lastName: 'Last'
+      lastName: 'Last',
+      email: 'test@test.de',
+
     },
     notes: [
       {
@@ -129,6 +158,27 @@ const dummyParticipantRecords: ContactDetailsData[] = [
         author: 'test@test.nl',
         content: `Hi\n\nHow are you?`
       },
+    ]
+  },
+  {
+    id: "3",
+    addedAt: 1642238238,
+    sessionID: '621394a1a0919b90',
+    participantID: 'bcaes960c17ea4de7d4e267c754dbbe9eaeba54bf5a1da8d5d90b59bcd0cf98545',
+    general: {
+      age: 14,
+      gender: "female",
+      otherStudies: false,
+    },
+    keepContactData: true,
+    contactData: {
+      firstName: 'Firstname',
+      lastName: 'Lastname',
+      email: 'test@test.de',
+
+    },
+    notes: [
+
     ]
   },
 ];

@@ -108,15 +108,22 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
           </div>
         </div>
 
+
         <div className="d-flex flex-wrap justify-content-between">
-          {Object.entries(props.contactDetails.general).map(([key, value]) => {
-            return (
-              <div key={key} className="my-2 me-3">
-                <label className="fs-small fw-bold">{key}</label>
-                <p>{value}</p>
-              </div>
-            );
-          })}
+
+          <div className="my-2 me-3">
+            <label className="fs-small fw-bold">Age in PDiff</label>
+            <p>{props.contactDetails.general.age}</p>
+          </div>
+          <div className="my-2 me-3">
+            <label className="fs-small fw-bold">Gender in PDiff</label>
+            <p>{props.contactDetails.general.age}</p>
+          </div>
+          <div className="my-2 me-3">
+            <label className="fs-small fw-bold">Interested in other studies</label>
+            <p>{props.contactDetails.general.otherStudies ? 'yes' : 'no'}</p>
+          </div>
+
         </div>
         {/* --------- */}
         <hr></hr>
