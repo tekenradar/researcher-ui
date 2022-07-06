@@ -47,7 +47,6 @@ const NavigationMenu: React.FC<NavigationMenuProps> = (props) => {
       className={clsx(
         "border-end border-secondary h-100 d-flex flex-colum",
         borderClassName,
-        color,
         bgColor,
       )}
       style={{ minHeight: "100%" }}

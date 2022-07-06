@@ -21,7 +21,10 @@ const Appbar: React.FC = () => {
   const exitStudyButton = (
     <div style={{ width: 200 }}>
       {appContext.studyInfo !== undefined ? (
-        <NavLink className={clsx("nav-link", color)} to="../">
+        <NavLink className={clsx(
+          "nav-link ",
+          color
+        )} to="../">
           <FontAwesomeIcon className="fa-lg me-2" icon={faArrowLeft} />
           Exit Study
         </NavLink>
@@ -39,7 +42,10 @@ const Appbar: React.FC = () => {
       )}
     >
       {exitStudyButton}
-      <h1 className={clsx("flex-grow-1 text-center h6 m-0", color)}>
+      <h1
+        className={clsx("flex-grow-1 text-center h6 m-0",
+          //color
+        )}>
         {studyName}
       </h1>
 

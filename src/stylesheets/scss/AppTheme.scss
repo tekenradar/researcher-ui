@@ -17,18 +17,22 @@ $theme-colors: (
 );
 
 $custom-colors: (
-  "study-tekenradar": #1C8E00,
-  "study-tb-only": #00318F,
-  "study-weekly-tb": #62008F,
-  "study-k-em-contact": #8F001A,
-  "study-em-adult-contact": #796D01,
-  "study-fever-adult-contact": #8F3C00,
-  "study-tb-adult-contact": #366c00,
-  "study-tb-kids-contact": #00008f,
+  "study-color-1": #13795b,
+  "study-color-2": #198754,
+  "study-color-3": #836c26,
+  "study-color-4": #d63384,
+  "study-color-5": #dc3545,
+  "study-color-6": #af511a,
+  "study-color-7": #6f42c1,
+  "study-color-8": #6610f2,
+  "study-color-9": #187183,
+  "study-color-10": #6a6c6e,
 );
 
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
+
+$enable-rounded: false;
 
 .scale-effect-on-hover {
   transition: transform 300ms ease-in-out;

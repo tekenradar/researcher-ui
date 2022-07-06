@@ -10,18 +10,16 @@ interface StudyInfoCardProps {
 }
 
 const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
-  const bgColor = `alert-study-${props.study.key}`;
-  const color = `text-study-${props.study.key}`;
-  const borderColor = `border-study-${props.study.key}`;
+  const bgColor = `btn-study-${props.study.studyColor}`;
+  const borderColor = `border-study-${props.study.studyColor}`;
 
   return (
     <div className='col-12 col-md-6 col-lg-4'>
       <Link
         className={clsx(
-          "p-3 scale-effect-on-hover text-decoration-none d-flex flex-column border h-100",
+          "btn p-3 text-decoration-none d-flex flex-column border h-100 text-start",
           borderColor,
           bgColor,
-          color,
         )}
         to={props.study.key}
       >

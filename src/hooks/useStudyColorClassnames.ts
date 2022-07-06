@@ -10,7 +10,7 @@ export const useStudyColorClassnames = (): {
 } => {
   const appContext = useAppContext();
 
-  if (appContext.studyKey === undefined) {
+  if (appContext.studyInfo === undefined) {
     return {
       bgColor: `bg-white`,
       color: `text-dark`,
@@ -19,13 +19,13 @@ export const useStudyColorClassnames = (): {
       btnClassName: 'btn-primary',
     }
   }
-
+  const studyColor = appContext.studyInfo.studyColor;
   return {
-    bgColor: `alert-study-${appContext.studyKey}`,
-    bgDarkColor: `bg-study-${appContext.studyKey}`,
-    color: `text-study-${appContext.studyKey}`,
-    borderClassName: `border-study-${appContext.studyKey}`,
-    btnClassName: `btn-study-${appContext.studyKey}`,
+    bgColor: `alert-study-${studyColor}`,
+    bgDarkColor: `bg-study-${studyColor}`,
+    color: `text-study-${studyColor}`,
+    borderClassName: `border-study-${studyColor}`,
+    btnClassName: `btn-study-${studyColor}`,
   }
 }
 

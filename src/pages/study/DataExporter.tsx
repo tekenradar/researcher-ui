@@ -84,7 +84,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
 
   const downloadBtn = <LoadingButton
     className={clsx(
-      'btn text-white',
+      'btn',
       btnClassName,
     )}
     label="Download"

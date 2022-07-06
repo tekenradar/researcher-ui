@@ -6,6 +6,7 @@ export interface StudyInfo {
   key: string;
   name: string;
   description: string;
+  studyColor: string;
   features: {
     datasetExporter: boolean;
     contacts: boolean;
@@ -23,6 +24,7 @@ export interface AppContextData {
 export const dummyStudies = [
   {
     key: "tekenradar", name: "Tekenradar", description: "Default study of tekenradar",
+    studyColor: 'color-1',
     features: {
       datasetExporter: true,
       contacts: false,
@@ -30,6 +32,7 @@ export const dummyStudies = [
   },
   {
     key: "tb-only", name: "TB only ", description: "Tickbite reports without health data",
+    studyColor: 'color-2',
     features: {
       datasetExporter: true,
       contacts: false,
@@ -37,6 +40,7 @@ export const dummyStudies = [
   },
   {
     key: "weekly-tb", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with...",
+    studyColor: 'color-3',
     features: {
       datasetExporter: true,
       contacts: false,
@@ -45,6 +49,7 @@ export const dummyStudies = [
   //
   {
     key: "k-em-contact", name: "kEM", description: "kEM with contact data",
+    studyColor: 'color-4',
     features: {
       datasetExporter: true,
       contacts: true,
@@ -52,6 +57,7 @@ export const dummyStudies = [
   },
   {
     key: "em-adult-contact", name: "EM Adult", description: "EM Adults with contact data",
+    studyColor: 'color-5',
     features: {
       datasetExporter: true,
       contacts: true,
@@ -59,6 +65,7 @@ export const dummyStudies = [
   },
   {
     key: "fever-adult-contact", name: "Fever Adult", description: "Fever Adults with contact data",
+    studyColor: 'color-6',
     features: {
       datasetExporter: true,
       contacts: true,
@@ -66,13 +73,16 @@ export const dummyStudies = [
   },
   {
     key: "tb-adult-contact", name: "TB Adults", description: "TB Adults with contact data",
+    studyColor: 'color-7',
     features: {
       datasetExporter: true,
       contacts: true,
     }
   },
   {
-    key: "tb-kids-contact", name: "TB Kids", description: "TB Kids with contact data", features: {
+    key: "tb-kids-contact", name: "TB Kids", description: "TB Kids with contact data",
+    studyColor: 'color-8',
+    features: {
       datasetExporter: true,
       contacts: true,
     }
