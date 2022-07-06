@@ -1,3 +1,5 @@
+import { faArrowUpRightDots, faArrowUpRightFromSquare, faLink } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 const Credits: React.FC = () => {
@@ -9,7 +11,13 @@ const Credits: React.FC = () => {
       <a
         href='https://coneno.com'
         className="btn text-muted fs-small"
-      >coneno GmbH</a>
+      >
+        coneno GmbH
+        <FontAwesomeIcon
+          className='ms-1'
+          size='sm'
+          icon={faArrowUpRightFromSquare} />
+      </a>
 
     </div>
   );
