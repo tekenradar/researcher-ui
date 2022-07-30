@@ -1,4 +1,3 @@
-import { features } from "process";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -92,6 +91,7 @@ export const dummyStudies = [
 
 export const useAppContextValue = (): AppContextData => {
   let params = useParams();
+
   const [isLoading, setIsLoading] = useState(false);
   const [studyInfo, setStudyInfos] = useState<StudyInfo | undefined>(undefined);
 

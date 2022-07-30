@@ -17,7 +17,7 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
     <div className='col-12 col-md-6 col-lg-4'>
       <Link
         className={clsx(
-          "btn p-3 text-decoration-none d-flex flex-column border h-100 text-start",
+          "btn p-3 text-decoration-none d-flex flex-column border h-100 text-start shadow",
           borderColor,
           bgColor,
         )}
