@@ -13,21 +13,8 @@ interface StudyInfoListProps {
 
 const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
   return (
-    <div className='bg-white h-100 border-end'>
-      <div className='text-center py-3 px-3'>
-        <Button
-          variant="link"
-          onClick={() => {
-            props.onAddNew();
-          }}>
-          <FontAwesomeIcon
-            icon={faPlus}
-          />
-
-        </Button>
-      </div>
-
-      <h6 className='ms-2'>Edit study:</h6>
+    <div className='bg-white h-100 border-end overflow-scroll' style={{ minWidth: 150 }}>
+      <h6 className='ms-2 mt-3'>Edit study:</h6>
       <ListGroup variant='flush'>
         {props.studyInfos.map(data => {
 
@@ -43,6 +30,18 @@ const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
           </ListGroup.Item>
         })}
       </ListGroup>
+      <div className='text-center mt-1 '>
+        <Button
+          variant="link"
+          onClick={() => {
+            props.onAddNew();
+          }}>
+          <FontAwesomeIcon
+            icon={faPlus}
+          />
+
+        </Button>
+      </div>
     </div>
   );
 };
