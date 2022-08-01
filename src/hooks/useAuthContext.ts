@@ -67,8 +67,24 @@ export const useAuthContextValue = (): AuthContextData => {
   }
 
   const logout = async () => {
-    console.log('logout called')
-    navigate('/login', { replace: true });
+    try {
+      const url = new URL(`${apiRoot}/v1/auth/logout`);
+      if (token) {
+        url.search = new URLSearchParams({ token: token }).toString()
+      }
+
+      const response = await fetch(url.toString(), {
+        credentials: 'include',
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      navigate('/login', { replace: true });
+    }
   }
 
   return useMemo(() => {

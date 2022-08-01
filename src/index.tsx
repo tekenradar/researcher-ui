@@ -13,6 +13,7 @@ import Contacts from "./pages/study/Contacts";
 import "./stylesheets/scss/AppTheme.scss";
 import Unavailable from "./pages/study/Unavailable";
 import LoginPage from "./pages/LoginPage";
+import AdminPage from "./pages/AdminPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -33,6 +34,7 @@ root.render(
             </Route>
           </Route>
           <Route path="login" element={<LoginPage />} />
+          <Route path="admin" element={<AdminPage />} />
           <Route index element={<Navigate replace to={"studies" + window.location.search} />} />
           <Route path="*" element={<Navigate replace to="studies" />} />
         </Route>

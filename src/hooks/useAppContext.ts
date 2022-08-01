@@ -9,7 +9,16 @@ export interface StudyInfo {
   features: {
     datasetExporter: boolean;
     contacts: boolean;
-  }
+  };
+  availableDatasets?: DatasetInfo[];
+}
+
+export interface DatasetInfo {
+  surveyKey: string;
+  name: string;
+  excludeColumns: string[];
+  startDate: number;
+  endDate: number;
 }
 
 

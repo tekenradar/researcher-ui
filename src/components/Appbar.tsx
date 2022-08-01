@@ -66,7 +66,7 @@ const Appbar: React.FC = () => {
             className="fa-lg me-2"
             icon={faCircleUser}
           />
-          <span className="d-none d-md-block">{authContext.userID}</span>
+          <span className="d-none d-md-block me-2">{authContext.userID}</span>
         </div>
       </OverlayTrigger>
       <OverlayTrigger placement="bottom" overlay={<Tooltip>Logout</Tooltip>}>
