@@ -35,6 +35,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
       <div className='d-flex h-100'>
         <StudyInfoList
           studyInfos={studyInfos}
+          selectedStudyKey={selectedStudy?.key}
           onAddNew={() => {
             setSelectedStudy(undefined);
           }}
