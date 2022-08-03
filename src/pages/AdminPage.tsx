@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AdminAppbar from '../components/admin/AdminAppbar';
 import StudyInfoEditor from '../components/admin/StudyInfoEditor';
 import StudyInfoList from '../components/admin/StudyInfoList';
-import { dummyStudies, StudyInfo } from '../hooks/useAppContext';
+import { StudyInfo } from '../hooks/useAppContext';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 interface AdminPageProps {
@@ -13,13 +13,12 @@ const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SER
 
 
 const AdminPage: React.FC<AdminPageProps> = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedStudy, setSelectedStudy] = useState<StudyInfo | undefined>();
   const authContext = useAuthContext();
 
-  // TODO: save study info
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedStudy, setSelectedStudy] = useState<StudyInfo | undefined>();
+  const [studyInfos, setStudyInfos] = useState<StudyInfo[]>([]);
 
-  const studyInfos = dummyStudies;
 
   useEffect(() => {
     fetchAllStudyInfos();
@@ -40,8 +39,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
       if (!response.ok) {
         throw new Error(data.error);
       }
-      console.log(data);
-
+      setStudyInfos(data.studyInfos);
     } catch (err: any) {
       console.error(err)
       authContext.logout();
@@ -67,9 +65,8 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
       if (!response.ok) {
         throw new Error(data.error);
       }
-      console.log(data);
+      // console.log(data);
       fetchAllStudyInfos();
-
     } catch (err: any) {
       console.error(err)
       authContext.logout();
