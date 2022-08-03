@@ -12,6 +12,7 @@ import DatasetInfoEditor from './DatasetInfoEditor';
 interface StudyInfoEditorProps {
   isLoading: boolean;
   studyInfo?: StudyInfo;
+  onSaveStudy: (studyInfo: StudyInfo) => void;
   onDeleteStudy: (studyKey: string) => void;
 }
 
@@ -124,7 +125,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
         <h2 className="h5">{props.studyInfo ? `Edit Study: ${props.studyInfo.name}` : 'Create new study'}</h2>
         <Form onSubmit={(event) => {
           event.preventDefault()
-
+          props.onSaveStudy(currentStudy);
         }}>
           <h3 className='h6'>General</h3>
           <Form.Group className="mb-3" controlId="studyInfo.key">
@@ -221,6 +222,9 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
               datasetInfo={openedDatasetInfo}
               onSave={(datasetInfo) => {
                 setCurrentStudy(prev => {
+                  if (!prev.availableDatasets) {
+                    prev.availableDatasets = [];
+                  }
                   prev.availableDatasets?.push(datasetInfo);
                   return { ...prev };
                 });

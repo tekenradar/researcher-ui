@@ -1,10 +1,11 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
-import { Button, ListGroup } from 'react-bootstrap';
+import { Button, ListGroup, Spinner } from 'react-bootstrap';
 import { StudyInfo } from '../../hooks/useAppContext';
 
 interface StudyInfoListProps {
+  isLoading: boolean;
   studyInfos: StudyInfo[];
   selectedStudyKey?: string;
   onAddNew: () => void;
@@ -15,6 +16,11 @@ const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
   return (
     <div className='bg-white h-100 border-end overflow-scroll' style={{ minWidth: 150 }}>
       <h6 className='ms-2 mt-3'>Edit study:</h6>
+      {props.isLoading ? <div className='py-3 text-center'>
+        <Spinner className="mx-1" size="sm" animation="grow" />
+        <Spinner className="mx-1" size="sm" animation="grow" />
+        <Spinner className="mx-1" size="sm" animation="grow" />
+      </div> : null}
       <ListGroup variant='flush'>
         {props.studyInfos.map(data => {
 
