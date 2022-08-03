@@ -67,6 +67,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
       }
       // console.log(data);
       fetchAllStudyInfos();
+      setSelectedStudy(studyInfo);
     } catch (err: any) {
       console.error(err)
       authContext.logout();
@@ -76,8 +77,30 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
   }
 
   const deleteStudyInfo = async (studyKey: string) => {
-    // TODO: implement api request
-    console.log('triggered deleting study')
+    try {
+      setIsLoading(true);
+      const url = new URL(`${apiRoot}/v1/study-management/study-info/${studyKey}`);
+
+      const response = await fetch(url.toString(), {
+        method: 'DELETE',
+        headers: {
+          'Api-Key': apiKey,
+        },
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      // console.log(data);
+      fetchAllStudyInfos();
+    } catch (err: any) {
+      console.error(err)
+      authContext.logout();
+    } finally {
+      setIsLoading(false);
+      setSelectedStudy(undefined);
+    }
   }
 
   return (
