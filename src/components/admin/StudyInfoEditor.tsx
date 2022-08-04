@@ -63,8 +63,6 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
   const renderDatasets = () => {
     return <ListGroup variant='flush'>
       {currentStudy.availableDatasets?.map((datasetInfo, index) => {
-        console.log(datasetInfo)
-
         return <ListGroup.Item key={index.toString()}>
           <div className='d-flex'>
             <div className='flex-grow-1'>

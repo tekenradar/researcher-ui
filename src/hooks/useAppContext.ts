@@ -97,6 +97,9 @@ export const dummyStudies = [
   },
 ];
 
+const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
+const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SERVICE_API_KEY : "";
+
 
 export const useAppContextValue = (): AppContextData => {
   let params = useParams();
@@ -119,13 +122,27 @@ export const useAppContextValue = (): AppContextData => {
     if (isLoading) {
       return;
     }
-    console.warn('TODO: fetch study infos')
-    setIsLoading(true);
-    setTimeout(() => {
-      const currentStudy = dummyStudies.find(study => study.key === studyKey);
-      setStudyInfos(currentStudy);
+    try {
+      setIsLoading(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyKey}/`);
+
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: {
+          'Api-Key': apiKey,
+        },
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setStudyInfos(data);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
       setIsLoading(false);
-    }, 1000)
+    }
   }
 
 

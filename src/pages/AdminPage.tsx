@@ -22,6 +22,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
 
   useEffect(() => {
     fetchAllStudyInfos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchAllStudyInfos = async () => {

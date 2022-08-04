@@ -5,20 +5,15 @@ import { Form } from "react-bootstrap";
 import Credits from "../../components/Credits";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import LoadingButton from "../../components/LoadingButton";
+import { DatasetInfo, useAppContext } from "../../hooks/useAppContext";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
 
 interface DataExporterProps { }
 
-interface DatasetInfo {
-  key: string;
-  name: string;
-}
-const dummyDatasets: DatasetInfo[] = [
-  { key: 'PDiff', name: 'PDiff (Entry survey)' },
-]
-
 
 const DataExporter: React.FC<DataExporterProps> = (props) => {
+  const { isLoading, studyInfo } = useAppContext();
+
   const { btnClassName } = useStudyColorClassnames();
 
   const [loading, setLoading] = useState(false);
@@ -28,10 +23,11 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
   const [datasets, setDataSets] = useState<DatasetInfo[]>([])
 
   useEffect(() => {
-    setTimeout(() => {
-      setDataSets(dummyDatasets);
-    }, 1000)
-  }, [])
+    if (studyInfo?.availableDatasets) {
+      setDataSets(studyInfo.availableDatasets);
+    }
+
+  }, [studyInfo])
 
 
   const datasetSelector = <Form.Group className="mb-3">
@@ -44,7 +40,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       }}
     >
       <option>Select a dataset</option>
-      {datasets.map(value => <option key={value.key} value={value.key}>{value.name}</option>)}
+      {datasets.map(value => <option key={value.surveyKey} value={value.surveyKey}>{value.name}</option>)}
     </Form.Select>
   </Form.Group>
 
