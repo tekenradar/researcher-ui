@@ -1,18 +1,24 @@
 import clsx from "clsx";
 import { addMonths } from "date-fns/esm";
 import React, { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Toast, ToastContainer } from "react-bootstrap";
 import Credits from "../../components/Credits";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import LoadingButton from "../../components/LoadingButton";
 import { DatasetInfo, useAppContext } from "../../hooks/useAppContext";
 import { useStudyColorClassnames } from "../../hooks/useStudyColorClassnames";
+import { saveAs } from 'file-saver';
+import { format, getUnixTime } from "date-fns";
 
 interface DataExporterProps { }
 
 
+const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
+const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SERVICE_API_KEY : "";
+
+
 const DataExporter: React.FC<DataExporterProps> = (props) => {
-  const { isLoading, studyInfo } = useAppContext();
+  const { studyInfo } = useAppContext();
 
   const { btnClassName } = useStudyColorClassnames();
 
@@ -21,6 +27,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
   const [startDate, setStartDate] = useState(addMonths(new Date(), -1));
   const [endDate, setEndDate] = useState(new Date());
   const [datasets, setDataSets] = useState<DatasetInfo[]>([])
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     if (studyInfo?.availableDatasets) {
@@ -28,6 +35,36 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
     }
 
   }, [studyInfo])
+
+  const downloadData = async () => {
+    setErrorMsg('')
+    try {
+      setLoading(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/data/${selectedDataset}`);
+      url.search = new URLSearchParams({ from: `${getUnixTime(startDate)}`, until: `${getUnixTime(endDate)}` }).toString();
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const err = await response.json()
+        throw new Error(err.error);
+      }
+
+      const data = await response.blob();
+      const filename = `${studyInfo?.key}_${selectedDataset}_${format(startDate, 'yyyy-MM-dd')}-${format(endDate, 'yyyy-MM-dd')}.csv`
+      saveAs(data, filename);
+
+    } catch (err: any) {
+      setErrorMsg(err.toString());
+      console.error(err)
+    } finally {
+      setLoading(false);
+    }
+  }
 
 
   const datasetSelector = <Form.Group className="mb-3">
@@ -94,7 +131,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       <h2 className="">Dataset Exporter</h2>
       <Form onSubmit={(event) => {
         event.preventDefault()
-        setLoading(true);
+        downloadData();
       }}>
         {datasetSelector}
         {rangeSelector}
@@ -102,6 +139,14 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       </Form>
     </div>
     <Credits />
+    <ToastContainer className="p-3" position={'bottom-center'}>
+      <Toast bg="danger" show={errorMsg.length > 0} onClose={() => setErrorMsg('')}>
+        <Toast.Header className="">
+          <strong className="me-auto">Error</strong>
+        </Toast.Header>
+        <Toast.Body className="text-white">{errorMsg}</Toast.Body>
+      </Toast>
+    </ToastContainer>
 
   </div>
 };

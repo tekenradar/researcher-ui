@@ -35,29 +35,46 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
     }
   }, [props.open])
 
-  useEffect(() => {
-    if (datasetInfo.startDate < 1) {
-      setUseStartLimit(false);
-      setStartDate(undefined);
-    } else {
-      setUseStartLimit(true);
-      setStartDate(fromUnixTime(datasetInfo.startDate))
-    }
-    if (datasetInfo.endDate < 1) {
-      setUseEndLimit(false);
-      setEndDate(undefined);
-    } else {
-      setUseEndLimit(true);
-      setEndDate(fromUnixTime(datasetInfo.endDate))
-    }
-  }, [datasetInfo])
-
 
   useEffect(() => {
     if (props.datasetInfo) {
       setDatasetInfo({ ...props.datasetInfo })
+      if (props.datasetInfo.startDate < 1) {
+        setUseStartLimit(false);
+        setStartDate(undefined);
+      } else {
+        setUseStartLimit(true);
+        setStartDate(fromUnixTime(props.datasetInfo.startDate))
+      }
+      if (props.datasetInfo.endDate < 1) {
+        setUseEndLimit(false);
+        setEndDate(undefined);
+      } else {
+        setUseEndLimit(true);
+        setEndDate(fromUnixTime(props.datasetInfo.endDate))
+      }
     }
   }, [props.datasetInfo])
+
+  useEffect(() => {
+    const value = startDate ? getUnixTime(startDate) : 0;
+    setDatasetInfo(prev => {
+      return {
+        ...prev,
+        startDate: value,
+      }
+    })
+  }, [startDate])
+
+  useEffect(() => {
+    const value = endDate ? getUnixTime(endDate) : 0;
+    setDatasetInfo(prev => {
+      return {
+        ...prev,
+        endDate: value,
+      }
+    })
+  }, [endDate])
 
   const updateCurrentValue = (objectKey: string) => (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const value = event.target.value;
@@ -107,10 +124,16 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
             rows={5}
             onChange={(event) => {
               const value = event.target.value;
+              const excluded: string[] = [];
+              value.split('\n').forEach(v => {
+                if (v.trim().length > 0) {
+                  excluded.push(v.trim())
+                }
+              })
               setDatasetInfo(prev => {
                 return {
                   ...prev,
-                  excludeColumns: value.split('\n')
+                  excludeColumns: excluded
                 }
               })
             }}
@@ -127,6 +150,9 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
             onChange={(event) => {
               const value = event.target.checked;
               setUseStartLimit(value);
+              if (!value) {
+                setStartDate(undefined)
+              }
             }}
           />
           {useStartLimit ? <div className='ms-auto'>
@@ -138,12 +164,7 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
                   return
                 }
                 setStartDate(date)
-                setDatasetInfo(prev => {
-                  return {
-                    ...prev,
-                    startDate: getUnixTime(date),
-                  }
-                })
+
 
               }}
             />
@@ -159,6 +180,9 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
             onChange={(event) => {
               const value = event.target.checked;
               setUseEndLimit(value);
+              if (!value) {
+                setEndDate(undefined)
+              }
             }}
           />
           {useEndLimit ? <div className='ms-auto'>
@@ -170,12 +194,6 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
                   return
                 }
                 setEndDate(date)
-                setDatasetInfo(prev => {
-                  return {
-                    ...prev,
-                    endDate: getUnixTime(date),
-                  }
-                })
               }}
             />
           </div> : null}
