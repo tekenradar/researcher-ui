@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 interface Note {
+  id: string;
   time: number;
   author: string;
   content: string;
@@ -79,85 +80,11 @@ const dummyParticipantRecords: ContactDetailsData[] = [
     },
     notes: [
       {
+        id: "sdkfnsdfknsdlfn",
         time: 1665456465,
         author: 'test@test.nl',
         content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
-      {
-        time: 1665456465,
-        author: 'test@test.nl',
-        content: `Hi\n\nHow are you?`
-      },
+      }
     ]
   },
   {

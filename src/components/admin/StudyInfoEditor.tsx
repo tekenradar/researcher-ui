@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import { format, fromUnixTime } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Form, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Alert, Button, Form, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { DatasetInfo, StudyInfo } from '../../hooks/useAppContext';
 import Credits from '../Credits';
 import LoadingButton from '../LoadingButton';
@@ -26,6 +26,9 @@ const emptyStudyInfo: StudyInfo = {
     contacts: false,
   },
   availableDatasets: [],
+  contactFeatureConfig: {
+    includeWithParticipantFlags: {}
+  }
 }
 
 
@@ -34,6 +37,11 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
 
   const [datasetInfoEditorOpen, setDatasetInfoEditorOpen] = useState(false);
   const [openedDatasetInfo, setOpenedDatasetInfo] = useState<undefined | DatasetInfo>(undefined);
+
+  const [newParticpantContactInclusionFlag, setNewParticpantContactInclusionFlag] = useState({
+    key: '',
+    value: ''
+  })
 
 
   useEffect(() => {
@@ -115,6 +123,84 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
 
       })}
     </ListGroup>
+  }
+
+  const renderContactConfigInputs = () => {
+    let nodes = []
+    for (let k in currentStudy.contactFeatureConfig.includeWithParticipantFlags) {
+      nodes.push((<li key={k}>
+        <div className="d-flex align-items-center">
+          <span className='text-muted me-1'>key: </span><span>{k}</span> <span className='ms-2 me-1 text-muted'>value: </span><span>{currentStudy.contactFeatureConfig.includeWithParticipantFlags[k]}</span>
+          <Button
+            variant='link' type='button'
+            onClick={() => {
+              if (window.confirm("Do you want to remove this flag from the list?")) {
+                setCurrentStudy(prev => {
+                  delete prev.contactFeatureConfig.includeWithParticipantFlags[k];
+                  return {
+                    ...prev,
+                  }
+                })
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </Button>
+        </div>
+      </li>
+      ))
+    }
+
+    return <React.Fragment>
+      <h6>Inclusion flags (include if all of them present)</h6>
+      <ul>
+        {nodes}
+      </ul>
+      <InputGroup className="mt-2 mb-3">
+        <Form.Control placeholder="enter the key, e.g. flow"
+          value={newParticpantContactInclusionFlag.key}
+          onChange={(event) => {
+            const value = event.target.value;
+            setNewParticpantContactInclusionFlag(prev => {
+              return {
+                ...prev,
+                key: value
+              }
+            })
+          }}
+        />
+        <Form.Control placeholder='expected value, e.g. TBflow'
+          value={newParticpantContactInclusionFlag.value}
+          onChange={(event) => {
+            const value = event.target.value;
+            setNewParticpantContactInclusionFlag(prev => {
+              return {
+                ...prev,
+                value: value
+              }
+            })
+          }}
+        />
+        <Button variant="outline-secondary" type='button'
+          onClick={() => {
+            setCurrentStudy(prev => {
+              return {
+                ...prev,
+                contactFeatureConfig: {
+                  includeWithParticipantFlags: {
+                    ...prev.contactFeatureConfig.includeWithParticipantFlags,
+                    [newParticpantContactInclusionFlag.key]: newParticpantContactInclusionFlag.value
+                  }
+                }
+              }
+            })
+            setNewParticpantContactInclusionFlag({
+              key: '', value: ''
+            })
+          }}
+        >Add</Button>
+      </InputGroup>
+    </React.Fragment>
   }
 
   return (
@@ -247,6 +333,19 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
             </Button>
           </div>
 
+          {currentStudy.features.contacts ?
+            <React.Fragment>
+              <hr></hr>
+              <div className='mb-3'>
+                <h3 className='h6'>Participant contact config</h3>
+                <Alert variant='info'>Participant contacts are recorded through T0_Invites survey. The event will be processed by the study if the following participant flag (with key and value) are preset in the participant state.</Alert>
+                {renderContactConfigInputs()}
+              </div>
+            </React.Fragment>
+            : null}
+
+
+          <hr></hr>
           <LoadingButton
             type='submit'
             className='btn btn-primary'

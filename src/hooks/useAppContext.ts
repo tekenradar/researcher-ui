@@ -11,6 +11,9 @@ export interface StudyInfo {
     contacts: boolean;
   };
   availableDatasets?: DatasetInfo[];
+  contactFeatureConfig: {
+    includeWithParticipantFlags: { [key: string]: string }
+  }
 }
 
 export interface DatasetInfo {
@@ -116,6 +119,7 @@ export const useAppContextValue = (): AppContextData => {
       return;
     }
     getStudyInfo(studyKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [studyKey])
 
 

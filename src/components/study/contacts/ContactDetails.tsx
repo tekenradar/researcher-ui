@@ -9,6 +9,7 @@ import { shortenParticipantID } from "../../../utils/shortenParticipantID";
 import styles from './ContactDetails.module.css';
 import Notes from "./Notes";
 import { useState } from "react";
+import { makeid } from "../../../utils/makeid";
 
 
 interface ContactDetailsProps {
@@ -29,6 +30,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
       if (props.contactDetails !== undefined) {
         const notes = [
           {
+            id: makeid(10),
             time: (new Date()).getTime(),
             author: 'test@email.nl',
             content: message,
