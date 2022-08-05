@@ -223,7 +223,15 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
                   if (!prev.availableDatasets) {
                     prev.availableDatasets = [];
                   }
-                  prev.availableDatasets?.push(datasetInfo);
+                  if (!openedDatasetInfo) {
+                    if (!prev.availableDatasets) {
+                      prev.availableDatasets = [];
+                    }
+                    prev.availableDatasets?.push(datasetInfo);
+                  } else {
+                    const index = prev.availableDatasets.findIndex(item => item.id === datasetInfo.id);
+                    prev.availableDatasets[index] = { ...datasetInfo }
+                  }
                   return { ...prev };
                 });
                 setOpenedDatasetInfo(undefined);

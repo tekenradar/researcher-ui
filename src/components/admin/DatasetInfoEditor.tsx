@@ -2,6 +2,7 @@ import { fromUnixTime, getUnixTime } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { DatasetInfo } from '../../hooks/useAppContext';
+import { makeid } from '../../utils/makeid';
 import CustomDatePicker from '../CustomDatePicker';
 
 interface DatasetInfoEditorProps {
@@ -11,16 +12,19 @@ interface DatasetInfoEditorProps {
   onCancel: () => void;
 }
 
-const defaultDatasetInfo: DatasetInfo = {
-  surveyKey: '',
-  name: '',
-  excludeColumns: [],
-  startDate: 0,
-  endDate: 0
+const getDefaultDatasetInfo = (): DatasetInfo => {
+  return {
+    id: makeid(10),
+    surveyKey: '',
+    name: '',
+    excludeColumns: [],
+    startDate: 0,
+    endDate: 0
+  }
 }
 
 const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
-  const [datasetInfo, setDatasetInfo] = useState({ ...defaultDatasetInfo });
+  const [datasetInfo, setDatasetInfo] = useState({ ...getDefaultDatasetInfo() });
   const [useStartLimit, setUseStartLimit] = useState(false);
   const [useEndLimit, setUseEndLimit] = useState(false);
 
@@ -30,7 +34,7 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
   useEffect(() => {
     if (!props.open) {
       setDatasetInfo({
-        ...defaultDatasetInfo
+        ...getDefaultDatasetInfo()
       })
     }
   }, [props.open])
@@ -205,14 +209,14 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onCancel}>
-          Close
+          Cancel
         </Button>
         <Button variant="primary"
           disabled={datasetInfo.surveyKey.length < 1 || datasetInfo.name.length < 1}
           onClick={() => {
             props.onSave(datasetInfo)
           }}>
-          Add new entry
+          Save
         </Button>
       </Modal.Footer>
     </Modal>

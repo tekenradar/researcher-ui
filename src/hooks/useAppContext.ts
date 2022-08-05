@@ -14,6 +14,7 @@ export interface StudyInfo {
 }
 
 export interface DatasetInfo {
+  id: string;
   surveyKey: string;
   name: string;
   excludeColumns: string[];
