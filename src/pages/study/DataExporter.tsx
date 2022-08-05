@@ -77,7 +77,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       }}
     >
       <option>Select a dataset</option>
-      {datasets.map(value => <option key={value.surveyKey} value={value.surveyKey}>{value.name}</option>)}
+      {datasets.map(value => <option key={value.id} value={value.id}>{value.name}</option>)}
     </Form.Select>
   </Form.Group>
 
