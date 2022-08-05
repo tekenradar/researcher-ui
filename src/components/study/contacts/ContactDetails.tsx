@@ -8,13 +8,14 @@ import { ContactDetailsData } from "../../../pages/study/Contacts";
 import { shortenParticipantID } from "../../../utils/shortenParticipantID";
 import styles from './ContactDetails.module.css';
 import Notes, { Note } from "./Notes";
-import { useState } from "react";
 import { makeid } from "../../../utils/makeid";
-import { fromUnixTime, format } from "date-fns";
+import { fromUnixTime, format, getUnixTime } from "date-fns";
+import { useAuthContext } from "../../../hooks/useAuthContext";
 
 
 
 interface ContactDetailsProps {
+  isLoading: boolean;
   contactDetails?: ContactDetailsData;
   onClose: () => void;
   onChangePermanentStatus: (contactDetails: ContactDetailsData, keep: boolean) => void;
@@ -30,37 +31,7 @@ const showValueOrDashIfMissing = (value?: string | number): string => {
 
 const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
   const { bgColor, color, borderClassName } = useStudyColorClassnames();
-
-  const [loadingNotes, setLoadingNotes] = useState(false);
-
-  const addNewNote = async (message: string) => {
-    setLoadingNotes(true);
-    // TODO:
-    /*setTimeout(() => {
-      if (props.contactDetails !== undefined) {
-        const notes = [
-          {
-            id: makeid(10),
-            time: (new Date()).getTime(),
-            author: 'test@email.nl',
-            content: message,
-          }
-        ]
-        if (props.contactDetails.notes) {
-          notes.push(...props.contactDetails.notes)
-        }
-
-        const newContactDetails: ContactDetailsData = {
-          ...props.contactDetails,
-          notes: notes
-        }
-        props.onContactDetailsChanged(newContactDetails)
-        setLoadingNotes(false)
-      }
-    }, 500)*/
-  }
-
-
+  const authContext = useAuthContext();
 
 
   const header = () => {
@@ -235,8 +206,18 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
         <hr></hr>
         <Notes
           contactNotes={props.contactDetails.notes}
-          onAddContactNote={addNewNote}
-          isLoading={loadingNotes}
+          onAddContactNote={(message) => {
+            if (!props.contactDetails || !authContext.userID) {
+              return;
+            }
+            props.onAddNote(props.contactDetails, {
+              id: makeid(10),
+              author: authContext.userID,
+              content: message,
+              time: getUnixTime(new Date()),
+            })
+          }}
+          isLoading={props.isLoading}
         />
 
       </div>

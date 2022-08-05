@@ -4,6 +4,7 @@ import LoadingButton from '../../LoadingButton';
 import NoteCard from './NoteCard';
 
 export interface Note {
+  id: string;
   time: number;
   author: string;
   content: string;

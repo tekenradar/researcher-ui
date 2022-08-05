@@ -130,8 +130,33 @@ const Contacts: React.FC = () => {
     } finally {
       setLoadingContactDetails(false);
     }
-
   }
+
+  const addNoteToParticipantContact = async (contactId: string, note: Note) => {
+    try {
+      setLoadingContactDetails(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts/${contactId}/note`);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        method: 'POST',
+        body: JSON.stringify(note),
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setContactDetailsList(data.participantContacts);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      setLoadingContactDetails(false);
+    }
+  }
+
 
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
@@ -156,24 +181,15 @@ const Contacts: React.FC = () => {
         <Credits />
       </div>
       <ContactDetails
+        isLoading={loadingContactDetails}
         contactDetails={selectedContactDetails}
         onClose={() => setSelectedContactDetails(undefined)}
         onChangePermanentStatus={(details, keep) => {
           changeContactKeepAttribute(details.id, keep)
         }}
         onAddNote={(details, note) => {
-
+          addNoteToParticipantContact(details.id, note)
         }}
-      /*onContactDetailsChanged={(details) => {
-        const index = contactDetailsList.findIndex(cd => cd.id === details.id);
-        setSelectedContactDetails({ ...details })
-        if (index > -1) {
-          setContactDetailsList(prev => {
-            prev[index] = details;
-            return [...prev];
-          })
-        }
-      }}*/
       />
     </div>
   );
