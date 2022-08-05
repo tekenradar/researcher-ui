@@ -48,6 +48,9 @@ export interface ContactDetailsData {
 }
 
 
+const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
+const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SERVICE_API_KEY : "";
+
 const dummyParticipantRecords: ContactDetailsData[] = [
   {
     id: "1",
@@ -112,31 +115,53 @@ const dummyParticipantRecords: ContactDetailsData[] = [
 
 
 const Contacts: React.FC = () => {
-  const { studyInfo } = useAppContext();
+  const { studyInfo, isLoading } = useAppContext();
   let navigate = useNavigate();
 
   const [contactDetailsList, setContactDetailsList] = useState<ContactDetailsData[]>([])
   const [selectedContactDetails, setSelectedContactDetails] = useState<ContactDetailsData>();
-  const [loadingContactDetails, setLoadingContactDetails] = useState(true);
+  const [loadingContactDetails, setLoadingContactDetails] = useState(false);
 
   useEffect(() => {
-    if (studyInfo !== undefined && !studyInfo.features.contacts) {
+    if (!studyInfo) {
+      return;
+    }
+    if (!studyInfo.features.contacts) {
       navigate('../unavailable', { replace: true })
     }
-  }, [navigate, studyInfo])
+    if (!isLoading && !loadingContactDetails) {
+      fetchContactDetails();
+    }
+
+  }, [navigate, studyInfo, isLoading])
 
   useEffect(() => {
     setSelectedContactDetails(undefined);
-    fetchContactDetails();
+
   }, [])
 
   const fetchContactDetails = async () => {
-    setLoadingContactDetails(true);
-    // TODO
-    setTimeout(() => {
-      setContactDetailsList(dummyParticipantRecords);
+    try {
+      setLoadingContactDetails(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts`);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setContactDetailsList(data.participantContacts);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
       setLoadingContactDetails(false);
-    }, 1200)
+    }
+
   }
 
   return (
