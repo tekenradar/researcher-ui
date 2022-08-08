@@ -78,7 +78,7 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
       <h5 className="">
         Email Notifications
       </h5>
-      <p>Recieve email notification, whenever a new entry is added to the above list.</p>
+      <p>Recieve email notification, when a new entry is added to the above list.</p>
       <ListGroup>
         {renderNotificationList()}
       </ListGroup>
