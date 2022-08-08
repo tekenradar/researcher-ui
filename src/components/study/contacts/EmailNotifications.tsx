@@ -1,17 +1,23 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import LoadingButton from '../../LoadingButton';
 
-interface EmailNotificationsProps {
+export interface NotificationSub {
+  id: string;
+  topic: string;
+  email: string;
 }
 
-const dummyNotifications: Array<string> = [
-  'test@email.nl',
-  'test2@email.nl'
-];
+interface EmailNotificationsProps {
+  isLoading: boolean;
+  notificationSubs: NotificationSub[];
+  onAddNewSub: (email: string) => void;
+  onDeleteSub: (id: string) => void;
+}
+
 
 
 const emailFormatRegexp = new RegExp(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -22,21 +28,10 @@ const checkEmailFormat = (email: string): boolean => {
 
 const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
   const [newEmailSubscription, setNewEmailSubscription] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [notifications, setNotifications] = useState<string[]>([]);
-
-  useEffect(() => {
-    setNewEmailSubscription('');
-    setTimeout(() => {
-      setNotifications(dummyNotifications)
-      setIsLoading(false);
-    }, 1000)
-  }, [])
 
 
   const renderNotificationList = () => {
-    if (isLoading) {
+    if (props.isLoading) {
       return <div className='py-2 text-center'>
         <Spinner className="mx-1" size="sm" animation="grow" />
         <Spinner className="mx-1" size="sm" animation="grow" />
@@ -44,26 +39,25 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
       </div>
     }
 
-    if (notifications.length < 1) {
+    if (props.notificationSubs.length < 1) {
       return (
         <ListGroup.Item className="text-muted">Currently there are no subscriptions for this study.</ListGroup.Item>
       )
     }
 
-    return notifications.map(notification => {
+    return props.notificationSubs.map(notification => {
       return (
         <ListGroup.Item
-          key={notification}
+          key={notification.id}
           className="d-flex align-items-center"
         >
-          <span className="flex-grow-1">{notification}</span>
+          <span className="flex-grow-1">{notification.email}</span>
           <OverlayTrigger placement="bottom" overlay={<Tooltip>Remove email from notification list</Tooltip>}>
             <button className={clsx("btn text-secondary")}
               onClick={() => {
-                const confirmed = window.confirm(`Do you want to remove the entry "${notification}" from the notification list?`)
+                const confirmed = window.confirm(`Do you want to remove the entry "${notification.email}" from the notification list?`)
                 if (confirmed) {
-                  // TODO: add logic to delete notification from the list
-                  console.log('TODO: delete email from notification list')
+                  props.onDeleteSub(notification.id)
                 }
               }}
             >
@@ -108,20 +102,17 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
               "btn btn-secondary",
             )}
             onClick={() => {
-              if (notifications.find(n => n === newEmailSubscription)) {
+              if (props.notificationSubs.find(n => n.email === newEmailSubscription)) {
                 alert(`"${newEmailSubscription}" is already in the list.`)
                 return;
               }
               const confirmed = window.confirm(`You are about to add the email "${newEmailSubscription}" to the notification list. Do you want to proceed?`)
               if (confirmed) {
-                // TODO: add logic to add notification to the list
-                setIsLoading(true)
-                console.log('TODO: add email to notification list')
-
+                props.onAddNewSub(newEmailSubscription);
               }
             }}
             disabled={!checkEmailFormat(newEmailSubscription)}
-            loading={isLoading}
+            loading={props.isLoading}
           />
         </InputGroup>
       </Form.Group>

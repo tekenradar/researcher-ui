@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Credits from "../../components/Credits";
-import EmailNotifications from "../../components/study/contacts/EmailNotifications";
+import EmailNotifications, { NotificationSub } from "../../components/study/contacts/EmailNotifications";
 import ContactDetails from "../../components/study/contacts/ContactDetails";
 import ContactTable from "../../components/study/contacts/ContactTable";
 import { useAppContext } from "../../hooks/useAppContext";
@@ -51,6 +51,7 @@ export interface ContactDetailsData {
 const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
 const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SERVICE_API_KEY : "";
 
+const contactTopic = "contact";
 
 const Contacts: React.FC = () => {
   const { studyInfo, isLoading } = useAppContext();
@@ -59,6 +60,9 @@ const Contacts: React.FC = () => {
   const [contactDetailsList, setContactDetailsList] = useState<ContactDetailsData[]>([])
   const [selectedContactDetails, setSelectedContactDetails] = useState<ContactDetailsData>();
   const [loadingContactDetails, setLoadingContactDetails] = useState(false);
+
+  const [loadingNotificationSubs, setLoadingNotificationSubs] = useState(false);
+  const [notificationSubs, setNotificationSubs] = useState<NotificationSub[]>([])
 
   useEffect(() => {
     if (!studyInfo) {
@@ -69,6 +73,9 @@ const Contacts: React.FC = () => {
     }
     if (!isLoading && !loadingContactDetails) {
       fetchContactDetails();
+    }
+    if (!isLoading && !loadingNotificationSubs) {
+      fetchNotificationSubs();
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -157,6 +164,79 @@ const Contacts: React.FC = () => {
     }
   }
 
+  const fetchNotificationSubs = async () => {
+    try {
+      setLoadingNotificationSubs(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications`);
+      url.search = new URLSearchParams({ topic: contactTopic }).toString();
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setNotificationSubs(data.emailNotifications);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      setLoadingNotificationSubs(false);
+    }
+  }
+
+  const addNotificationSub = async (sub: NotificationSub) => {
+    try {
+      setLoadingNotificationSubs(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications`);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        method: 'POST',
+        body: JSON.stringify(sub),
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setNotificationSubs(data.emailNotifications);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      setLoadingNotificationSubs(false);
+    }
+  }
+
+  const deleteNotificationSub = async (id: string) => {
+    try {
+      setLoadingNotificationSubs(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications/${id}`);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        method: 'DELETE',
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      fetchNotificationSubs()
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      setLoadingNotificationSubs(false);
+    }
+  }
+
 
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
@@ -177,7 +257,21 @@ const Contacts: React.FC = () => {
             }}
           />
         </div>
-        <EmailNotifications />
+        <EmailNotifications
+          isLoading={loadingNotificationSubs}
+          notificationSubs={notificationSubs}
+          onAddNewSub={(email) => {
+            const sub: NotificationSub = {
+              id: '',
+              topic: contactTopic,
+              email: email,
+            }
+            addNotificationSub(sub);
+          }}
+          onDeleteSub={(id: string) => {
+            deleteNotificationSub(id);
+          }}
+        />
         <Credits />
       </div>
       <ContactDetails
