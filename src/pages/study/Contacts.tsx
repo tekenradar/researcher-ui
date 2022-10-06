@@ -5,7 +5,12 @@ import ContactDetails from "../../components/study/contacts/ContactDetails";
 import ContactTable from "../../components/study/contacts/ContactTable";
 import { useAppContext } from "../../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSave
+} from "@fortawesome/free-solid-svg-icons";
+import { saveAs } from 'file-saver';
+import { format } from "date-fns";
 
 interface Note {
   id: string;
@@ -164,6 +169,30 @@ const Contacts: React.FC = () => {
     }
   }
 
+  const deleteParticipantContact = async (contactId: string) => {
+    try {
+      setLoadingContactDetails(true);
+      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts/${contactId}`);
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Api-Key': apiKey,
+        },
+        method: 'DELETE',
+        credentials: "include"
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      setContactDetailsList(data.participantContacts);
+    } catch (err: any) {
+      console.error(err)
+    } finally {
+      setLoadingContactDetails(false);
+    }
+  }
+
   const fetchNotificationSubs = async () => {
     try {
       setLoadingNotificationSubs(true);
@@ -237,6 +266,88 @@ const Contacts: React.FC = () => {
     }
   }
 
+  const toCSVentry = (value?: string): string => {
+    if (value === undefined) {
+      return '""';
+    }
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+
+  const downloadContactDataTable = () => {
+    const filename = `${studyInfo?.key}_participant_contacts_${format(new Date(), 'yyyy-MM-dd-HH-mm-ss')}.csv`;
+    var content = '';
+    const sep = ',';
+    const lineEnd = '\r\n';
+
+    // header:
+    const header = [
+      '"Contact ID"',
+      '"Added at"',
+      '"Session ID"',
+      '"Participant ID"',
+      '"Keep"',
+
+      '"Age Flag"',
+      '"Gender Flag"',
+      '"Interested in other studies"',
+
+      '"First name"',
+      '"Last name"',
+      '"Email"',
+      '"Phone"',
+      '"Birthday"',
+      '"Gender"',
+
+      '"GP_Office"',
+      '"GP_Name"',
+      '"GP_Phone"',
+      '"GP_Street"',
+      '"GP_Nr"',
+      '"GP_Postcode"',
+      '"GP_City"',
+
+      '"Notes"'
+    ];
+    content += header.join(sep) + lineEnd;
+
+    // rows:
+    contactDetailsList.forEach(details => {
+      const row = [
+        `"${details.id}"`,
+        `"${details.addedAt}"`,
+        `"${details.sessionID}"`,
+        `"${details.participantID}"`,
+        `"${details.keepContactData}"`,
+
+        `"${details.general.age}"`,
+        `"${details.general.gender}"`,
+        `"${details.general.otherStudies}"`,
+
+        toCSVentry(details.contactData?.firstName),
+        toCSVentry(details.contactData?.lastName),
+        toCSVentry(details.contactData?.email),
+        toCSVentry(details.contactData?.phone),
+        `"${details.contactData?.birthday}"`,
+        toCSVentry(details.contactData?.gender),
+
+        toCSVentry(details.contactData?.gp?.office),
+        toCSVentry(details.contactData?.gp?.name),
+        toCSVentry(details.contactData?.gp?.phone),
+        toCSVentry(details.contactData?.gp?.address.street),
+        toCSVentry(details.contactData?.gp?.address.nr),
+        toCSVentry(details.contactData?.gp?.address.postcode),
+        toCSVentry(details.contactData?.gp?.address.city),
+
+        `"${JSON.stringify(details.notes).replace(/"/g, '""')}"`,
+      ]
+      content += row.join(sep) + lineEnd;
+    })
+
+
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, filename);
+  }
+
 
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
@@ -247,15 +358,24 @@ const Contacts: React.FC = () => {
             isLoading={loadingContactDetails}
             contactDetailsList={contactDetailsList}
             selectedContactDetails={selectedContactDetails}
-            onParticipantRowClicked={(participantId: string) => {
+            onParticipantRowClicked={(id: string) => {
               contactDetailsList.map((element) => {
-                if (element.participantID === participantId) {
+                if (element.id === id) {
                   setSelectedContactDetails(element);
                 }
                 return null;
               });
             }}
           />
+          <div className="text-start">
+            <button
+              className="btn btn-outline-secondary"
+              onClick={downloadContactDataTable}
+            >
+              <FontAwesomeIcon icon={faSave} /> Save to disk
+            </button>
+          </div>
+
         </div>
         <EmailNotifications
           isLoading={loadingNotificationSubs}
@@ -283,6 +403,9 @@ const Contacts: React.FC = () => {
         }}
         onAddNote={(details, note) => {
           addNoteToParticipantContact(details.id, note)
+        }}
+        onDeleteContact={(details) => {
+          deleteParticipantContact(details.id);
         }}
       />
     </div>

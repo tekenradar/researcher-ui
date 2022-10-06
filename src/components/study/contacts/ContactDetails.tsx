@@ -11,6 +11,7 @@ import Notes, { Note } from "./Notes";
 import { makeid } from "../../../utils/makeid";
 import { fromUnixTime, format, getUnixTime } from "date-fns";
 import { useAuthContext } from "../../../hooks/useAuthContext";
+import LoadingButton from "../../LoadingButton";
 
 
 
@@ -20,6 +21,7 @@ interface ContactDetailsProps {
   onClose: () => void;
   onChangePermanentStatus: (contactDetails: ContactDetailsData, keep: boolean) => void;
   onAddNote: (contactDetails: ContactDetailsData, note: Note) => void;
+  onDeleteContact: (contactDetails: ContactDetailsData) => void;
 }
 
 const showValueOrDashIfMissing = (value?: string | number): string => {
@@ -220,6 +222,21 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
           isLoading={props.isLoading}
         />
 
+        <hr></hr>
+        <LoadingButton
+          className="btn btn-danger"
+          label="Delete Entry"
+          loading={props.isLoading}
+          disabled={props.isLoading}
+          onClick={() => {
+            if (!props.contactDetails) {
+              return;
+            }
+            if (window.confirm('Do you want to delete this entry (inlcuding all notes and contact infos) permanently?')) {
+              props.onDeleteContact(props.contactDetails)
+            }
+          }}
+        />
       </div>
     );
   };

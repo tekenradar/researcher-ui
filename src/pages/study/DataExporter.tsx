@@ -55,7 +55,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
       }
 
       const data = await response.blob();
-      const filename = `${studyInfo?.key}_${selectedDataset}_${format(startDate, 'yyyy-MM-dd')}-${format(endDate, 'yyyy-MM-dd')}.csv`
+      const filename = `${studyInfo?.key}_${studyInfo?.availableDatasets?.find(item => item.id === selectedDataset)?.surveyKey}_${format(startDate, 'yyyy-MM-dd')}-${format(endDate, 'yyyy-MM-dd')}.csv`
       saveAs(data, filename);
 
     } catch (err: any) {

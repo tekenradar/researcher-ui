@@ -28,6 +28,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
       {Object.keys(props.contactDetailsList[0].general).map((item) => {
         return <th key={item} scope="col">{item}</th>;
       })}
+      <th>Contact</th>
     </React.Fragment>);
   };
 
@@ -44,7 +45,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
             "fw-bold": props.selectedContactDetails?.id === item.id
           })}
           onClick={() => {
-            props.onParticipantRowClicked(item.participantID as string);
+            props.onParticipantRowClicked(item.id as string);
           }}
         >
           {tableEachRow(item)}
@@ -63,6 +64,10 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
         {Object.values(item.general).map((rowElement, index) => {
           return <td key={index}>{"" + rowElement}</td>;
         })}
+        <td>{
+          item.keepContactData ? 'Permanent' : (item.contactData !== null ? 'Available' : 'Empty')
+        }
+        </td>
       </React.Fragment>
     )
   };
