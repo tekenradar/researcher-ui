@@ -20,7 +20,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : undefined}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="studies">

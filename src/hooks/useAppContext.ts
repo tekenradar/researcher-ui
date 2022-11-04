@@ -33,77 +33,8 @@ export interface AppContextData {
 }
 
 
-export const dummyStudies = [
-  {
-    key: "tekenradar", name: "Tekenradar", description: "Default study of tekenradar",
-    studyColor: 'color-1',
-    features: {
-      datasetExporter: true,
-      contacts: false,
-    }
-  },
-  {
-    key: "tb-only", name: "TB only ", description: "Tickbite reports without health data",
-    studyColor: 'color-2',
-    features: {
-      datasetExporter: true,
-      contacts: false,
-    }
-  },
-  {
-    key: "weekly-tb", name: "Weekly TB", description: "Weekly TB Cohort in collaboration with...",
-    studyColor: 'color-3',
-    features: {
-      datasetExporter: true,
-      contacts: false,
-    }
-  },
-  //
-  {
-    key: "k-em-contact", name: "kEM", description: "kEM with contact data",
-    studyColor: 'color-4',
-    features: {
-      datasetExporter: true,
-      contacts: true,
-    }
-  },
-  {
-    key: "em-adult-contact", name: "EM Adult", description: "EM Adults with contact data",
-    studyColor: 'color-5',
-    features: {
-      datasetExporter: true,
-      contacts: true,
-    }
-  },
-  {
-    key: "fever-adult-contact", name: "Fever Adult", description: "Fever Adults with contact data",
-    studyColor: 'color-6',
-    features: {
-      datasetExporter: true,
-      contacts: true,
-    }
-  },
-  {
-    key: "tb-adult-contact", name: "TB Adults", description: "TB Adults with contact data",
-    studyColor: 'color-7',
-    features: {
-      datasetExporter: true,
-      contacts: true,
-    }
-  },
-  {
-    key: "tb-kids-contact", name: "TB Kids", description: "TB Kids with contact data",
-    studyColor: 'color-8',
-    features: {
-      datasetExporter: true,
-      contacts: true,
-    }
-  },
-];
-
 const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
 const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SERVICE_API_KEY : "";
-
 
 export const useAppContextValue = (): AppContextData => {
   let params = useParams();
