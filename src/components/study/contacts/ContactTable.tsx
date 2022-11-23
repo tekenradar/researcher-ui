@@ -83,7 +83,7 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
 
   if (props.contactDetailsList.length < 1) {
     return <div className='py-3 text-center'>
-      <p>No contact infos found in this study yet. Check back later or refresh the page.</p>
+      <p>No contact infos found in this substudy yet. Check back later or refresh the page.</p>
     </div>
   }
 

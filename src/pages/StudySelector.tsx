@@ -26,7 +26,7 @@ const StudySelector: React.FC = () => {
   const fetchStudyInfos = async () => {
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/study/infos`);
+      const url = new URL(`${apiRoot}/v1/substudy/infos`);
 
       const response = await fetch(url.toString(), {
         headers: {

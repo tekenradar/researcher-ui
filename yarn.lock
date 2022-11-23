@@ -4322,6 +4322,13 @@ file-saver@^2.0.5:
   resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
   integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
 
+file-selector@0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.2.4.tgz#7b98286f9dbb9925f420130ea5ed0a69238d4d80"
+  integrity sha512-ZDsQNbrv6qRi1YTDOEWzf5J2KjZ9KMI1Q2SGeTkCJmNNW25Jg4TW4UMcmoqcg4WrAyKRcpBXdbWRxkfrOzVRbA==
+  dependencies:
+    tslib "^2.0.3"
+
 filelist@^1.0.1:
   version "1.0.3"
   resolved "https://registry.npmjs.org/filelist/-/filelist-1.0.3.tgz"
@@ -8552,6 +8559,13 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-file-picker@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/use-file-picker/-/use-file-picker-1.5.1.tgz#969fb536886f3cc6b9db85e5341d0b472b2a3ac6"
+  integrity sha512-mKkoEX1Iw8SufkLYEvwGI+faT9LyT58vWY1GxdxNpxe2Z5bzaQ6GXNYADrPIbUsg1TJy67VsVSIafrqx4yqbBg==
+  dependencies:
+    file-selector "0.2.4"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

@@ -40,7 +40,7 @@ const DataExporter: React.FC<DataExporterProps> = (props) => {
     setErrorMsg('')
     try {
       setLoading(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/data/${selectedDataset}`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/data/${selectedDataset}`);
       url.search = new URLSearchParams({ from: `${getUnixTime(startDate)}`, until: `${getUnixTime(endDate)}` }).toString();
 
       const response = await fetch(url.toString(), {

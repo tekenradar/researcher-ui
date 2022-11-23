@@ -60,7 +60,7 @@ export const useAppContextValue = (): AppContextData => {
     }
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyKey}/`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyKey}/`);
 
       const response = await fetch(url.toString(), {
         method: 'GET',

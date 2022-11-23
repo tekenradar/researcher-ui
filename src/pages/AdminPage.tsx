@@ -28,7 +28,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
   const fetchAllStudyInfos = async () => {
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/study-management/study-info`);
+      const url = new URL(`${apiRoot}/v1/substudy-management`);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -52,7 +52,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
   const saveStudyInfo = async (studyInfo: StudyInfo) => {
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/study-management/study-info`);
+      const url = new URL(`${apiRoot}/v1/substudy-management`);
 
       const response = await fetch(url.toString(), {
         method: 'POST',
@@ -80,7 +80,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
   const deleteStudyInfo = async (studyKey: string) => {
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/study-management/study-info/${studyKey}`);
+      const url = new URL(`${apiRoot}/v1/substudy-management`);
 
       const response = await fetch(url.toString(), {
         method: 'DELETE',

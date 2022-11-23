@@ -15,7 +15,7 @@ interface StudyInfoListProps {
 const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
   return (
     <div className='bg-white h-100 border-end overflow-scroll' style={{ minWidth: 150 }}>
-      <h6 className='ms-2 mt-3'>Edit study:</h6>
+      <h6 className='ms-2 mt-3'>Edit substudy:</h6>
       {props.isLoading ? <div className='py-3 text-center'>
         <Spinner className="mx-1" size="sm" animation="grow" />
         <Spinner className="mx-1" size="sm" animation="grow" />

@@ -100,7 +100,7 @@ const Contacts: React.FC = () => {
   const fetchContactDetails = async () => {
     try {
       setLoadingContactDetails(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/participant-contacts`);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -123,7 +123,7 @@ const Contacts: React.FC = () => {
   const changeContactKeepAttribute = async (contactId: string, keep: boolean) => {
     try {
       setLoadingContactDetails(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts/${contactId}/keep`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/participant-contacts/${contactId}/keep`);
       url.search = new URLSearchParams({ value: keep.toString() }).toString();
 
       const response = await fetch(url.toString(), {
@@ -147,7 +147,7 @@ const Contacts: React.FC = () => {
   const addNoteToParticipantContact = async (contactId: string, note: Note) => {
     try {
       setLoadingContactDetails(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts/${contactId}/note`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/participant-contacts/${contactId}/note`);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -172,7 +172,7 @@ const Contacts: React.FC = () => {
   const deleteParticipantContact = async (contactId: string) => {
     try {
       setLoadingContactDetails(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/participant-contacts/${contactId}`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/participant-contacts/${contactId}`);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -196,7 +196,7 @@ const Contacts: React.FC = () => {
   const fetchNotificationSubs = async () => {
     try {
       setLoadingNotificationSubs(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/notifications`);
       url.search = new URLSearchParams({ topic: contactTopic }).toString();
 
       const response = await fetch(url.toString(), {
@@ -220,7 +220,7 @@ const Contacts: React.FC = () => {
   const addNotificationSub = async (sub: NotificationSub) => {
     try {
       setLoadingNotificationSubs(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/notifications`);
 
       const response = await fetch(url.toString(), {
         headers: {
@@ -245,7 +245,7 @@ const Contacts: React.FC = () => {
   const deleteNotificationSub = async (id: string) => {
     try {
       setLoadingNotificationSubs(true);
-      const url = new URL(`${apiRoot}/v1/study/${studyInfo?.key}/notifications/${id}`);
+      const url = new URL(`${apiRoot}/v1/substudy/${studyInfo?.key}/notifications/${id}`);
 
       const response = await fetch(url.toString(), {
         headers: {

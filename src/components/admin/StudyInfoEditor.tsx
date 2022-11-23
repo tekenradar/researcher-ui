@@ -8,6 +8,8 @@ import { DatasetInfo, StudyInfo } from '../../hooks/useAppContext';
 import Credits from '../Credits';
 import LoadingButton from '../LoadingButton';
 import DatasetInfoEditor from './DatasetInfoEditor';
+import { saveAs } from 'file-saver';
+import { useFilePicker } from 'use-file-picker';
 
 interface StudyInfoEditorProps {
   isLoading: boolean;
@@ -43,10 +45,22 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
     value: ''
   })
 
+  const [openFileSelector, { filesContent, loading }] = useFilePicker({
+    accept: '.json',
+    multiple: false,
+  });
+
 
   useEffect(() => {
     setCurrentStudy(props.studyInfo ? props.studyInfo : { ...emptyStudyInfo })
   }, [props.studyInfo])
+
+  useEffect(() => {
+    if (filesContent.length > 0) {
+      // console.log(filesContent)
+      setCurrentStudy(JSON.parse(filesContent[0].content))
+    }
+  }, [filesContent])
 
   const validate = (): boolean => {
     if (currentStudy.key.length < 1) {
@@ -206,11 +220,23 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
   return (
     <div className='flex-grow-1 p-3 overflow-scroll mb-5'>
       <div className="bg-white p-3 shadow-sm">
-        <h2 className="h5">{props.studyInfo ? `Edit Study: ${props.studyInfo.name}` : 'Create new study'}</h2>
+        <h2 className="h5">{props.studyInfo ? `Edit Substudy: ${props.studyInfo.name}` : 'Create new substudy'}</h2>
         <Form onSubmit={(event) => {
           event.preventDefault()
           props.onSaveStudy(currentStudy);
         }}>
+          {props.studyInfo === undefined ?
+            <LoadingButton
+              className={clsx(
+                'btn my-3 btn-outline-secondary',
+              )}
+              label="Import Config"
+              type="button"
+              disabled={loading}
+              onClick={() => {
+                openFileSelector()
+              }}
+            /> : null}
           <h3 className='h6'>General</h3>
           <Form.Group className="mb-3" controlId="studyInfo.key">
             <Form.Label>Study-Key</Form.Label>
@@ -226,7 +252,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
             <Form.Label>Name</Form.Label>
             <Form.Control type="text"
               value={currentStudy.name}
-              placeholder="Give a short name to your study"
+              placeholder="Give a short name to your substudy"
               onChange={updateCurrentStudyValue('name')}
             />
           </Form.Group>
@@ -236,15 +262,15 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
             <Form.Control
               as="textarea"
               value={currentStudy.description}
-              placeholder="You can add a short description that is displayed on the study selector page."
+              placeholder="You can add a short description that is displayed on the substudy selector page."
               onChange={updateCurrentStudyValue('description')}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="studyInfo.description">
-            <Form.Label>Study color</Form.Label>
+            <Form.Label>Substudy color</Form.Label>
             <div className='d-flex mb-3 align-items-center'>
-              <Form.Select aria-label="Study color picker"
+              <Form.Select aria-label="Substudy color picker"
                 value={currentStudy.studyColor}
                 onChange={updateCurrentStudyValue('studyColor')}
               >
@@ -338,7 +364,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
               <hr></hr>
               <div className='mb-3'>
                 <h3 className='h6'>Participant contact config</h3>
-                <Alert variant='info'>Participant contacts are recorded through T0_Invites survey. The event will be processed by the study if the following participant flag (with key and value) are preset in the participant state.</Alert>
+                <Alert variant='info'>Participant contacts are recorded through T0_Invites survey. The event will be processed by the substudy if the following participant flag (with key and value) are preset in the participant state.</Alert>
                 {renderContactConfigInputs()}
               </div>
             </React.Fragment>
@@ -349,16 +375,29 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
           <LoadingButton
             type='submit'
             className='btn btn-primary'
-            label='Save'
+            label='Upload config to server'
             disabled={!validate()}
           />
+          {props.studyInfo ?
+            <LoadingButton
+              className={clsx(
+                'btn ms-2 btn-outline-secondary',
+              )}
+              label="Export as json file"
+              type="button"
+              disabled={!validate()}
+              onClick={() => {
+                const content = JSON.stringify(currentStudy, undefined, 2);
+                saveAs(new Blob([content]), `${currentStudy.key}.json`)
+              }}
+            /> : null}
         </Form>
       </div >
       {
         props.studyInfo !== undefined ? <div className="bg-white p-3  mt-3 shadow-sm">
           <h2 className="h5 text-danger">Delete Study: {props.studyInfo.name}</h2>
           <Alert variant='danger'>
-            This is an irreversible action. Perform this only if you are certain of the consequences and you intend to delete the study object.
+            This is an irreversible action. Perform this only if you are certain of the consequences and you intend to delete the substudy object.
           </Alert>
           <LoadingButton
             className='btn btn-danger'

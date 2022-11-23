@@ -19,11 +19,11 @@ const AdminAppbar: React.FC = () => {
       "nav-link ",
 
     )} to="/">
-      <OverlayTrigger placement="bottom" overlay={<Tooltip>Exit Study Management</Tooltip>}>
+      <OverlayTrigger placement="bottom" overlay={<Tooltip>Exit Substudy Management</Tooltip>}>
         <span>
           <FontAwesomeIcon className="fa-lg me-2" icon={faArrowLeft} />
 
-          <span className="d-none d-md-inline-block">Exit Study Management</span>
+          <span className="d-none d-md-inline-block">Exit Substudy Management</span>
         </span>
       </OverlayTrigger>
 
