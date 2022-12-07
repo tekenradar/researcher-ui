@@ -80,7 +80,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
   const deleteStudyInfo = async (studyKey: string) => {
     try {
       setIsLoading(true);
-      const url = new URL(`${apiRoot}/v1/substudy-management`);
+      const url = new URL(`${apiRoot}/v1/substudy-management/${studyKey}`);
 
       const response = await fetch(url.toString(), {
         method: 'DELETE',
