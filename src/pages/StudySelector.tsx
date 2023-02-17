@@ -4,7 +4,7 @@ import StudyInfoCard from "../components/study/StudyInfoCard";
 import Credits from "../components/Credits";
 import Appbar from "../components/Appbar";
 import { useAuthContext } from "../hooks/useAuthContext";
-import { Spinner } from "react-bootstrap";
+import { Alert, Spinner } from "react-bootstrap";
 
 
 const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
@@ -55,6 +55,17 @@ const StudySelector: React.FC = () => {
     </div>
   }
 
+  if (!studies || studies.length < 1) {
+    return <div className="d-flex align-items-center w-100 justify-content-center vh-100 p-3">
+      <div>
+        <h1>Tekenradar Researcher UI</h1>
+        <Alert variant="warning">
+          Currently, you don't have access to any study. Please ask the Tekenradar Researcher Team admin.
+        </Alert>
+      </div>
+    </div>
+  }
+
   return (
     <React.Fragment>
       <Appbar />
@@ -62,7 +73,6 @@ const StudySelector: React.FC = () => {
       <div className="container h-100 justify-content-center overflow-scroll">
         <div className="row justify-content-start g-3 py-3">
           <h2 className="h4 mb-0">Select a study</h2>
-          {studies.length < 1 ? <p>Currently, you don't have access to any study. Please ask the Tekenradar Researcher Team admin.</p> : null}
           {
             studies.map((study) => <StudyInfoCard
               key={study.key}
