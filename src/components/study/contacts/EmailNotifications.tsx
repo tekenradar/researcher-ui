@@ -74,7 +74,7 @@ const EmailNotifications: React.FC<EmailNotificationsProps> = (props) => {
 
 
   return (
-    <div className="bg-white p-3 mt-3  shadow-sm">
+    <div className="bg-white p-3 mt-3 rounded shadow-sm">
       <h5 className="">
         Email Notifications
       </h5>

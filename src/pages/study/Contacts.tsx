@@ -352,7 +352,7 @@ const Contacts: React.FC = () => {
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
       <div className="table-responsive flex-grow-1 p-3">
-        <div className="table-responsive flex-grow-1 p-3 bg-white shadow-sm">
+        <div className="table-responsive flex-grow-1 p-3 bg-white rounded shadow-sm">
           <h2 className="">Participant Contacts</h2>
           <ContactTable
             isLoading={loadingContactDetails}

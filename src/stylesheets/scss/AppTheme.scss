@@ -33,7 +33,7 @@ $custom-colors: (
 // Merge the maps
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
-$enable-rounded: false;
+$enable-rounded: true;
 
 .scale-effect-on-hover {
   transition: transform 300ms ease-in-out;

@@ -14,6 +14,7 @@ import "./stylesheets/scss/AppTheme.scss";
 import Unavailable from "./pages/study/Unavailable";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";
+import AuthErrorPage from "./pages/AuthErrorPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter basename={process.env.NODE_ENV === 'production' ? process.env.PUBLIC_URL : undefined}>
       <Routes>
+        <Route path="/auth-error" element={<AuthErrorPage />} />
         <Route path="/" element={<App />}>
           <Route path="studies">
             <Route index element={<StudySelector />} />
