@@ -21,7 +21,7 @@ export const useStudyColorClassnames = (): {
   }
   const studyColor = appContext.studyInfo.studyColor;
   return {
-    bgColor: `alert-study-${studyColor}`,
+    bgColor: `bg-opacity-10 bg-study-${studyColor}`,
     bgDarkColor: `bg-study-${studyColor}`,
     color: `text-study-${studyColor}`,
     borderClassName: `border-study-${studyColor}`,

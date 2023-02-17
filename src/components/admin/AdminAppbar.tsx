@@ -16,14 +16,14 @@ const AdminAppbar: React.FC = () => {
   const exitButton = <div className="flex-grow-1" style={{ width: 0 }}>
 
     <NavLink className={clsx(
-      "nav-link ",
+      "nav-link ps-3",
 
     )} to="/">
       <OverlayTrigger placement="bottom" overlay={<Tooltip>Exit Substudy Management</Tooltip>}>
         <span>
           <FontAwesomeIcon className="fa-lg me-2" icon={faArrowLeft} />
 
-          <span className="d-none d-md-inline-block">Exit Substudy Management</span>
+          <span className="d-none d-md-inline-block">Exit Sub-study Management</span>
         </span>
       </OverlayTrigger>
 

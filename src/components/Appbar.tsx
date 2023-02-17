@@ -22,6 +22,7 @@ const Appbar: React.FC = () => {
     <div className="flex-grow-1" style={{ width: 0 }}>
       {appContext.studyInfo !== undefined ? (
         <NavLink className={clsx(
+          "ps-3",
           "nav-link ",
           color
         )} to="../">

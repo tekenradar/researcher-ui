@@ -6,6 +6,9 @@ export interface StudyInfo {
   name: string;
   description: string;
   studyColor: string;
+  accessControl: {
+    emails: string[];
+  };
   features: {
     datasetExporter: boolean;
     contacts: boolean;
