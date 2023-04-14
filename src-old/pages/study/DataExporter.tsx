@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { addMonths } from "date-fns/esm";
 import React, { useEffect, useState } from "react";
 import { Form, Toast, ToastContainer } from "react-bootstrap";
-import Credits from "../../components/Credits";
+import Credits from "../../../components/Credits";
 import CustomDatePicker from "../../components/CustomDatePicker";
 import LoadingButton from "../../components/LoadingButton";
 import { DatasetInfo, useAppContext } from "../../hooks/useAppContext";

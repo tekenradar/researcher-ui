@@ -2,8 +2,8 @@ import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { StudyInfo } from '../../hooks/useAppContext';
+import Link from 'next/link';
+import { StudyInfo } from '../src-old/hooks/useAppContext';
 
 interface StudyInfoCardProps {
   study: StudyInfo;
@@ -21,11 +21,13 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
           borderColor,
           bgColor,
         )}
-        to={props.study.key}
+        href={`/substudies/${props.study.key}`}
       >
         <h5>{props.study.name}</h5>
         <p className='flex-grow-1'>{props.study.description}</p>
-        <div className='text-end text-decoration-underline'>Open Study<FontAwesomeIcon className='ms-2' icon={faAnglesRight} /></div>
+        <div className='text-end text-decoration-underline'>Open Study<FontAwesomeIcon
+          width={16}
+          className='ms-2' icon={faAnglesRight} /></div>
       </Link>
     </div>
   );

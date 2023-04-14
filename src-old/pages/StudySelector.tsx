@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StudyInfo } from "../hooks/useAppContext";
-import StudyInfoCard from "../components/study/StudyInfoCard";
-import Credits from "../components/Credits";
+import StudyInfoCard from "../../components/StudyInfoCard";
+import Credits from "../../components/Credits";
 import Appbar from "../components/Appbar";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Alert, Spinner } from "react-bootstrap";

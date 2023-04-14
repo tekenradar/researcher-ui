@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import Credits from '../components/Credits';
+import Credits from '../../components/Credits';
 
 interface LoginPageProps {
 }

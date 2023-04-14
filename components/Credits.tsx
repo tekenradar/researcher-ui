@@ -6,7 +6,7 @@ const Credits: React.FC = () => {
   return (
     <div className='text-center text-muted py-3' style={{
     }}>
-      <p className='m-0 fs-small'>© 2022 Tekenradar Researcher App v{process.env.REACT_APP_VERSION}</p>
+      <p className='m-0 fs-small'>© 2023 Tekenradar Researcher App v{process.env.NEXT_PUBLIC_APP_VERSION}</p>
 
       <a
         href='https://coneno.com'
@@ -15,7 +15,7 @@ const Credits: React.FC = () => {
         coneno GmbH
         <FontAwesomeIcon
           className='ms-1'
-          size='sm'
+          width={12}
           icon={faArrowUpRightFromSquare} />
       </a>
 

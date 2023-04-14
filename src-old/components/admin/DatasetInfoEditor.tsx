@@ -2,7 +2,7 @@ import { fromUnixTime, getUnixTime } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { DatasetInfo } from '../../hooks/useAppContext';
-import { makeid } from '../../../components/utils/makeid';
+import { makeid } from '../../../utils/makeid';
 import CustomDatePicker from '../CustomDatePicker';
 
 interface DatasetInfoEditorProps {

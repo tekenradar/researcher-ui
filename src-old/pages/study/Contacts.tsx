@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Credits from "../../components/Credits";
+import Credits from "../../../components/Credits";
 import EmailNotifications, { NotificationSub } from "../../components/study/contacts/EmailNotifications";
 import ContactDetails from "../../components/study/contacts/ContactDetails";
 import ContactTable from "../../components/study/contacts/ContactTable";
