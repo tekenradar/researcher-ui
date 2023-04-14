@@ -5,10 +5,10 @@ import { useStudyColorClassnames } from "../../../hooks/useStudyColorClassnames"
 import clsx from "clsx";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ContactDetailsData } from "../../../pages/study/Contacts";
-import { shortenParticipantID } from "../../../utils/shortenParticipantID";
+import { shortenParticipantID } from "../../../../components/utils/shortenParticipantID";
 import styles from './ContactDetails.module.css';
 import Notes, { Note } from "./Notes";
-import { makeid } from "../../../utils/makeid";
+import { makeid } from "../../../../components/utils/makeid";
 import { fromUnixTime, format, getUnixTime } from "date-fns";
 import { useAuthContext } from "../../../hooks/useAuthContext";
 import LoadingButton from "../../LoadingButton";

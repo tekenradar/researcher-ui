@@ -1,16 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import StudySelector from "./pages/StudySelector";
 import Study from "./pages/study/Study";
 import DataExporter from "./pages/study/DataExporter";
 import Contacts from "./pages/study/Contacts";
 
 
-import "./stylesheets/scss/AppTheme.scss";
 import Unavailable from "./pages/study/Unavailable";
 import LoginPage from "./pages/LoginPage";
 import AdminPage from "./pages/AdminPage";

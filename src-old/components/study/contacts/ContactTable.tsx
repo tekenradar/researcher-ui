@@ -5,7 +5,7 @@ import { format, fromUnixTime } from "date-fns";
 import React, { useState } from "react";
 import { Button, Spinner, Table } from "react-bootstrap";
 import { ContactDetailsData } from "../../../pages/study/Contacts";
-import { shortenParticipantID } from "../../../utils/shortenParticipantID";
+import { shortenParticipantID } from "../../../../components/utils/shortenParticipantID";
 
 
 interface ContactTableProps {
