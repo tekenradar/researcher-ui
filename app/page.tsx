@@ -3,8 +3,6 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
 import Profile from "@/components/navbar/Profile";
-import Image from "next/image";
-import logo from '../public/tick-logo.png';
 import Credits from "@/components/Credits";
 import AppTitle from "@/components/AppTitle";
 

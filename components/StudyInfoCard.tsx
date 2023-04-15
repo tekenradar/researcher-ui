@@ -21,7 +21,7 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
           borderColor,
           bgColor,
         )}
-        href={`/substudies/${props.study.key}`}
+        href={`/substudies/${props.study.key}/exporter`}
       >
         <h5>{props.study.name}</h5>
         <p className='flex-grow-1'>{props.study.description}</p>

@@ -25,7 +25,7 @@ const getSubstudies = async (accessToken: string) => {
 export default async function Page(props: PageProps) {
   const session = await getServerSession(authOptions);
   if (!session || session.error || session.accessToken === undefined) {
-    redirect('/login')
+    redirect('/')
   }
 
   const substudies = await getSubstudies(session.accessToken);

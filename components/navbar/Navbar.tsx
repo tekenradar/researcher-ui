@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   return (
     <div className='bg-white border-bottom'>
-      <div className='container-fluid d-flex py-2 align-items-center'>
+      <nav className='container-fluid d-flex py-2 align-items-center'>
         <Image
           src={logo}
           alt='Tick Logo'
@@ -25,7 +25,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         <Profile
           email={props.email}
         />
-      </div>
+      </nav>
     </div>
   );
 };

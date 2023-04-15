@@ -15,16 +15,16 @@ interface ProfileProps {
 const Profile: React.FC<ProfileProps> = (props) => {
   return (
     <>
-      <OverlayTrigger placement="bottom" overlay={<Tooltip>{props.email}</Tooltip>}>
-        <div className="d-flex align-items-center">
-          <FontAwesomeIcon
-            className="fa-lg me-2"
-            width={24}
-            icon={faCircleUser}
-          />
-          <span className="d-none d-md-block me-2">{props.email}</span>
-        </div>
-      </OverlayTrigger>
+
+      <div className="d-flex align-items-center">
+        <FontAwesomeIcon
+          className="fa-lg me-2"
+          width={24}
+          icon={faCircleUser}
+        />
+        <span className="d-none d-md-block me-2">{props.email}</span>
+      </div>
+
       <OverlayTrigger placement="bottom" overlay={<Tooltip>Logout</Tooltip>}>
         <button className={clsx("btn")}
           onClick={() =>
