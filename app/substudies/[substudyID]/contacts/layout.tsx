@@ -1,11 +1,32 @@
+import { getServerSession } from "next-auth/next";
+import { getSubstudy } from "../utils";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/navigation";
 
 
-interface PageProps {
+interface LayoutProps {
   children: React.ReactNode;
   modal: React.ReactNode;
+  params: {
+    substudyID: string
+  },
 }
 
-export default function Layout(props: PageProps) {
+export default async function Layout(props: LayoutProps) {
+  // if substudy does not have this feature - redirect to exporter
+  const session = await getServerSession(authOptions);
+  if (!session || session.error || session.accessToken === undefined) {
+    return <p>Not authenticated</p>
+  }
+
+  const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
+  console.log(substudy)
+
+  if (substudy.features.contacts !== true) {
+    redirect(`/substudies/${props.params.substudyID}/exporter`)
+  }
+
+
   console.log(props.modal)
   return <div>
     {props.children}

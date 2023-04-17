@@ -1,5 +1,6 @@
-import reseacherBackendAPI, { getTokenHeader } from "./api";
-
+import "server-only";
+import reseacherBackendAPI from "./api";
+import { getTokenHeader } from "./utils";
 
 interface TokenResponse {
   accessToken: string;
