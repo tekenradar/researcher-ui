@@ -3,13 +3,25 @@ import React from 'react';
 import Link from 'next/link';
 import { getSubstudyBgColor, getSubstudyBorderColor, getSubstudyTextColor } from '../utils';
 import NavLink from './NavLink';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import { getSubstudy } from '@/app/substudies/[substudyID]/utils';
 
 interface SubstudyNavbarProps {
-  substudy: any;
+  params: {
+    substudyID: string
+  }
 }
 
+export default async function SubstudyNavbar(props: SubstudyNavbarProps) {
+  const session = await getServerSession(authOptions);
+  if (!session || session.error || session.accessToken === undefined) {
+    redirect('/')
+  }
 
-const SubstudyNavbar: React.FC<SubstudyNavbarProps> = ({ substudy }) => {
+  const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
+
   return (
     <nav className={clsx("border-bottom container-fluid",
       'bg-opacity-10',
@@ -54,4 +66,3 @@ const SubstudyNavbar: React.FC<SubstudyNavbarProps> = ({ substudy }) => {
   );
 };
 
-export default SubstudyNavbar;

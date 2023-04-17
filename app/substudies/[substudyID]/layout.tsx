@@ -1,8 +1,5 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
-import { getSubstudy } from "./utils";
 import SubstudyNavbar from "@/components/substudy/navbar/SubstudyNavbar";
+import { Suspense } from "react";
 
 
 interface LayoutProps {
@@ -12,21 +9,19 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
-export const revalidate = 10;
-
 
 export default async function Layout(props: LayoutProps) {
-  const session = await getServerSession(authOptions);
-  if (!session || session.error || session.accessToken === undefined) {
-    redirect('/')
-  }
-
-  const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
-
   return <div className="">
-    <SubstudyNavbar
-      substudy={substudy}
-    />
+    <Suspense fallback={<div
+      className="d-flex justify-content-center align-items-center bg-white border-bottom"
+      style={{ height: 81 }}>
+      <p>Loading {props.params.substudyID}...</p>
+    </div>}>
+      {/* @ts-expect-error Async Server Component */}
+      <SubstudyNavbar
+        params={props.params}
+      />
+    </Suspense>
     {props.children}
   </div>
 };

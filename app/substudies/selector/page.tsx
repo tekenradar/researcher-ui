@@ -20,7 +20,7 @@ export default async function Page(props: PageProps) {
   const substudies = await getSubstudies(session.accessToken);
 
   if (!substudies || substudies.length < 1) {
-    return <div className="d-flex align-items-center w-100 justify-content-center vh-100 p-3">
+    return <div className="d-flex align-items-top w-100 justify-content-center vh-100 p-3">
       <div>
         <h1>Tekenradar Researcher UI</h1>
         <div className='alert alert-warning'>

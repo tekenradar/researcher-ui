@@ -5,7 +5,7 @@ import { getTokenHeader } from "@/utils/backend/utils";
 
 export const getSubstudies = async (accessToken: string) => {
   // TODO: remove this
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  // await new Promise(resolve => setTimeout(resolve, 2000));
 
   const url = new URL(`${researcherBackendURL}/v1/substudy/infos`);
 

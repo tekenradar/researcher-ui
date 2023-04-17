@@ -16,9 +16,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <Navbar
         email={session.user.email ?? ''}
       />
-      <Suspense fallback={<p>loading substudies</p>}>
-        {children}
-      </Suspense>
+      {children}
     </>
   )
 }

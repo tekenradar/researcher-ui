@@ -1,10 +1,7 @@
 import LoadingScreen from '@/components/LoadingScreen';
 import React from 'react';
 
-interface loadingProps {
-}
-
-const loading: React.FC<loadingProps> = (props) => {
+const loading: React.FC = () => {
   return (
     <LoadingScreen />
   );
