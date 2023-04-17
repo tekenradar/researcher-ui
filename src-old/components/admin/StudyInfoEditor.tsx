@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Form, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { DatasetInfo, StudyInfo } from '../../hooks/useAppContext';
 import Credits from '../../../components/Credits';
-import LoadingButton from '../LoadingButton';
+import LoadingButton from '../../../components/LoadingButton';
 import DatasetInfoEditor from './DatasetInfoEditor';
 import { saveAs } from 'file-saver';
 import { useFilePicker } from 'use-file-picker';

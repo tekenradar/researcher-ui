@@ -1,3 +1,5 @@
+'use client'
+
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -74,7 +76,7 @@ const CustomDatepicker: React.FC<CustomDatePickerProps> = (props) => {
       <DatePicker
         id={props.id}
         ref={datePickerRef}
-        className="form-control"
+        className="rounded-0 rounded-start form-control "
         onChange={props.onChange}
         autoComplete="off"
         calendarContainer={DatepickerContainer}

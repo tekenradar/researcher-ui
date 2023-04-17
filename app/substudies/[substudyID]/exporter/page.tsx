@@ -2,6 +2,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import { getSubstudy } from "../utils";
 import Downloader from "@/components/substudy/exporter/Downloader";
+import Credits from "@/components/Credits";
 
 interface PageProps {
   params: {
@@ -19,10 +20,11 @@ export default async function Page(props: PageProps) {
 
   const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
   console.log(substudy)
-  return <h1>
-    exporter - {substudy.toString()}
+  return <div className="container-fluid py-4">
+
     <Downloader
-      datasets={substudy.availableDatasets}
+      substudy={substudy}
     />
-  </h1>
+    <Credits />
+  </div>
 };

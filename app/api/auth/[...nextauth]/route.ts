@@ -1,8 +1,18 @@
 import NextAuth, { AuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+
 import { Provider } from "next-auth/providers"
 import { initializeTokenReq, logoutReq, renewTokenReq } from "@/utils/backend/authAPI";
 
+const RIVMAdfsProvider = {
+  id: "rivm-adfs",
+  name: "RIVM ADFS",
+  type: "oauth",
+  wellKnown: 'https://fs.rivm.nl/FederationMetadata/2007-06/FederationMetadata.xml',
+  clientId: process.env.OAUTH2_RIVM_ADFS_CLIENT_ID,
+  authorization: { params: { scope: " email " } },
+  idToken: true,
+} as Provider
 
 interface CredentialsUser {
   id: string;
@@ -55,6 +65,7 @@ const CASECredentialProvider = CredentialsProvider({
 
 const providers: Provider[] = [
   CASECredentialProvider,
+  RIVMAdfsProvider,
 ];
 
 export const authOptions = {

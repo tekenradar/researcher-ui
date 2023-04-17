@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { Form, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
-import LoadingButton from '../LoadingButton';
+import LoadingButton from '../../../components/LoadingButton';
 
 interface EmailListEditorProps {
   emails: string[];

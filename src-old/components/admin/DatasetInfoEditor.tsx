@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { DatasetInfo } from '../../hooks/useAppContext';
 import { makeid } from '../../../utils/makeid';
-import CustomDatePicker from '../CustomDatePicker';
+import CustomDatePicker from '../../../components/CustomDatePicker';
 
 interface DatasetInfoEditorProps {
   open: boolean;

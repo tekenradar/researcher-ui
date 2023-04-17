@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React, { useState } from 'react';
 import { Form, FormControl, InputGroup, ListGroup, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
-import LoadingButton from '../../LoadingButton';
+import LoadingButton from '../../../../components/LoadingButton';
 
 export interface NotificationSub {
   id: string;

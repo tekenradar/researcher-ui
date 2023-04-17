@@ -11,7 +11,7 @@ import Notes, { Note } from "./Notes";
 import { makeid } from "../../../../utils/makeid";
 import { fromUnixTime, format, getUnixTime } from "date-fns";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import LoadingButton from "../../LoadingButton";
+import LoadingButton from "../../../../components/LoadingButton";
 
 
 

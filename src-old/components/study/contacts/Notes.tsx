@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import LoadingButton from '../../LoadingButton';
+import LoadingButton from '../../../../components/LoadingButton';
 import NoteCard from './NoteCard';
 
 export interface Note {
