@@ -14,7 +14,8 @@ export const getSubstudy = cache(async (substudyKey: string, accessToken: string
   });
   const data = await response.json();
   if (!response.ok) {
-    throw new Error(data.error);
+    console.log(data.error)
+    throw new Error('couldn\'t get substudy');
   }
   return data;
 });

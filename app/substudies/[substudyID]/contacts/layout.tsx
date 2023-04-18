@@ -26,8 +26,6 @@ export default async function Layout(props: LayoutProps) {
     redirect(`/substudies/${props.params.substudyID}/exporter`)
   }
 
-
-  console.log(props.modal)
   return <div>
     {props.children}
     {props.modal}
