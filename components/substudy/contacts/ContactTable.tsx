@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useTransition } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { ContactDetailsData } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +18,7 @@ const compactViewItemLimit = 9;
 
 const ContactTable: React.FC<ContactTableProps> = (props) => {
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const [showAll, setShowAll] = useState(false);
 
@@ -66,7 +67,9 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
           key={index.toFixed()}
           className='cursor-pointer'
           onClick={() => {
-            router.push(`/substudies/${props.substudyID}/contact-viewer/${item.id}`);
+            startTransition(() => {
+              router.push(`/substudies/${props.substudyID}/contact-viewer/${item.id}`);
+            });
           }}
         >
           {tableEachRow(item)}
@@ -82,6 +85,9 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
         striped
         responsive
         hover
+        style={{
+          opacity: isPending ? 0.5 : 1,
+        }}
       >
         <thead>
           <tr>{
