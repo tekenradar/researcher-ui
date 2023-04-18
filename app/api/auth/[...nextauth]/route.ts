@@ -8,8 +8,9 @@ const RIVMAdfsProvider = {
   id: "rivm-adfs",
   name: "RIVM ADFS",
   type: "oauth",
-  wellKnown: 'https://fs.rivm.nl/FederationMetadata/2007-06/FederationMetadata.xml',
+  wellKnown: process.env.OAUTH2_RIVM_ADFS_WELL_KNOWN_URL,
   clientId: process.env.OAUTH2_RIVM_ADFS_CLIENT_ID,
+  clientSecret: process.env.OAUTH2_RIVM_ADFS_CLIENT_SECRET,
   authorization: { params: { scope: " email " } },
   idToken: true,
 } as Provider

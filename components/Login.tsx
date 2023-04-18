@@ -31,7 +31,7 @@ const Login: React.FC<LoginProps> = (props) => {
         disabled={isLoading}
         onClick={async () => {
           setIsLoading(true);
-          //await signIn('rivm-adfs', {
+          // await signIn('rivm-adfs', {
           await signIn('dummy-login', {
             redirect: false,
           });

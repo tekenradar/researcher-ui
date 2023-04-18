@@ -12,45 +12,6 @@ import {
 import { saveAs } from 'file-saver';
 import { format } from "date-fns";
 
-interface Note {
-  id: string;
-  time: number;
-  author: string;
-  content: string;
-}
-
-export interface ContactDetailsData {
-  id: string;
-  addedAt: number;
-  sessionID: string;
-  participantID: string;
-  general: {
-    age: number;
-    gender: string;
-    otherStudies: boolean;
-  };
-  contactData?: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone?: string;
-    birthday?: number;
-    gender?: string;
-    gp?: {
-      office: string;
-      name: string;
-      address: {
-        street: string;
-        nr: string;
-        postcode: string;
-        city: string;
-      }
-      phone: string;
-    }
-  };
-  keepContactData: boolean;
-  notes?: Note[];
-}
 
 
 const apiRoot = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL : '';
@@ -266,115 +227,13 @@ const Contacts: React.FC = () => {
     }
   }
 
-  const toCSVentry = (value?: string): string => {
-    if (value === undefined) {
-      return '""';
-    }
-    return `"${value.replace(/"/g, '""')}"`;
-  }
 
-  const downloadContactDataTable = () => {
-    const filename = `${studyInfo?.key}_participant_contacts_${format(new Date(), 'yyyy-MM-dd-HH-mm-ss')}.csv`;
-    var content = '';
-    const sep = ',';
-    const lineEnd = '\r\n';
-
-    // header:
-    const header = [
-      '"Contact ID"',
-      '"Added at"',
-      '"Session ID"',
-      '"Participant ID"',
-      '"Keep"',
-
-      '"Age Flag"',
-      '"Gender Flag"',
-      '"Interested in other studies"',
-
-      '"First name"',
-      '"Last name"',
-      '"Email"',
-      '"Phone"',
-      '"Birthday"',
-      '"Gender"',
-
-      '"GP_Office"',
-      '"GP_Name"',
-      '"GP_Phone"',
-      '"GP_Street"',
-      '"GP_Nr"',
-      '"GP_Postcode"',
-      '"GP_City"',
-
-      '"Notes"'
-    ];
-    content += header.join(sep) + lineEnd;
-
-    // rows:
-    contactDetailsList.forEach(details => {
-      const row = [
-        `"${details.id}"`,
-        `"${details.addedAt}"`,
-        `"${details.sessionID}"`,
-        `"${details.participantID}"`,
-        `"${details.keepContactData}"`,
-
-        `"${details.general.age}"`,
-        `"${details.general.gender}"`,
-        `"${details.general.otherStudies}"`,
-
-        toCSVentry(details.contactData?.firstName),
-        toCSVentry(details.contactData?.lastName),
-        toCSVentry(details.contactData?.email),
-        toCSVentry(details.contactData?.phone),
-        `"${details.contactData?.birthday}"`,
-        toCSVentry(details.contactData?.gender),
-
-        toCSVentry(details.contactData?.gp?.office),
-        toCSVentry(details.contactData?.gp?.name),
-        toCSVentry(details.contactData?.gp?.phone),
-        toCSVentry(details.contactData?.gp?.address.street),
-        toCSVentry(details.contactData?.gp?.address.nr),
-        toCSVentry(details.contactData?.gp?.address.postcode),
-        toCSVentry(details.contactData?.gp?.address.city),
-
-        `"${JSON.stringify(details.notes).replace(/"/g, '""')}"`,
-      ]
-      content += row.join(sep) + lineEnd;
-    })
-
-
-    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, filename);
-  }
 
 
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
       <div className="table-responsive flex-grow-1 p-3">
         <div className="table-responsive flex-grow-1 p-3 bg-white rounded shadow-sm">
-          <h2 className="">Participant Contacts</h2>
-          <ContactTable
-            isLoading={loadingContactDetails}
-            contactDetailsList={contactDetailsList}
-            selectedContactDetails={selectedContactDetails}
-            onParticipantRowClicked={(id: string) => {
-              contactDetailsList.map((element) => {
-                if (element.id === id) {
-                  setSelectedContactDetails(element);
-                }
-                return null;
-              });
-            }}
-          />
-          <div className="text-start">
-            <button
-              className="btn btn-outline-secondary"
-              onClick={downloadContactDataTable}
-            >
-              <FontAwesomeIcon icon={faSave} /> Save to disk
-            </button>
-          </div>
 
         </div>
         <EmailNotifications
