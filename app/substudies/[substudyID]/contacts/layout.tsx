@@ -20,7 +20,6 @@ export default async function Layout(props: LayoutProps) {
   }
 
   const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
-  console.log(substudy)
 
   if (substudy.features.contacts !== true) {
     redirect(`/substudies/${props.params.substudyID}/exporter`)

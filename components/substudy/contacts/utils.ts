@@ -18,3 +18,19 @@ export const getContactDetailsData = async (substudyID: string) => {
   const data = await apiResponse.json();
   return data;
 }
+
+export const getEmailNotifications = async (substudyID: string) => {
+  const session = await getServerSession(authOptions);
+  if (!session || session.error || session.accessToken === undefined) {
+    throw new Error("Not authenticated");
+  }
+
+  const url = new URL(`${process.env.RESEARCHER_BACKEND_URL}/v1/substudy/${substudyID}/notifications`);
+
+  const apiResponse = await fetch(url.toString(), { headers: { ...getTokenHeader(session.accessToken) } });
+  if (!apiResponse.ok) {
+    return new Response(apiResponse.body, { status: apiResponse.status });
+  }
+  const data = await apiResponse.json();
+  return data;
+}

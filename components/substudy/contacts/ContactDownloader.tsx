@@ -116,7 +116,6 @@ const ContactDownloader: React.FC<ContactDownloaderProps> = (props) => {
       }
 
       const data = await response.json();
-      console.log(data)
       const participantContacts = data.participantContacts;
       saveContactDataTableAsFile(props.substudyID, participantContacts);
     } catch (err: any) {
