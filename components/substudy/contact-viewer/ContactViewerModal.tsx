@@ -27,6 +27,7 @@ const ContactViewerModal: React.FC<ContactViewerModalProps> = (props) => {
   return (
     <Modal
       show={show}
+      size='lg'
       onHide={() => {
         router.back();
       }}
