@@ -65,3 +65,21 @@ $enable-rounded: true;
 .cursor-pointer {
   cursor: pointer;
 }
+
+.pending {
+  animation: fade ease-in-out 1s infinite;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}

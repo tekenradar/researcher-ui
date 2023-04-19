@@ -8,6 +8,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { format, fromUnixTime } from 'date-fns';
 import { shortenParticipantID } from '@/utils/shortenParticipantID';
 import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
 
 interface ContactTableProps {
   substudyID: string;
@@ -85,9 +86,11 @@ const ContactTable: React.FC<ContactTableProps> = (props) => {
         striped
         responsive
         hover
-        style={{
-          opacity: isPending ? 0.5 : 1,
-        }}
+        className={
+          clsx({
+            'pending': isPending,
+          })
+        }
       >
         <thead>
           <tr>{
