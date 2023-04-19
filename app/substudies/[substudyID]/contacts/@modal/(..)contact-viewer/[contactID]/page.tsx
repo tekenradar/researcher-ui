@@ -1,17 +1,18 @@
-'use client';
-
-import { Modal } from "react-bootstrap";
+import { getContactDetails } from "@/app/substudies/[substudyID]/contact-viewer/[contactID]/utils";
+import ContactViewerModal from "@/components/substudy/contact-viewer/ContactViewerModal";
 
 interface PageProps {
+  params: {
+    substudyID: string;
+    contactID: string;
+  };
 }
 
-export default function Page(props: PageProps) {
-  return <Modal show={true}
-    onHide={() => {
-      window.history.back();
-    }}
-  >
+export default async function Page(props: PageProps) {
+  const contactDetails = await getContactDetails(props.params.substudyID, props.params.contactID);
 
-    <h1>contact viewer interceptor</h1>
-  </Modal>
+  return <ContactViewerModal
+    params={props.params}
+    contactDetails={contactDetails}
+  />
 };
