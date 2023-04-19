@@ -72,7 +72,7 @@ const providers: Provider[] = [
 export const authOptions = {
   providers: providers,
   pages: {
-    signIn: '/login',
+    signIn: '/',
   },
   events: {
     signOut: async ({ token }) => {
