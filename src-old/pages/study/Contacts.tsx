@@ -8,7 +8,7 @@ const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SER
 const contactTopic = "contact";
 
 const Contacts: React.FC = () => {
-
+  /*
   const [contactDetailsList, setContactDetailsList] = useState<ContactDetailsData[]>([])
   const [selectedContactDetails, setSelectedContactDetails] = useState<ContactDetailsData>();
   const [loadingContactDetails, setLoadingContactDetails] = useState(false);
@@ -138,12 +138,12 @@ const Contacts: React.FC = () => {
   }
 
 
-
+*/
 
 
   return (
     <div className="d-flex flex-grow-1" style={{ overflowX: 'auto', maxWidth: '100%' }}>
-
+      {/*
       <ContactDetails
         isLoading={loadingContactDetails}
         contactDetails={selectedContactDetails}
@@ -157,7 +157,7 @@ const Contacts: React.FC = () => {
         onDeleteContact={(details) => {
           deleteParticipantContact(details.id);
         }}
-      />
+      />*/}
     </div>
   );
 };

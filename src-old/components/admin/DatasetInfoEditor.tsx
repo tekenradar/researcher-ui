@@ -1,17 +1,16 @@
 import { fromUnixTime, getUnixTime } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { DatasetInfo } from '../../hooks/useAppContext';
 import { makeid } from '../../../utils/makeid';
 import CustomDatePicker from '../../../components/CustomDatePicker';
 
 interface DatasetInfoEditorProps {
   open: boolean;
-  datasetInfo?: DatasetInfo;
-  onSave: (datasetInfo: DatasetInfo) => void;
+  // datasetInfo?: DatasetInfo;
+  // onSave: (datasetInfo: DatasetInfo) => void;
   onCancel: () => void;
 }
-
+/*
 const getDefaultDatasetInfo = (): DatasetInfo => {
   return {
     id: makeid(10),
@@ -21,10 +20,11 @@ const getDefaultDatasetInfo = (): DatasetInfo => {
     startDate: 0,
     endDate: 0
   }
-}
+}*/
 
 const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
-  const [datasetInfo, setDatasetInfo] = useState({ ...getDefaultDatasetInfo() });
+  return <p>todo</p>
+  /*const [datasetInfo, setDatasetInfo] = useState({ ...getDefaultDatasetInfo() });
   const [useStartLimit, setUseStartLimit] = useState(false);
   const [useEndLimit, setUseEndLimit] = useState(false);
 
@@ -220,7 +220,7 @@ const DatasetInfoEditor: React.FC<DatasetInfoEditorProps> = (props) => {
         </Button>
       </Modal.Footer>
     </Modal>
-  );
+  );*/
 };
 
 export default DatasetInfoEditor;

@@ -1,17 +1,18 @@
 import React from "react";
 import clsx from "clsx";
-import { NavLink } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faArrowRightFromBracket, faCircleUser
 } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useAuthContext } from "../../hooks/useAuthContext";
+
 
 
 const AdminAppbar: React.FC = () => {
-  const authContext = useAuthContext();
+  return <p>todo</p>
+  /*const authContext = useAuthContext();
 
   const exitButton = <div className="flex-grow-1" style={{ width: 0 }}>
 
@@ -60,7 +61,7 @@ const AdminAppbar: React.FC = () => {
         </button>
       </OverlayTrigger>
     </div>
-  );
+  );*/
 };
 
 export default AdminAppbar;

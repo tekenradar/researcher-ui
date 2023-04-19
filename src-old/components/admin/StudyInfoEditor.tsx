@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { format, fromUnixTime } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Alert, Button, Form, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { DatasetInfo, StudyInfo } from '../../hooks/useAppContext';
+
 import Credits from '../../../components/Credits';
 import LoadingButton from '../../../components/LoadingButton';
 import DatasetInfoEditor from './DatasetInfoEditor';
@@ -14,11 +14,12 @@ import EmailListEditor from './EmailListEditor';
 
 interface StudyInfoEditorProps {
   isLoading: boolean;
-  studyInfo?: StudyInfo;
-  onSaveStudy: (studyInfo: StudyInfo) => void;
+  //studyInfo?: StudyInfo;
+  //onSaveStudy: (studyInfo: StudyInfo) => void;
   onDeleteStudy: (studyKey: string) => void;
 }
 
+/*
 const emptyStudyInfo: StudyInfo = {
   key: '',
   name: '',
@@ -35,7 +36,7 @@ const emptyStudyInfo: StudyInfo = {
   contactFeatureConfig: {
     includeWithParticipantFlags: {}
   }
-}
+}*/
 
 const Card: React.FC<{ className?: string, children: React.ReactNode; }> = (props) => {
   return <div className={clsx('bg-white shadow-sm rounded overflow-hidden', props.className)}>
@@ -74,7 +75,8 @@ const EditorSection: React.FC<{
 
 
 const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
-  const [currentStudy, setCurrentStudy] = useState<StudyInfo>(props.studyInfo ? props.studyInfo : { ...emptyStudyInfo });
+  return <p>todo</p>
+  /*const [currentStudy, setCurrentStudy] = useState<StudyInfo>(props.studyInfo ? props.studyInfo : { ...emptyStudyInfo });
 
   const [datasetInfoEditorOpen, setDatasetInfoEditorOpen] = useState(false);
   const [openedDatasetInfo, setOpenedDatasetInfo] = useState<undefined | DatasetInfo>(undefined);
@@ -553,7 +555,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
 
       < Credits />
     </div >
-  );
+  );*/
 };
 
 export default StudyInfoEditor;

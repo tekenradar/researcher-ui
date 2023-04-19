@@ -2,17 +2,19 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Button, ListGroup, Spinner } from 'react-bootstrap';
-import { StudyInfo } from '../../hooks/useAppContext';
+
 
 interface StudyInfoListProps {
   isLoading: boolean;
-  studyInfos: StudyInfo[];
+  //studyInfos: StudyInfo[];
   selectedStudyKey?: string;
   onAddNew: () => void;
-  onSelect: (studyInfo: StudyInfo) => void;
+  // onSelect: (studyInfo: StudyInfo) => void;
 }
 
 const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
+  return (<p>todo</p>)
+  {/*
   return (
     <div className='bg-white h-100 border-end overflow-scroll' style={{ minWidth: 150 }}>
       <h6 className='ms-2 mt-3'>Edit substudy:</h6>
@@ -50,6 +52,7 @@ const StudyInfoList: React.FC<StudyInfoListProps> = (props) => {
       </div>
     </div>
   );
+   */}
 };
 
 export default StudyInfoList;

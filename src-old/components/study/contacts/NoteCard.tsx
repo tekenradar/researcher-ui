@@ -1,6 +1,6 @@
 import React from 'react';
 import { fromUnixTime, format } from 'date-fns'
-import { useStudyColorClassnames } from '../../../hooks/useStudyColorClassnames';
+
 import clsx from 'clsx';
 import { Note } from './Notes';
 
@@ -9,7 +9,8 @@ interface NoteCardProps {
 }
 
 const NoteCard: React.FC<NoteCardProps> = (props) => {
-  const { borderClassName } = useStudyColorClassnames();
+  return <p>todo</p>
+  /*const { borderClassName } = useStudyColorClassnames();
 
 
   return (
@@ -29,7 +30,7 @@ const NoteCard: React.FC<NoteCardProps> = (props) => {
         {props.note.content}
       </div>
     </div>
-  );
+  );*/
 };
 
 export default NoteCard;

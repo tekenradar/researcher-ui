@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AdminAppbar from '../components/admin/AdminAppbar';
 import StudyInfoEditor from '../components/admin/StudyInfoEditor';
 import StudyInfoList from '../components/admin/StudyInfoList';
-import { StudyInfo } from '../hooks/useAppContext';
-import { useAuthContext } from '../hooks/useAuthContext';
 
 interface AdminPageProps {
 }
@@ -13,8 +11,13 @@ const apiKey = process.env.REACT_APP_SERVICE_API_KEY ? process.env.REACT_APP_SER
 
 
 const AdminPage: React.FC<AdminPageProps> = (props) => {
-  const authContext = useAuthContext();
-
+  return (
+    <div>
+      TODO
+    </div>
+  );
+  // const authContext = useAuthContext();
+  /*
   const [isLoading, setIsLoading] = useState(false);
   const [selectedStudy, setSelectedStudy] = useState<StudyInfo | undefined>();
   const [studyInfos, setStudyInfos] = useState<StudyInfo[]>([]);
@@ -131,6 +134,7 @@ const AdminPage: React.FC<AdminPageProps> = (props) => {
 
 
   );
+  */
 };
 
 export default AdminPage;

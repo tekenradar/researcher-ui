@@ -19,5 +19,5 @@ export const getContactDetails = async (substudyID: string, contactID: string) =
     }
   );
   const data = await response.json();
-  return data;
+  return data.participantContact;
 }

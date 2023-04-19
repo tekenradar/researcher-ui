@@ -1,27 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { faClone } from "@fortawesome/free-regular-svg-icons";
-import { useStudyColorClassnames } from "../../../hooks/useStudyColorClassnames";
 import clsx from "clsx";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { ContactDetailsData } from "../../../pages/study/Contacts";
-import { shortenParticipantID } from "../../../../components/utils/shortenParticipantID";
+
 import styles from './ContactDetails.module.css';
 import Notes, { Note } from "./Notes";
 import { makeid } from "../../../../utils/makeid";
 import { fromUnixTime, format, getUnixTime } from "date-fns";
-import { useAuthContext } from "../../../hooks/useAuthContext";
 import LoadingButton from "../../../../components/LoadingButton";
 
 
 
 interface ContactDetailsProps {
   isLoading: boolean;
-  contactDetails?: ContactDetailsData;
+
   onClose: () => void;
-  onChangePermanentStatus: (contactDetails: ContactDetailsData, keep: boolean) => void;
-  onAddNote: (contactDetails: ContactDetailsData, note: Note) => void;
-  onDeleteContact: (contactDetails: ContactDetailsData) => void;
 }
 
 const showValueOrDashIfMissing = (value?: string | number): string => {
@@ -32,75 +26,14 @@ const showValueOrDashIfMissing = (value?: string | number): string => {
 }
 
 const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
-  const { bgColor, color, borderClassName } = useStudyColorClassnames();
-  const authContext = useAuthContext();
 
-
-  const header = () => {
-    return (
-      <div
-        className={clsx(
-          bgColor,
-          color,
-          borderClassName,
-          "d-flex align-items-center border-bottom p-2"
-        )}
-      >
-        <h4 className="m-0 flex-grow-1 h5">Session Details</h4>
-        <OverlayTrigger
-          placement="left"
-          overlay={<Tooltip>Close Details</Tooltip>}
-        >
-          <button
-            type="button"
-            className={clsx("btn", color)}
-            onClick={() => {
-              props.onClose();
-            }}
-          >
-            <FontAwesomeIcon className="fa-xl pl-5" icon={faClose} />
-          </button>
-        </OverlayTrigger>
-      </div>
-    );
-  };
-
-  const body = () => {
+  /*const body = () => {
     if (!props.contactDetails) {
       return <p key="select">Select a participant</p>;
     }
 
     return (
       <div className="p-3">
-        <Form.Check
-          type="switch"
-          className="mb-2"
-          id="permanentData"
-
-          checked={props.contactDetails.keepContactData}
-          label={props.contactDetails.keepContactData ? "Permanent entry" : "Non-Permanent entry"}
-          onChange={(event) => {
-            if (!props.contactDetails) { return }
-            const checked = event.target.checked;
-            if (window.confirm(
-              checked ? 'Are you sure you are authorized to mark this entry as "permanent"?' :
-                'Are you sure, you want to mark this entry as "non-permanent", so it will be auto-deleted after 12 weeks?'
-            )) {
-              props.onChangePermanentStatus(props.contactDetails, checked);
-            }
-          }}
-        />
-        {props.contactDetails.keepContactData ? null : <div className="alert alert-warning">
-          <p className="fs-small mb-0">
-            Unless explicitly marked here, contact infos will be deleted after 12 weeks automatically.
-          </p>
-        </div>}
-
-        <h5 className="fw-bold ">General</h5>
-        <div>
-          <label className="fs-small fw-bold">Session ID</label>
-          <p>{props.contactDetails.sessionID}</p>
-        </div>
         <div className="">
           <label className="fs-small fw-bold">Participant ID</label>
           <div className="d-flex align-items-center">
@@ -135,7 +68,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
           </div>
 
         </div>
-        {/* --------- */}
+
         <hr></hr>
         <h5 className="fw-bold">Contact Infos</h5>
         <div className="mb-2">
@@ -204,7 +137,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
 
 
 
-        {/* --------- */}
+
         <hr></hr>
         <Notes
           contactNotes={props.contactDetails.notes}
@@ -222,40 +155,18 @@ const ContactDetails: React.FC<ContactDetailsProps> = (props) => {
           isLoading={props.isLoading}
         />
 
-        <hr></hr>
-        <LoadingButton
-          className="btn btn-danger"
-          label="Delete Entry"
-          loading={props.isLoading}
-          disabled={props.isLoading}
-          onClick={() => {
-            if (!props.contactDetails) {
-              return;
-            }
-            if (window.confirm('Do you want to delete this entry (inlcuding all notes and contact infos) permanently?')) {
-              props.onDeleteContact(props.contactDetails)
-            }
-          }}
-        />
+
       </div>
     );
-  };
+  };*/
 
   return (
     <div
-      className={clsx(
-        "bg-white border-start",
-        "d-flex flex-column overflow-scroll",
-        borderClassName,
-        {
-          [styles.open]: props.contactDetails,
-          [styles.close]: !props.contactDetails,
-        })
-      }
+
+
       style={{ minWidth: "380px", maxHeight: '100%' }}
     >
-      {header()}
-      {body()}
+
     </div>
   );
 };

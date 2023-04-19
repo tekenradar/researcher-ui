@@ -3,7 +3,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React from 'react';
 import Link from 'next/link';
-import { StudyInfo } from '../src-old/hooks/useAppContext';
+import { DatasetInfo } from './substudy/exporter/DatasetSelector';
+
+export interface StudyInfo {
+  key: string;
+  name: string;
+  description: string;
+  studyColor: string;
+  accessControl: {
+    emails: string[];
+  };
+  features: {
+    datasetExporter: boolean;
+    contacts: boolean;
+  };
+  availableDatasets?: DatasetInfo[];
+  contactFeatureConfig: {
+    includeWithParticipantFlags: { [key: string]: string }
+  }
+}
+
 
 interface StudyInfoCardProps {
   study: StudyInfo;
