@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import ContactViewer from './ContactViewer';
 import { ContactDetailsData } from '../contacts/types';
 
@@ -15,10 +15,18 @@ interface ContactViewerModalProps {
 
 const ContactViewerModal: React.FC<ContactViewerModalProps> = (props) => {
   const router = useRouter();
+  const pathname = usePathname();
+
+  const [show, setShow] = React.useState(true);
+
+  React.useEffect(() => {
+    setShow(pathname.includes('contact-viewer'));
+  }, [pathname]);
+
 
   return (
     <Modal
-      show={true}
+      show={show}
       onHide={() => {
         router.back();
       }}

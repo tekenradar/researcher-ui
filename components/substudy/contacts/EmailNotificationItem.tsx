@@ -26,9 +26,7 @@ const EmailNotificationItem: React.FC<EmailNotificationItemProps> = ({ notificat
   const deleteSub = async () => {
     setIsLoading(true);
     try {
-      const baseURL = `${window.location.protocol}//${window.location.host}`;
-      const url = new URL(`/api/substudy/${substudyID}/notifications/${notification.id}`, baseURL);
-
+      const url = new URL(`/api/researcher-backend/v1/substudy/${substudyID}/notifications/${notification.id}`, process.env.NEXT_PUBLIC_API_URL);
       const response = await fetch(url.toString(),
         {
           method: 'DELETE',

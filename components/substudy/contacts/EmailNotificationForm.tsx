@@ -29,8 +29,7 @@ const EmailNotificationForm: React.FC<EmailNotificationFormProps> = (props) => {
     setErrorMsg('')
     setIsLoading(true);
     try {
-      const baseURL = `${window.location.protocol}//${window.location.host}`;
-      const url = new URL(`/api/substudy/${props.substudyID}/notifications`, baseURL);
+      const url = new URL(`/api/researcher-backend/v1/substudy/${props.substudyID}/notifications`, process.env.NEXT_PUBLIC_API_URL);
 
       const response = await fetch(url.toString(),
         {
