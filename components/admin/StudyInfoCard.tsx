@@ -3,25 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React from 'react';
 import Link from 'next/link';
-import { DatasetInfo } from './substudy/exporter/DatasetSelector';
-
-export interface StudyInfo {
-  key: string;
-  name: string;
-  description: string;
-  studyColor: string;
-  accessControl: {
-    emails: string[];
-  };
-  features: {
-    datasetExporter: boolean;
-    contacts: boolean;
-  };
-  availableDatasets?: DatasetInfo[];
-  contactFeatureConfig: {
-    includeWithParticipantFlags: { [key: string]: string }
-  }
-}
+import { StudyInfo } from '../StudyInfoCard';
 
 
 interface StudyInfoCardProps {
@@ -40,11 +22,11 @@ const StudyInfoCard: React.FC<StudyInfoCardProps> = (props) => {
           borderColor,
           bgColor,
         )}
-        href={`/substudies/${props.study.key}/exporter`}
+        href={`/admin/${props.study.key}`}
       >
         <h5>{props.study.name}</h5>
         <p className='flex-grow-1'>{props.study.description}</p>
-        <div className='text-end text-decoration-underline'>Open Study<FontAwesomeIcon
+        <div className='text-end text-decoration-underline'>Edit substudy<FontAwesomeIcon
           width={16}
           className='ms-2' icon={faAnglesRight} /></div>
       </Link>

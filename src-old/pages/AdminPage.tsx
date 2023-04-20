@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import AdminAppbar from '../components/admin/AdminAppbar';
 import StudyInfoEditor from '../components/admin/StudyInfoEditor';
 import StudyInfoList from '../components/admin/StudyInfoList';
 
