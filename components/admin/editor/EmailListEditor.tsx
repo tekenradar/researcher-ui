@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import { Form, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
-import LoadingButton from '../../../components/LoadingButton';
+import LoadingButton from '../../LoadingButton';
 
 interface EmailListEditorProps {
   emails: string[];
@@ -37,6 +37,7 @@ const EmailListEditor: React.FC<EmailListEditorProps> = (props) => {
         >
           <span className="flex-grow-1">{email}</span>
           <button className={clsx("btn text-secondary")}
+            type='button'
             onClick={() => {
               const confirmed = window.confirm(`Do you want to remove the entry "${email}" from the notification list?`)
               if (confirmed) {

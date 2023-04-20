@@ -1,25 +1,26 @@
-import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import clsx from 'clsx';
-import { format, fromUnixTime } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import { StudyInfo } from '@/components/StudyInfoCard';
+import React, { useEffect, useState, useTransition } from 'react';
+import EditorSection from './EditorSection';
+import LoadingButton from '@/components/LoadingButton';
 import { Alert, Button, Form, InputGroup, ListGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
-
-import Credits from '../../../components/Credits';
-import LoadingButton from '../../../components/LoadingButton';
-import DatasetInfoEditor from './DatasetInfoEditor';
-import { saveAs } from 'file-saver';
 import { useFilePicker } from 'use-file-picker';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { DatasetInfo } from '@/components/substudy/exporter/DatasetSelector';
+import saveAs from 'file-saver';
+import clsx from 'clsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { format, fromUnixTime } from 'date-fns';
 import EmailListEditor from './EmailListEditor';
+import DatasetInfoEditor from './DatasetInfoEditor';
 
-interface StudyInfoEditorProps {
-  isLoading: boolean;
-  //studyInfo?: StudyInfo;
-  //onSaveStudy: (studyInfo: StudyInfo) => void;
-  onDeleteStudy: (studyKey: string) => void;
+interface EditorProps {
+  substudy?: StudyInfo;
 }
 
-/*
 const emptyStudyInfo: StudyInfo = {
   key: '',
   name: '',
@@ -36,47 +37,14 @@ const emptyStudyInfo: StudyInfo = {
   contactFeatureConfig: {
     includeWithParticipantFlags: {}
   }
-}*/
-
-const Card: React.FC<{ className?: string, children: React.ReactNode; }> = (props) => {
-  return <div className={clsx('bg-white shadow-sm rounded overflow-hidden', props.className)}>
-    {props.children}
-  </div>
 }
 
-const EditorSection: React.FC<{
-  title: string, description: string,
-  className?: string,
-  children: React.ReactNode,
-  action?: React.ReactNode,
-}> = (props) => {
-  return <div className={clsx(
-    'row mt-3', props.className
-  )}>
-    <div className='col-12 col-md-4'>
-      <h3 className='h5'>{props.title}</h3>
-      <p className='text-muted fs-small'>{props.description}</p>
-    </div>
-    <div className='col-12 col-md-8'>
-      <Card>
-        <div className='p-3'>
-          {props.children}
-        </div>
-        <div className='text-end p-3 bg-light'>
-          {props.action}
-        </div>
-
-      </Card>
-    </div>
-  </div>
-}
-
-
-
-
-const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
-  return <p>todo</p>
-  /*const [currentStudy, setCurrentStudy] = useState<StudyInfo>(props.studyInfo ? props.studyInfo : { ...emptyStudyInfo });
+const Editor: React.FC<EditorProps> = (props) => {
+  const router = useRouter();
+  const [currentStudy, setCurrentStudy] = useState<StudyInfo>(props.substudy ? props.substudy : { ...emptyStudyInfo });
+  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   const [datasetInfoEditorOpen, setDatasetInfoEditorOpen] = useState(false);
   const [openedDatasetInfo, setOpenedDatasetInfo] = useState<undefined | DatasetInfo>(undefined);
@@ -86,15 +54,14 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
     value: ''
   })
 
-  const [openFileSelector, { filesContent, loading, clear }] = useFilePicker({
+  const [openFileSelector, { filesContent, loading: isFileLoading, clear }] = useFilePicker({
     accept: '.json',
     multiple: false,
   });
 
-
   useEffect(() => {
-    setCurrentStudy(props.studyInfo ? props.studyInfo : { ...emptyStudyInfo })
-  }, [props.studyInfo])
+    setCurrentStudy(props.substudy ? props.substudy : { ...emptyStudyInfo })
+  }, [props.substudy])
 
   useEffect(() => {
     if (filesContent.length > 0) {
@@ -102,11 +69,12 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
       const content = JSON.parse(filesContent[0].content);
       setCurrentStudy(content);
       if (content.key.length > 0) {
-        props.onSaveStudy(content);
+        saveStudyInfo(content)
         clear();
       }
     }
-  }, [filesContent, clear, props])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filesContent])
 
   const validate = (): boolean => {
     if (currentStudy.key.length < 1) {
@@ -128,139 +96,63 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
     })
   }
 
-  const renderDatasets = () => {
-    return <ListGroup variant='flush'>
-      {currentStudy.availableDatasets?.map((datasetInfo, index) => {
-        return <ListGroup.Item key={index.toString()}>
-          <div className='d-flex'>
-            <div className='flex-grow-1'>
-              <div className='fw-bold'>
-                <span className='text-muted me-2'>{datasetInfo.surveyKey}</span>
-                {datasetInfo.name}
-              </div>
-              <div>
-                {datasetInfo.startDate > 0 ? <span className='me-2'>From: {format(fromUnixTime(datasetInfo.startDate), 'dd-MM-yyyy')}</span> : null}
-                {datasetInfo.endDate > 0 ? <span>Until: {format(fromUnixTime(datasetInfo.endDate), 'dd-MM-yyyy')}</span> : null}
-              </div>
-              <div className=''>{datasetInfo.excludeColumns.length} excluded columns</div>
-            </div>
-            <div>
-              <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
-                <button className="btn btn-link"
-                  onClick={() => {
-                    setOpenedDatasetInfo(datasetInfo);
-                    setDatasetInfoEditorOpen(true);
-                  }}
-                >
-                  <FontAwesomeIcon
-                    className="fa-md me-1"
-                    icon={faPen}
-                  />
-                </button>
-              </OverlayTrigger>
+  const saveStudyInfo = async (studyInfo: StudyInfo) => {
+    if (isPending || isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    setErrorMsg('');
 
-              <OverlayTrigger placement="bottom" overlay={<Tooltip>Remove</Tooltip>}>
-                <button className="btn btn-link"
-                  onClick={() => {
-                    if (window.confirm('Do you really want to delete this entry?')) {
-                      setCurrentStudy(prev => {
-                        prev.availableDatasets?.splice(index, 1);
-                        return { ...prev };
-                      });
-                    }
-                  }}
-                >
-                  <FontAwesomeIcon
-                    className="fa-md"
-                    icon={faTrash}
-                  />
-                </button>
-              </OverlayTrigger>
-            </div>
-          </div>
-        </ListGroup.Item>
+    try {
+      const url = new URL(`/api/researcher-backend/v1/substudy-management`, process.env.NEXT_PUBLIC_API_URL);
 
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        body: JSON.stringify(studyInfo),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
 
-      })}
-    </ListGroup>
+      console.log(data);
+      startTransition(() => {
+        router.replace(`/admin/${studyInfo.key}`);
+      });
+    } catch (err: any) {
+      console.error(err)
+      setErrorMsg('Error saving substudy');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  const renderContactConfigInputs = () => {
-    let nodes = []
-    for (let k in currentStudy.contactFeatureConfig.includeWithParticipantFlags) {
-      nodes.push((<li key={k}>
-        <div className="d-flex align-items-center">
-          <span className='text-muted me-1'>key: </span><span>{k}</span> <span className='ms-2 me-1 text-muted'>value: </span><span>{currentStudy.contactFeatureConfig.includeWithParticipantFlags[k]}</span>
-          <Button
-            variant='link' type='button'
-            onClick={() => {
-              if (window.confirm("Do you want to remove this flag from the list?")) {
-                setCurrentStudy(prev => {
-                  delete prev.contactFeatureConfig.includeWithParticipantFlags[k];
-                  return {
-                    ...prev,
-                  }
-                })
-              }
-            }}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </Button>
-        </div>
-      </li>
-      ))
-    }
 
-    return <React.Fragment>
-      <h6>Inclusion flags (include if all of them present)</h6>
-      <ul>
-        {nodes}
-      </ul>
-      <InputGroup className="mt-2 mb-3">
-        <Form.Control placeholder="enter the key, e.g. flow"
-          value={newParticpantContactInclusionFlag.key}
-          onChange={(event) => {
-            const value = event.target.value;
-            setNewParticpantContactInclusionFlag(prev => {
-              return {
-                ...prev,
-                key: value
-              }
-            })
-          }}
-        />
-        <Form.Control placeholder='expected value, e.g. TBflow'
-          value={newParticpantContactInclusionFlag.value}
-          onChange={(event) => {
-            const value = event.target.value;
-            setNewParticpantContactInclusionFlag(prev => {
-              return {
-                ...prev,
-                value: value
-              }
-            })
-          }}
-        />
-        <Button variant="outline-secondary" type='button'
-          onClick={() => {
-            setCurrentStudy(prev => {
-              return {
-                ...prev,
-                contactFeatureConfig: {
-                  includeWithParticipantFlags: {
-                    ...prev.contactFeatureConfig.includeWithParticipantFlags,
-                    [newParticpantContactInclusionFlag.key]: newParticpantContactInclusionFlag.value
-                  }
-                }
-              }
-            })
-            setNewParticpantContactInclusionFlag({
-              key: '', value: ''
-            })
-          }}
-        >Add</Button>
-      </InputGroup>
-    </React.Fragment>
+  const deleteStudyInfo = async () => {
+    if (isPending || isLoading) {
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const url = new URL(`/api/researcher-backend/v1/substudy-management/${currentStudy.key}`, process.env.NEXT_PUBLIC_API_URL);
+
+      const response = await fetch(url.toString(), {
+        method: 'DELETE',
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+      // console.log(data);
+      startTransition(() => {
+        router.replace(`/admin`);
+      });
+    } catch (err: any) {
+      console.error(err)
+      setErrorMsg('Error deleting substudy');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const generalConfig = () => {
@@ -269,7 +161,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
         <Form.Label>Study-Key</Form.Label>
         <Form.Control type="text"
           value={currentStudy.key}
-          disabled={props.studyInfo !== undefined}
+          disabled={props.substudy !== undefined}
           placeholder="key-of-the-study"
           onChange={updateCurrentStudyValue('key')}
         />
@@ -321,6 +213,145 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
     </React.Fragment>
   }
 
+  const renderDatasets = () => {
+    return <ListGroup variant='flush'>
+      {currentStudy.availableDatasets?.map((datasetInfo, index) => {
+        return <ListGroup.Item key={index.toString()}>
+          <div className='d-flex'>
+            <div className='flex-grow-1'>
+              <div className='fw-bold'>
+                <span className='text-muted me-2'>{datasetInfo.surveyKey}</span>
+                {datasetInfo.name}
+              </div>
+              <div>
+                {datasetInfo.startDate > 0 ? <span className='me-2'>From: {format(fromUnixTime(datasetInfo.startDate), 'dd-MM-yyyy')}</span> : null}
+                {datasetInfo.endDate > 0 ? <span>Until: {format(fromUnixTime(datasetInfo.endDate), 'dd-MM-yyyy')}</span> : null}
+              </div>
+              <div className=''>{datasetInfo.excludeColumns.length} excluded columns</div>
+            </div>
+            <div>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip>Edit</Tooltip>}>
+                <button className="btn btn-link"
+                  type='button'
+                  onClick={() => {
+                    setOpenedDatasetInfo(datasetInfo);
+                    setDatasetInfoEditorOpen(true);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    className="fa-md me-1"
+                    icon={faPen}
+                    height={16}
+                  />
+                </button>
+              </OverlayTrigger>
+
+              <OverlayTrigger placement="bottom" overlay={<Tooltip>Remove</Tooltip>}>
+                <button className="btn btn-link"
+                  type='button'
+                  onClick={() => {
+                    if (window.confirm('Do you really want to delete this entry?')) {
+                      setCurrentStudy(prev => {
+                        prev.availableDatasets?.splice(index, 1);
+                        return { ...prev };
+                      });
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon
+                    className="fa-md"
+                    icon={faTrash}
+                  />
+                </button>
+              </OverlayTrigger>
+            </div>
+          </div>
+        </ListGroup.Item>
+
+
+      })}
+    </ListGroup>
+  }
+
+  const renderContactConfigInputs = () => {
+    let nodes = []
+    for (let k in currentStudy.contactFeatureConfig.includeWithParticipantFlags) {
+      nodes.push((<li key={k}>
+        <div className="d-flex align-items-center">
+          <span className='text-muted me-1'>key: </span><span>{k}</span> <span className='ms-2 me-1 text-muted'>value: </span><span>{currentStudy.contactFeatureConfig.includeWithParticipantFlags[k]}</span>
+          <Button
+            variant='link' type='button'
+            onClick={() => {
+              if (window.confirm("Do you want to remove this flag from the list?")) {
+                setCurrentStudy(prev => {
+                  delete prev.contactFeatureConfig.includeWithParticipantFlags[k];
+                  return {
+                    ...prev,
+                  }
+                })
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faTrash} height={16} />
+          </Button>
+        </div>
+      </li>
+      ))
+    }
+
+    return <React.Fragment>
+      <h6>Inclusion flags (include if all of them present)</h6>
+      <ul>
+        {nodes}
+      </ul>
+      <InputGroup className="mt-2 mb-3">
+        <Form.Control placeholder="enter the key, e.g. flow"
+          value={newParticpantContactInclusionFlag.key}
+          onChange={(event) => {
+            const value = event.target.value;
+            setNewParticpantContactInclusionFlag(prev => {
+              return {
+                ...prev,
+                key: value
+              }
+            })
+          }}
+        />
+        <Form.Control placeholder='expected value, e.g. TBflow'
+          value={newParticpantContactInclusionFlag.value}
+          onChange={(event) => {
+            const value = event.target.value;
+            setNewParticpantContactInclusionFlag(prev => {
+              return {
+                ...prev,
+                value: value
+              }
+            })
+          }}
+        />
+        <Button variant="outline-secondary"
+          type='button'
+          onClick={() => {
+            setCurrentStudy(prev => {
+              return {
+                ...prev,
+                contactFeatureConfig: {
+                  includeWithParticipantFlags: {
+                    ...prev.contactFeatureConfig.includeWithParticipantFlags,
+                    [newParticpantContactInclusionFlag.key]: newParticpantContactInclusionFlag.value
+                  }
+                }
+              }
+            })
+            setNewParticpantContactInclusionFlag({
+              key: '', value: ''
+            })
+          }}
+        >Add</Button>
+      </InputGroup>
+    </React.Fragment>
+  }
+
   const availableDatasets = () => {
     return <React.Fragment>
       {!currentStudy.availableDatasets || currentStudy.availableDatasets.length < 1 ? <p className='text-muted mb-0'>No available datasets defined for this study.</p> : renderDatasets()}
@@ -332,20 +363,22 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
         }}
         datasetInfo={openedDatasetInfo}
         onSave={(datasetInfo) => {
+          console.log('onSave', datasetInfo)
           setCurrentStudy(prev => {
-            if (!prev.availableDatasets) {
-              prev.availableDatasets = [];
+            let newDatasetList: Array<DatasetInfo> = [];
+            if (prev.availableDatasets !== undefined) {
+              newDatasetList = [...prev.availableDatasets];
             }
             if (!openedDatasetInfo) {
-              if (!prev.availableDatasets) {
-                prev.availableDatasets = [];
-              }
-              prev.availableDatasets?.push(datasetInfo);
+              newDatasetList.push(datasetInfo);
             } else {
-              const index = prev.availableDatasets.findIndex(item => item.id === datasetInfo.id);
-              prev.availableDatasets[index] = { ...datasetInfo }
+              const index = newDatasetList.findIndex(item => item.id === datasetInfo.id);
+              newDatasetList[index] = { ...datasetInfo }
             }
-            return { ...prev };
+            return {
+              ...prev,
+              availableDatasets: [...newDatasetList]
+            };
           });
           setOpenedDatasetInfo(undefined);
           setDatasetInfoEditorOpen(false);
@@ -353,31 +386,36 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
       />
       <Button
         className='mt-1'
-        variant='link' type='button'
+        variant='link'
+        type='button'
         onClick={() => { setDatasetInfoEditorOpen(true) }}
       >
-        <FontAwesomeIcon icon={faPlus} />
+        <FontAwesomeIcon icon={faPlus} height={16} />
       </Button>
     </React.Fragment>
   }
 
+
   return (
-    <div className='flex-grow-1 p-3 overflow-scroll mb-5'>
-
-      <h2 className="h4 fw-bold">{props.studyInfo ? `Edit Substudy: ${props.studyInfo.name}` : 'Create new substudy'}</h2>
-
-      {props.studyInfo === undefined ?
+    <>
+      <h2 className="h4 fw-bold">{props.substudy ? `Edit Substudy: ${props.substudy.name}` : 'Create new substudy'}</h2>
+      <Link
+        className='btn btn-outline-secondary btn-sm mb-3'
+        href="/admin"
+      >
+        Back to substudy list
+      </Link>
+      {errorMsg.length > 0 && <Alert variant='danger'>{errorMsg}</Alert>}
+      {props.substudy === undefined ?
         <React.Fragment>
           <EditorSection
             title='Import'
             description='Import a study config file from the local file system. The file must be a valid JSON file.'
             action={<LoadingButton
-              className={clsx(
-                'btn btn-secondary',
-              )}
+              className={'btn btn-secondary'}
               label="Import Config"
               type="button"
-              disabled={loading}
+              disabled={isFileLoading}
               onClick={() => {
                 openFileSelector()
               }}
@@ -396,9 +434,8 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
 
       <Form onSubmit={(event) => {
         event.preventDefault()
-        props.onSaveStudy(currentStudy);
+        saveStudyInfo(currentStudy);
       }}>
-
         <EditorSection
           title='General'
           description='General information about the substudy.'
@@ -413,6 +450,7 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
         </EditorSection>
 
         <hr />
+
 
         <EditorSection
           title='Available datasets'
@@ -499,19 +537,18 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
             </React.Fragment>
             : null}
         </EditorSection>
+
       </Form>
 
       {
-        props.studyInfo !== undefined ? <React.Fragment>
+        props.substudy !== undefined ? <React.Fragment>
           <hr />
 
           <EditorSection
             title='Export config'
             description='Export the current configuration as a JSON file. You can import this file on a different instance of the platform to create a new substudy with the same configuration.'
             action={<LoadingButton
-              className={clsx(
-                'btn ms-2 btn-secondary',
-              )}
+              className={'btn ms-2 btn-secondary'}
               label="Export as json file"
               type="button"
               disabled={!validate()}
@@ -533,15 +570,15 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
             description='Remove this sub-study permanently.'
             action={<LoadingButton
               className='btn btn-danger'
-              label={`I want to delete ${props.studyInfo.name}(${props.studyInfo.key}) `}
-              disabled={!props.studyInfo}
+              label={`I want to delete ${props.substudy.name}(${props.substudy.key}) `}
+              disabled={!props.substudy}
               type="button"
               onClick={() => {
-                if (!props.studyInfo) {
+                if (!props.substudy) {
                   return;
                 }
                 if (window.confirm('Are you sure you want to delete the sub-study?')) {
-                  props.onDeleteStudy(props.studyInfo?.key)
+                  deleteStudyInfo();
                 }
               }}
             />}
@@ -552,10 +589,8 @@ const StudyInfoEditor: React.FC<StudyInfoEditorProps> = (props) => {
           </EditorSection>
         </React.Fragment> : null}
 
-
-      < Credits />
-    </div >
-  );*/
+    </>
+  );
 };
 
-export default StudyInfoEditor;
+export default Editor;

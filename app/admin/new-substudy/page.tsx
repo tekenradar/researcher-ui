@@ -1,9 +1,13 @@
+import Container from "@/components/Container";
 import { getAllSubstudies } from "../utils";
+import SubstudyEditor from "@/components/admin/SubstudyEditorPage";
 
 interface PageProps {
 }
 
 export default async function Page(props: PageProps) {
-  const substudies = await getAllSubstudies();
-  return <h1>new substudy</h1>
+  return <Container className="mt-4">
+    {/* @ts-expect-error Async Server Component */}
+    <SubstudyEditor />
+  </Container>
 };
