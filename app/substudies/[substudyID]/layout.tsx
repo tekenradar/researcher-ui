@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import SubstudyNavbar from "@/components/substudy/navbar/SubstudyNavbar";
 import { Suspense } from "react";
 
@@ -9,6 +10,7 @@ interface LayoutProps {
   children: React.ReactNode
 }
 
+export const revalidate = 0;
 
 export default async function Layout(props: LayoutProps) {
   return <div className="">
@@ -22,6 +24,8 @@ export default async function Layout(props: LayoutProps) {
         params={props.params}
       />
     </Suspense>
-    {props.children}
+    <Container>
+      {props.children}
+    </Container>
   </div>
 };

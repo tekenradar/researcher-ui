@@ -11,9 +11,20 @@ export async function GET(request: NextRequest, { params: { segments } }: { para
   }
 
   const url = new URL(`${segments.join('/')}`, process.env.RESEARCHER_BACKEND_URL);
+  request.nextUrl.searchParams.forEach((value, key) => {
+    url.searchParams.append(key, value);
+  })
 
-  console.log(url.toString());
-  return new Response(url.toString());
+  const apiResponse = await fetch(url.toString(), {
+    headers: { ...getTokenHeader(session.accessToken) },
+  });
+
+  const resp = new Response(apiResponse.body, {
+    status: apiResponse.status,
+    headers: { 'Content-Type': apiResponse.headers.get('Content-Type') || 'application/json' }
+  });
+
+  return resp;
 
 }
 

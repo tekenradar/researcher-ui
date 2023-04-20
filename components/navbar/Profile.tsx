@@ -26,7 +26,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
       </div>
 
       <OverlayTrigger placement="bottom" overlay={<Tooltip>Logout</Tooltip>}>
-        <button className={clsx("btn")}
+        <button className={clsx("btn p-0")}
           onClick={() =>
             signOut({
               callbackUrl: '/',
@@ -34,7 +34,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
           }
         >
           <FontAwesomeIcon
-            className="fa-lg me-2"
+            className="fa-lg"
             width={24}
             icon={faArrowRightFromBracket}
           />

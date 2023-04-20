@@ -2,17 +2,14 @@ import React from 'react';
 import { fromUnixTime, format } from 'date-fns'
 
 import clsx from 'clsx';
-import { Note } from './Notes';
+import { Note } from '../contacts/types';
+
 
 interface NoteCardProps {
   note: Note;
 }
 
 const NoteCard: React.FC<NoteCardProps> = (props) => {
-  return <p>todo</p>
-  /*const { borderClassName } = useStudyColorClassnames();
-
-
   return (
     <div className='mb-3'>
       <div className='d-flex text-muted fs-small'>
@@ -22,7 +19,6 @@ const NoteCard: React.FC<NoteCardProps> = (props) => {
       <div
         className={clsx(
           'p-2 border form-control',
-          borderClassName,
         )}
         style={{
           whiteSpace: 'pre-line',
@@ -30,7 +26,7 @@ const NoteCard: React.FC<NoteCardProps> = (props) => {
         {props.note.content}
       </div>
     </div>
-  );*/
+  );
 };
 
 export default NoteCard;

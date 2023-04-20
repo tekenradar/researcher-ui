@@ -29,7 +29,7 @@ const ContactViewerModal: React.FC<ContactViewerModalProps> = (props) => {
       show={show}
       size='lg'
       onHide={() => {
-        router.back();
+        router.replace(`/substudies/${props.params.substudyID}/contacts`);
       }}
     >
       <div className='p-3'>

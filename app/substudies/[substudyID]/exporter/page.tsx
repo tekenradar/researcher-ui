@@ -19,7 +19,7 @@ export default async function Page(props: PageProps) {
   }
 
   const substudy = await getSubstudy(props.params.substudyID, session.accessToken);
-  return <div className="container-fluid py-4">
+  return <div className="py-4">
     <Downloader
       substudy={substudy}
     />

@@ -10,6 +10,8 @@ import LoadingButton from '@/components/LoadingButton';
 import { useRouter } from 'next/navigation';
 import { shortenParticipantID } from '@/utils/shortenParticipantID';
 import { format, fromUnixTime } from 'date-fns';
+import NoteCard from './NoteCard';
+import NewNote from './NewNote';
 
 interface ContactViewerProps {
   params: {
@@ -33,6 +35,28 @@ const ContactViewer: React.FC<ContactViewerProps> = (props) => {
 
   const router = useRouter();
 
+
+  const changeContactKeepAttribute = async (keep: boolean) => {
+    if (isLoading || isPending) return;
+    setIsLoading(true);
+    try {
+      const url = new URL(`/api/researcher-backend/v1/substudy/${props.params.substudyID}/participant-contacts/${props.params.contactID}/keep`, process.env.NEXT_PUBLIC_API_URL);
+      url.search = new URLSearchParams({ value: keep.toString() }).toString();
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        const err = await response.json()
+        console.log(err)
+        throw new Error(err.error);
+      }
+      const data = await response.json();
+      router.replace(`/substudies/${props.params.substudyID}/contact-viewer/${props.params.contactID}`);
+    } catch (err: any) {
+      console.error(err)
+      setErrorMsg('Error deleting contact');
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const deleteContact = async () => {
     setIsLoading(true);
@@ -77,7 +101,7 @@ const ContactViewer: React.FC<ContactViewerProps> = (props) => {
             checked ? 'Are you sure you are authorized to mark this entry as "permanent"?' :
               'Are you sure, you want to mark this entry as "non-permanent", so it will be auto-deleted after 12 weeks?'
           )) {
-            // props.onChangePermanentStatus(props.contactDetails, checked);
+            changeContactKeepAttribute(checked);
           }
         }}
       />
@@ -193,12 +217,30 @@ const ContactViewer: React.FC<ContactViewerProps> = (props) => {
         </div>
         : <p className="text-muted">No GP data</p>}
 
+      <hr></hr>
 
+      <div>
+        <h5 className="fw-bold">Notes</h5>
+        <NewNote
+          params={props.params}
+        />
 
+        <div className="py-3">
+          <p className="fw-bold m-0">Previous notes:</p>
+          {!props.contactDetails.notes || props.contactDetails.notes.length < 1 ?
+            <p className="text-muted">No notes yet.</p>
+            : null}
+          {props.contactDetails.notes?.map((note, index) => {
+            return <NoteCard
+              key={index.toString()}
+              note={note}
+            />
+          })}
+        </div>
+      </div>
 
       <hr></hr>
 
-      <hr></hr>
       <LoadingButton
         className="btn btn-outline-danger"
         label="Delete Entry"
