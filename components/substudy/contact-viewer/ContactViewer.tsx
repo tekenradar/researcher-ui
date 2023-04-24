@@ -49,10 +49,11 @@ const ContactViewer: React.FC<ContactViewerProps> = (props) => {
         throw new Error(err.error);
       }
       const data = await response.json();
+      // router.refresh();
       router.replace(`/substudies/${props.params.substudyID}/contact-viewer/${props.params.contactID}`);
     } catch (err: any) {
       console.error(err)
-      setErrorMsg('Error deleting contact');
+      setErrorMsg('Error changing contact keep attribute');
     } finally {
       setIsLoading(false);
     }

@@ -4,6 +4,7 @@ import StudyInfoCard from '@/components/StudyInfoCard';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { getSubstudies } from './utils';
+import Container from '@/components/Container';
 
 
 interface PageProps {
@@ -31,7 +32,10 @@ export default async function Page(props: PageProps) {
   }
 
   return <>
-    <div className="container h-100 justify-content-center overflow-scroll">
+
+    <Container
+      className='h-100'
+    >
       <div className="row justify-content-start g-3 py-3">
         <h2 className="h4 mb-0">Select a substudy</h2>
         {
@@ -43,6 +47,6 @@ export default async function Page(props: PageProps) {
         }
       </div>
       <Credits />
-    </div>
+    </Container>
   </>
 };
