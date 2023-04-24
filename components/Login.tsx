@@ -31,17 +31,11 @@ const Login: React.FC<LoginProps> = (props) => {
         disabled={isLoading}
         onClick={async () => {
           setIsLoading(true);
-          if (process.env.NEXT_PUBLIC_DUMMY_LOGIN === 'true') {
-            await signIn('dummy-login', {
-              redirect: false,
-            });
-          } else {
-            await signIn('rivm-adfs', {
-              //await signIn('dummy-login', {
-              redirect: false,
-            });
-          }
-          setIsLoading(false);
+          console.log('signing in')
+          await signIn('rivm-adfs', {
+            //await signIn('dummy-login', {
+            redirect: false,
+          });
           router.push('/substudies/selector');
         }}>Login via RIVM Account
         {isLoading ?? <Spinner />}
