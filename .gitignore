@@ -35,4 +35,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/s2i/bin
+/.s2i
+/.s2i/bin
