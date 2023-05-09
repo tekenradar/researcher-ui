@@ -11,8 +11,15 @@ const RIVMAdfsProvider = {
   wellKnown: process.env.OAUTH2_RIVM_ADFS_WELL_KNOWN_URL,
   clientId: process.env.OAUTH2_RIVM_ADFS_CLIENT_ID,
   clientSecret: process.env.OAUTH2_RIVM_ADFS_CLIENT_SECRET,
-  authorization: { params: { scope: " email " } },
+  authorization: { params: { scope: "openid email profile" } },
   idToken: true,
+  profile(profile) {
+    return {
+      id: profile.sub,
+      name: profile.name,
+      email: profile.email,
+    }
+  },
 } as Provider
 
 interface CredentialsUser {
