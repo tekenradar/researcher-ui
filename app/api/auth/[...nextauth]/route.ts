@@ -20,6 +20,7 @@ const RIVMAdfsProvider = {
       email: profile.email,
     }
   },
+
 } as Provider
 
 interface CredentialsUser {
@@ -112,7 +113,17 @@ export const authOptions = {
           };
         }
 
-        console.log(account);
+        if (account.provider === 'rivm-adfs') {
+          console.log('jwt callback')
+          console.log(user);
+          console.log(token);
+          console.log(account);
+
+          console.log('todo: get access and refresh token from researcher backend');
+          return {
+            email: user.email,
+          }
+        }
         return {
           // email: account.email,
           access_token: account.access_token,
