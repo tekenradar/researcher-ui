@@ -33,7 +33,7 @@ interface CredentialsUser {
   };
 }
 
-const dummyUserEmail = 'testaccount@rivm.nl';
+const dummyUserEmail = process.env.DUMMY_USER_EMAIL || '';
 
 const CASECredentialProvider = CredentialsProvider({
   id: "dummy-login",
