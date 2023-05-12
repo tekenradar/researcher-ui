@@ -11,7 +11,6 @@ export const getSubstudies = async (accessToken: string) => {
 
   const response = await fetch(url.toString(), {
     headers: getTokenHeader(accessToken),
-    cache: 'force-cache',
     next: { revalidate: 10 }
   });
   const data = await response.json();

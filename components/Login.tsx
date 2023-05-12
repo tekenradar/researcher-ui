@@ -26,6 +26,22 @@ const Login: React.FC<LoginProps> = (props) => {
       </div>
       <p className='text-center'>Please login to access the researcher portal.</p>
 
+      {process.env.NEXT_PUBLIC_DUMMY_LOGIN === 'true' &&
+        <button
+          className='btn btn-primary w-100 mb-2'
+          disabled={isLoading}
+          onClick={async () => {
+            setIsLoading(true);
+            console.log('signing in')
+            await signIn('dummy-login', {
+              redirect: false,
+            });
+            router.push('/substudies/selector');
+          }}>Dummy Login
+          {isLoading ?? <Spinner />}
+        </button>
+      }
+
       <button
         className='btn btn-primary w-100'
         disabled={isLoading}
@@ -33,7 +49,6 @@ const Login: React.FC<LoginProps> = (props) => {
           setIsLoading(true);
           console.log('signing in')
           await signIn('rivm-adfs', {
-            //await signIn('dummy-login', {
             redirect: false,
           });
           router.push('/substudies/selector');
