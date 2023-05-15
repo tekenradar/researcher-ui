@@ -45,26 +45,35 @@ const CASECredentialProvider = CredentialsProvider({
     }
 
     try {
-      const response = await initializeTokenReq(
-        dummyUserEmail,
-      );
+      const researcherBackendURL = process.env.RESEARCHER_BACKEND_URL ? process.env.RESEARCHER_BACKEND_URL : '';
+      console.log('dummy login at url ' + researcherBackendURL);
+      const response = await fetch(`${researcherBackendURL}/v1/auth/init-token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Api-Key': process.env.RESEARCHER_BACKEND_API_KEY || '',
+        },
+        body: JSON.stringify({ email: dummyUserEmail }),
+      });
+      if (!response.ok) {
+        console.error('error while dummy login: ' + response.statusText);
+        throw new Error('LoginFailed');
+      }
 
-      console.log(response.data)
+      const data = await response.json();
+      // console.log(data);
       const now = new Date();
       return {
         id: 'dummy-user',
         email: dummyUserEmail,
         account: {
-          accessToken: response.data.accessToken,
-          expiresAt: new Date(now.getTime() + response.data.expiresIn * 60000),
-          refreshToken: response.data.refreshToken,
+          accessToken: data.accessToken,
+          expiresAt: new Date(now.getTime() + data.expiresIn * 60000),
+          refreshToken: data.refreshToken,
         }
       };
     } catch (error: any) {
-      if (error.response.data.error) {
-        console.error(error.response.data);
-        throw new Error(error.response.data.error);
-      }
+      console.error('error while dummy login: ' + error.message);
       throw error;
     }
   },
