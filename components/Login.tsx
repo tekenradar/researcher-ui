@@ -14,6 +14,10 @@ const Login: React.FC<LoginProps> = (props) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
 
+  console.log('Environment variables:')
+  console.log(process.env.NEXT_PUBLIC_DUMMY_LOGIN)
+  console.log(process.env.NEXT_PUBLIC_API_URL)
+
 
   return (
     <div className='bg-white shadow p-3 rounded'
