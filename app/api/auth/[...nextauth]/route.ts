@@ -35,6 +35,27 @@ interface CredentialsUser {
 
 const dummyUserEmail = process.env.DUMMY_USER_EMAIL || '';
 
+const initToken = async (email: string) => {
+  const researcherBackendURL = process.env.RESEARCHER_BACKEND_URL ? process.env.RESEARCHER_BACKEND_URL : '';
+  console.log('dummy login at url ' + researcherBackendURL);
+  const response = await fetch(`${researcherBackendURL}/v1/auth/init-token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Api-Key': process.env.RESEARCHER_BACKEND_API_KEY || '',
+    },
+    body: JSON.stringify({ email: email }),
+  });
+  if (!response.ok) {
+    console.error(`error while getting access token: ${response.status} ${response.statusText}`);
+    throw new Error('LoginFailed');
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+
 const CASECredentialProvider = CredentialsProvider({
   id: "dummy-login",
   credentials: {
@@ -45,22 +66,8 @@ const CASECredentialProvider = CredentialsProvider({
     }
 
     try {
-      const researcherBackendURL = process.env.RESEARCHER_BACKEND_URL ? process.env.RESEARCHER_BACKEND_URL : '';
-      console.log('dummy login at url ' + researcherBackendURL);
-      const response = await fetch(`${researcherBackendURL}/v1/auth/init-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Api-Key': process.env.RESEARCHER_BACKEND_API_KEY || '',
-        },
-        body: JSON.stringify({ email: dummyUserEmail }),
-      });
-      if (!response.ok) {
-        console.error('error while dummy login: ' + response.statusText);
-        throw new Error('LoginFailed');
-      }
+      const data = await initToken(dummyUserEmail);
 
-      const data = await response.json();
       // console.log(data);
       const now = new Date();
       return {
@@ -127,10 +134,16 @@ export const authOptions = {
           console.log(user);
           console.log(token);
           console.log(account);
-
-          console.log('todo: get access and refresh token from researcher backend');
+          if (!user || !user.email) {
+            console.error('user or user.email is undefined');
+            return { ...token, error: 'LoginFailed' as const };
+          }
+          const data = await initToken(user.email);
           return {
             email: user.email,
+            access_token: data.accessToken,
+            expires_at: new Date().getTime() + data.expiresIn * 1000,
+            refresh_token: data.refreshToken,
           }
         }
         return {
